@@ -1,0 +1,53 @@
+<div class="row mx-auto mb-5">
+    <div class="col-md-6 mx-auto">
+        <div class="container mt-5">
+            <h2 class="text-center">Sign Up</h2>
+            <form action="/signup" method="POST">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-4">
+                    <label>First Name</label>
+                    <input type="text" class="form-control" name="FName" placeholder="Enter Name">
+                </div>
+                </div>
+                 <div class="col-md-6">
+                    <div class="form-group mt-4">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" name="LName" placeholder="Enter Name">
+                </div>
+                </div>
+            </div>
+                     <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-4">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="Email" placeholder="Enter Name">
+                </div>
+                </div>
+                 <div class="col-md-6">
+                    <div class="form-group mt-4">
+                    <label>Phone Number</label>
+                    <input type="number" class="form-control" name="Phone" placeholder="Enter Name">
+                </div>
+                </div>
+            </div>
+             <div class="form-group mt-4">
+                                    <label>Place</label>
+
+                  <select class="form-select" name="Place" aria-label="Default select example">
+                    <option selected disabled>Select</option>
+                    <option value="Calicut">Calicut</option>
+                    </select>
+                </div>
+                <div class="form-group mt-4">
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="Password" placeholder="Password">
+                </div>
+                <div class="row">
+                    <a href="/signin" class="mt-4 float-right">Already Have Account ?</a>
+                    <button type="submit" class="btn btn-primary mt-2">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

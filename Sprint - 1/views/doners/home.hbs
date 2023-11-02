@@ -1,0 +1,20 @@
+<section>
+    <div class="container mt-2">
+        <center>
+            {{#if doner}}
+            <h4>Hi {{doner.Orgname}}, Welcome</h4>
+            <h6>This is Donators Interface</h6>
+            <a href="/doners/signout" class="btn btn-danger">Logout</a>
+            {{else}}
+            <h3>Welcome</h3>
+                        <a href="/doners/signin" class="btn btn-primary">Login</a>
+
+            {{/if}}
+        </center>
+        
+    </div>
+</section>
+
+
+
+
