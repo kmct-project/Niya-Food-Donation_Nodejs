@@ -52,7 +52,8 @@ app.use("/doners", donerRouter);
 app.use("/volunteers", volunteerRouter);
 app.use("/trusts", trustRouter);
 app.use("/foodspots", foodspotRouter);
-
+app.use("/foodspots/menu", foodspotRouter);
+app.use("/foodspots/time", foodspotRouter);
 
 
 // catch 404 and forward to error handler
