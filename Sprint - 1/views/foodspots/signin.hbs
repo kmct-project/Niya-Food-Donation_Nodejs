@@ -1,6 +1,17 @@
+<style>
+    body{
+        background-image: url();
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
+
 <div class="row mx-auto">
     <div class="col-md-6 mx-auto">
         <div class="container mt-5">
+                        <div class="card p-4 shadow">
+
             <h2 class="text-center">foodspots Sign In</h2>
             <form action="/foodspots/signin" method="POST">
                 {{#if signInErr}}
@@ -21,6 +32,7 @@
                     <button type="submit" class="btn btn-primary mt-2">Sign Up</button>
                 </div>
             </form>
+        </div>
         </div>
     </div>
 </div>

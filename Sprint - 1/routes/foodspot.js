@@ -24,7 +24,7 @@ router.route("/signup")
       res.redirect("/foodspots");
     } else {
       res.render("foodspots/signup", {
-        foodspot: true,
+        foodspot: true,layout:'emptylayout',
         signUpErr: req.session.signUpErr,
       });
     }
@@ -50,7 +50,7 @@ router.route("/signup")
       res.redirect("/foodspots");
     } else {
       res.render("foodspots/signin", {
-        foodspot: true,
+        foodspot: true, layout:'emptylayout',
         signInErr: req.session.signInErr,
       });
       req.session.signInErr = null;
