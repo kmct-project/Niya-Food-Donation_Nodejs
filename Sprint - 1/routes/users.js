@@ -18,76 +18,73 @@ router.get("/", async function (req, res, next) {
 
 router.get("/home", async function (req, res, next) {
   let user = req.session.user;
-    res.render("users/home", { admin: false, user });
+    res.render("users/home", { admin: false,  user });
 });
 
 router.get("/signup", function (req, res) {
   if (req.session.signedIn) {
     res.redirect("/");
   } else {
-    res.render("users/signup", { admin: false });
+    res.render("users/signup", { admin: false,layout: 'emptylayout', });
   }
 });
 
-router.route("/signup")
-  .get(function (req, res) {
-    if (req.session.signedIn) {
-      res.redirect("/");
-    } else {
-      res.render("/signup", {
-        admin: false,
-        layout: 'emptylayout',
-        signUpErr: req.session.signUpErr,
-      });
-    }
-  })
-  .post(function (req, res) {
-    const phoneRegex = /^\d{10}$/; // Match 10-digit phone numbers
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/; // Basic email validation
 
-    const { Phone, Email, Password } = req.body;
+router.post("/signup", async function (req, res) {
+  const mobileRegex = /^[0-9\s-]{10}$/;
+  const phone = req.body.Phone;
+  const password = req.body.Password;
+  const email = req.body.Email;
+  const name = req.body.FName; // Assuming the name field is named "Name"
+  const nameRegex = /^[A-Za-z]+$/; // Regular expression for name validation (letters only)
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i; // Regular expression for email validation
 
-    // Validate phone number
-    if (!Phone.match(phoneRegex)) {
-      const error = "Invalid phone number (10 digits required)";
-      return sendValidationAlert(res, error);
-    }
+  const passwordCriteria = /^.{6,}$/;
 
-    // Validate email
-    if (!Email.match(emailRegex)) {
-      const error = "Invalid email address";
-      return sendValidationAlert(res, error);
-    }
+  let isValidMobile = mobileRegex.test(phone);
+  let isValidPassword = passwordCriteria.test(password);
+  let isValidEmail = emailRegex.test(email);
+  let isValidName = nameRegex.test(name);
 
-    // Validate password length
-    if (Password.length < 6) {
-      const error = "Password must be at least 6 characters long";
-      return sendValidationAlert(res, error);
-    }
-
-    // If all validations pass, proceed with signup
-    userHelper.doSignup(req.body).then((response) => {
-      console.log(response);
-      if (response.status == false) {
-        req.session.signUpErr = "Invalid Code";
-        return sendValidationAlert(res, "Invalid Code");
-      } else {
+  if (isValidMobile && isValidPassword && isValidEmail && isValidName) {
+    try {
+      const response = await userHelper.doSignup(req.body);
+      if (response && response._id) {
         req.session.signedIn = true;
         req.session.user = response;
-        res.redirect("/");
+        res.status(200).send("Success"); // Return success message
+      } else {
+        console.log("User signup response does not contain a valid ID.");
+        res.status(400).send("User signup response does not contain a valid ID.");
       }
-    });
-  });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error.message); // Return the error message
+    }
+  } else {
+    let errorMessage = "";
 
-  function sendValidationAlert(res, message) {
-    res.setHeader('Content-Type', 'text/html');
-    res.status(400).send(`
-      <script>
-        alert("${message}");
-        window.history.back();
-      </script>
-    `);
+    if (!isValidMobile) {
+      errorMessage += "Please enter a valid mobile number. ";
+    }
+
+    if (!isValidEmail) {
+      errorMessage += "Please enter a valid email address. ";
+    }
+
+    if (!isValidName) {
+      errorMessage += "Please enter a valid name with letters only. ";
+    }
+
+    if (!isValidPassword) {
+      errorMessage += "Password must be at least 6 characters.";
+    }
+
+    res.status(400).send(errorMessage.trim());
   }
+});
+
+
   
 
 router.get("/signin", function (req, res) {
@@ -96,6 +93,7 @@ router.get("/signin", function (req, res) {
   } else {
     res.render("users/signin", {
       admin: false,
+      layout: 'emptylayout',
       signInErr: req.session.signInErr,
     });
     req.session.signInErr = null;

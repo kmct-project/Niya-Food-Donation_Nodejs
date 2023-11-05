@@ -118,6 +118,12 @@ module.exports = {
       Name: menuDetails.Name,
         Category: menuDetails.Category,
           Price: menuDetails.Price,
+          size: menuDetails.size,
+          time: menuDetails.time,
+          timeampm: menuDetails.timeampm,
+          cuisine: menuDetails.cuisine,
+
+
             Description: menuDetails.Description,
             },
           }

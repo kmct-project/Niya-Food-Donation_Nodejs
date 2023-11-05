@@ -142,8 +142,10 @@ router.get("/edit-menu/:id", verifySignedIn, async function (req, res) {
   let foodspots = req.session.foodspots;
   let menuId = req.params.id;
   let menu = await foodspotHelper.getmenuDetails(menuId);
+  let fcatId = req.params.id;
+  let fcats = await foodspotHelper.getfcats(fcatId);
   console.log(menu);
-  res.render("foodspots/menu/edit-menu", { foodspot: true, layout:"food", menu, foodspots });
+  res.render("foodspots/menu/edit-menu", { foodspot: true, layout:"food", menu,fcats, foodspots });
 });
 
 ///////EDIT menu/////////////////////                                         

@@ -1,16 +1,15 @@
 <style>
     body{
-        background-image: url();
+        background-image: url('/images/bg1.jpg');
         background-repeat: no-repeat;
         background-size: cover;
     }
 </style>
 
-
 <div class="row mx-auto">
     <div class="col-md-6 mx-auto">
         <div class="container mt-5">
-            <div class="card p-4 shadow">
+            <div class="card p-4 mb-4 shadow">
             <h2 class="text-center">foodspots Sign Up</h2>
             <form action="/foodspots/signup" method="POST">
                 {{#if signUpErr}}

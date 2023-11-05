@@ -49,12 +49,17 @@
 
           <div class="col-lg-8" data-aos="fade">
             <form action="forms/quote.php" method="post" class="php-email-form">
+             {{#if user}}<h1> Hi {{user.FName}} {{user.LName}}</h1><span class="mb-3"><a href="/signout">Signout</a></span>{{/if}}  
               <h3>Welcome to Let's Feed</h3>
               <p>Vel nobis odio laboriosam et hic voluptatem. Inventore vitae totam. Rerum repellendus enim linead sero park flows.</p>
               <div class="row gy-3">
 
                 <div class="col-md-12">
-                 <a href="/signin" class="btn btn-success w-100 ">Order Your Food Now!!! </a>
+                  {{#if user}}
+                 <a href="#!" class="btn btn-success w-100 ">Order Your Food Now!!! </a>
+                 {{else}}
+                <a href="/signin" class="btn btn-success w-100 ">Order Your Food Now!!! </a>
+                {{/if}}
                 </div>
 
                 <div class="col-md-12">

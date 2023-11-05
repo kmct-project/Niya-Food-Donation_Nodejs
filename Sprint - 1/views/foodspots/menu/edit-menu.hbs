@@ -1,0 +1,43 @@
+<div class="page-wrapper mb-4">
+
+    <div class="page-breadcrumb mb-5">
+
+<div class="container mt-4 mb-4">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <h2 class="text-center">Edit Menu</h2>
+                <form action="/foodspots/edit-menu/{{menu._id}}" enctype="multipart/form-data" method="POST"
+                   <label for="">Type of cuisine</label>
+                    <select class="form-select" name="cuisine" value="{{menu.cuisine}}" aria-label="Default select example">
+                    <option selected disabled>{{menu.cuisine}}</option>
+                                                {{#each fcats}}
+                    <option value="{{this.Name}}">{{this.Name}}</option>
+                    {{/each}}
+                    </select>
+                
+                   <label for="">Protin Size</label>
+                    <input type="text" name="size" value="{{menu.size}}" class="form-control" required>
+
+                    <label for="">Price</label>
+                    <input type="text" name="Price" value="{{menu.Price}}" class="form-control" required>
+
+                    <label for="">Scheduled Time</label>
+                    <input type="time" name="time" value="{{menu.time}}" class="form-control" required>
+                      <label for="">Am/Pm</label>
+                     <select class="form-select" name="timeampm" value="{{menu.timeampm}}" aria-label="Default select example">
+                    <option selected disabled>{{menu.timeampm}}</option>
+                    <option value="am">am</option>
+                    <option value="pm">pm</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-primary mb-5 w-100 mt-4">Submit</button>
+                    <br>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+
+ 
