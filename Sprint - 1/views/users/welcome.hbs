@@ -60,7 +60,8 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-6 text-center">
-            <select class="w-75">
+                <form onsubmit="return validateSelect()">
+            <select class="w-75"  id="placeSelect">
     <option value="" selected disabled>Select Your Place</option>
     <option value="Baluessery">Baluessery</option>
         <option value="Poonoor">Poonoor</option>
@@ -69,8 +70,12 @@
     <option value="Thamarassery">Thamarassery</option>
 
   </select>
-              <a data-aos="fade-up" data-aos-delay="200" href="/home" class="btn-get-started w-75 mt-5">Go to website</a>
 
+              <button type="submit" value="submit" data-aos="fade-up" data-aos-delay="200" class="btn-get-started w-75 mt-5">Go to website</button>
+                      <div id="errorContainer" style="color: red;"></div>
+
+
+</form>
           </div>
         </div>
       </div>
@@ -166,4 +171,23 @@
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <div id="preloader"></div>
+
+
+   <script>
+        function validateSelect() {
+            var selectBox = document.getElementById("placeSelect");
+            var selectedValue = selectBox.value;
+            var errorContainer = document.getElementById("errorContainer");
+
+            if (selectedValue === "") {
+                errorContainer.textContent = "Please select one place";
+                return false; // Prevent form submission
+            } else {
+                errorContainer.textContent = ""; // Clear the error message
+                // Redirect to the home page
+                window.location.href = "/home"; // Replace with the actual URL of your home page
+                return false; // Prevent form submission (optional)
+            }
+        }
+    </script>
 

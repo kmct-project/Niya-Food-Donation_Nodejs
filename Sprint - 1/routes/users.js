@@ -23,7 +23,7 @@ router.get("/home", async function (req, res, next) {
 
 router.get("/signup", function (req, res) {
   if (req.session.signedIn) {
-    res.redirect("/");
+    res.redirect("/home");
   } else {
     res.render("users/signup", { admin: false,layout: 'emptylayout', });
   }
@@ -89,7 +89,7 @@ router.post("/signup", async function (req, res) {
 
 router.get("/signin", function (req, res) {
   if (req.session.signedIn) {
-    res.redirect("/");
+    res.redirect("/home");
   } else {
     res.render("users/signin", {
       admin: false,
@@ -105,7 +105,7 @@ router.post("/signin", function (req, res) {
     if (response.status) {
       req.session.signedIn = true;
       req.session.user = response.user;
-      res.redirect("/");
+      res.redirect("/home");
     } else {
       req.session.signInErr = "Invalid Email/Password";
       res.redirect("/signin");
@@ -116,7 +116,7 @@ router.post("/signin", function (req, res) {
 router.get("/signout", function (req, res) {
   req.session.signedIn = false;
   req.session.user = null;
-  res.redirect("/");
+  res.redirect("/home");
 });
 
 module.exports = router;

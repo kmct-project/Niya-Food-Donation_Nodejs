@@ -17,6 +17,26 @@ router.get("/", verifySignedIn, function (req, res, next) {
     res.render("foodspots/home", { foodspot: true,layout:'food', foodspots });
 });
 
+router.get("/cuisinereq", verifySignedIn, function (req, res, next) {
+  let foodspots = req.session.foodspot;
+    res.render("foodspots/cuisinereq", { foodspot: true,layout:'food', foodspots });
+});
+
+router.post("/cuisinereq", function (req, res) {
+  foodspotHelper.addcuisinereq(req.body, (id) => {
+      const successMessage = "Your request was submitted successfully";
+
+      // Use res.send to send a script that displays a prompt with the success message
+      res.send(`<script>
+          const message = "${successMessage}";
+          const confirmation = confirm(message);
+          if (confirmation) {
+              window.location.href = "/foodspots/menu/all-menus"; // Redirect to the home page
+          }
+      </script>`);
+  });
+});
+
 
 router.route("/signup")
   .get(function (req, res) {

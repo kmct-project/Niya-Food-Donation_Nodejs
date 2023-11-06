@@ -1,0 +1,30 @@
+<div class="page-wrapper">
+
+    <div class="page-breadcrumb">
+
+<section>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="text-center">Send Request For Cuisine</h2><br>
+                <form action="/foodspots/cuisinereq" enctype="multipart/form-data" method="POST">
+                {{#if foodspots}}
+                <input type="hidden" name="Name" value="{{foodspots.Name}}">
+                {{/if}}
+             
+                    <label for="">Cuisine Name</label>
+                    <input type="text" name="cname" class="form-control" required>
+
+                   
+
+               
+
+                    <button type="submit" class="btn btn-success mt-4 mb-5 text-white">Send Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+</div>
+</div>

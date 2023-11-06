@@ -50,6 +50,20 @@ doSignin: (adminData) => {
 },
 ////////////////////////////////////////////////////
 
+///////GET ALL menu/////////////////////                                            
+getAllcuisinereqs: () => {
+  return new Promise(async (resolve, reject) => {
+    let cuisinereqs = await db
+    .get()
+    .collection(collections.REQ_COLLECTION)
+    .find()
+    .toArray();
+resolve(cuisinereqs);
+  });
+},
+
+
+
 ////////CATEGORY FUNCTION CRUD///////////////////
 //                                             //
 ////////ADD FOOD CATEGORY TO DB FUNCTION/////////

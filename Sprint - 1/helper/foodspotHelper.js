@@ -53,6 +53,31 @@ module.exports = {
     });
   },
 
+ ///////ADD cuisinereq/////////////////////                                         
+ addcuisinereq: (cuisinereq, callback) => {
+  console.log(cuisinereq);
+db.get()
+  .collection(collections.REQ_COLLECTION)
+  .insertOne(cuisinereq)
+  .then((data) => {
+    console.log(data);
+    callback(data.ops[0]._id);
+  });
+},
+
+///////GET ALL menu/////////////////////                                            
+getAllgetAllcuisinereqs: () => {
+  return new Promise(async (resolve, reject) => {
+    let getAllcuisinereqs = await db
+    .get()
+    .collection(collections.REQ_COLLECTION)
+    .find()
+    .toArray();
+resolve(getAllcuisinereqs);
+  });
+},
+
+
   ///////ADD menu/////////////////////                                         
   addmenu: (menu, callback) => {
     console.log(menu);

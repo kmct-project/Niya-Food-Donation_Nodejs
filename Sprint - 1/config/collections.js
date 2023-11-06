@@ -10,6 +10,8 @@ module.exports={
     FCATEGORY_COLLECTION:'food-category',
     MENU_COLLECTION: "menu",
     TIME_COLLECTION: "time",
+    REQ_COLLECTION: "cuisinereq",
+
 
 
 }

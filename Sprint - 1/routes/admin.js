@@ -80,6 +80,16 @@ router.get("/signout", function (req, res) {
   res.redirect("/admin");
 });
 
+
+/////////////SIGNUP PAGE ROUTER////////////////////////////////
+router.get("/all-cuisinereq", verifySignedIn, function (req, res) {
+  let administator = req.session.admin;
+  adminHelper.getAllcuisinereqs().then((cuisinereqs) => {
+    res.render("admin/all-cuisinereq", { admin: true, layout:"adminlayout", administator, cuisinereqs });
+  });
+});
+
+
 /////////////SIGNUP PAGE ROUTER////////////////////////////////
 router.get("/all-food-category", verifySignedIn, function (req, res) {
   let administator = req.session.admin;
