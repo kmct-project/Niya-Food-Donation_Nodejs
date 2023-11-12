@@ -14,20 +14,20 @@ const verifySignedIn = (req, res, next) => {
 /* GET foodspots listing. */
 router.get("/", verifySignedIn, function (req, res, next) {
   let foodspots = req.session.foodspot;
-    res.render("foodspots/home", { foodspot: true,layout:'food', foodspots });
+  res.render("foodspots/home", { foodspot: true, layout: 'food', foodspots });
 });
 
 router.get("/cuisinereq", verifySignedIn, function (req, res, next) {
   let foodspots = req.session.foodspot;
-    res.render("foodspots/cuisinereq", { foodspot: true,layout:'food', foodspots });
+  res.render("foodspots/cuisinereq", { foodspot: true, layout: 'food', foodspots });
 });
 
 router.post("/cuisinereq", function (req, res) {
   foodspotHelper.addcuisinereq(req.body, (id) => {
-      const successMessage = "Your request was submitted successfully";
+    const successMessage = "Your request was submitted successfully";
 
-      // Use res.send to send a script that displays a prompt with the success message
-      res.send(`<script>
+    // Use res.send to send a script that displays a prompt with the success message
+    res.send(`<script>
           const message = "${successMessage}";
           const confirmation = confirm(message);
           if (confirmation) {
@@ -69,8 +69,8 @@ router.route("/signup")
     }
 
     // Validate password length
-    if (Password.length < 6) {
-      const error = "Password must be at least 6 characters long";
+    if (Password.length < 10) {
+      const error = "Password must be at least 10 characters long";
       return sendValidationAlert(res, error);
     }
 
@@ -99,13 +99,13 @@ function sendValidationAlert(res, message) {
 }
 
 
-  router.route("/signin")
+router.route("/signin")
   .get(function (req, res) {
     if (req.session.signedInFoodspot) {
       res.redirect("/foodspots");
     } else {
       res.render("foodspots/signin", {
-        foodspot: true, layout:'emptylayout',
+        foodspot: true, layout: 'emptylayout',
         signInErr: req.session.signInErr,
       });
       req.session.signInErr = null;
@@ -136,7 +136,7 @@ router.get("/signout", function (req, res) {
 router.get("/all-menus", verifySignedIn, function (req, res) {
   let foodspots = req.session.foodspots;
   foodspotHelper.getAllmenus().then((menus) => {
-    res.render("foodspots/menu/all-menus", { foodspot: true, layout:"food", menus, foodspots });
+    res.render("foodspots/menu/all-menus", { foodspot: true, layout: "food", menus, foodspots });
   });
 });
 
@@ -145,14 +145,14 @@ router.get("/add-menu", verifySignedIn, async function (req, res) {
   let foodspots = req.session.foodspots;
   let fcatId = req.params.id;
   let fcats = await foodspotHelper.getfcats(fcatId);
-  res.render("foodspots/menu/add-menu", { foodspot: true, layout:"food", fcats, foodspots });
+  res.render("foodspots/menu/add-menu", { foodspot: true, layout: "food", fcats, foodspots });
 });
 
 ///////ADD menu/////////////////////                                         
 router.post("/add-menu", function (req, res) {
   foodspotHelper.addmenu(req.body, (id) => {
-        res.redirect("/foodspots/menu/all-menus");
-      });
+    res.redirect("/foodspots/menu/all-menus");
+  });
 });
 
 
@@ -165,7 +165,7 @@ router.get("/edit-menu/:id", verifySignedIn, async function (req, res) {
   let fcatId = req.params.id;
   let fcats = await foodspotHelper.getfcats(fcatId);
   console.log(menu);
-  res.render("foodspots/menu/edit-menu", { foodspot: true, layout:"food", menu,fcats, foodspots });
+  res.render("foodspots/menu/edit-menu", { foodspot: true, layout: "food", menu, fcats, foodspots });
 });
 
 ///////EDIT menu/////////////////////                                         
@@ -204,22 +204,22 @@ router.get("/delete-all-menus", verifySignedIn, function (req, res) {
 router.get("/all-times", verifySignedIn, function (req, res) {
   let foodspots = req.session.foodspots;
   foodspotHelper.getAlltimes().then((times) => {
-    res.render("foodspots/time/all-times", { foodspot: true, layout:"food", times, foodspots });
+    res.render("foodspots/time/all-times", { foodspot: true, layout: "food", times, foodspots });
   });
 });
 
 ///////ADD Time/////////////////////                                         
 router.get("/add-time", verifySignedIn, function (req, res) {
   let foodspots = req.session.foodspots;
-  res.render("foodspots/time/add-time", { foodspot: true, layout:"food", foodspots });
+  res.render("foodspots/time/add-time", { foodspot: true, layout: "food", foodspots });
 });
 
 ///////ADD Time/////////////////////                                         
 router.post("/add-time", function (req, res) {
   foodspotHelper.addtime(req.body, (id) => {
-        res.redirect("/foodspots/time/all-times");
-      
-    });
+    res.redirect("/foodspots/time/all-times");
+
+  });
 });
 
 ///////EDIT Time/////////////////////                                         
@@ -228,7 +228,7 @@ router.get("/edit-time/:id", verifySignedIn, async function (req, res) {
   let timeId = req.params.id;
   let time = await foodspotHelper.gettimeDetails(timeId);
   console.log(time);
-  res.render("foodspots/time/edit-time", { foodspot: true, layout:"food", time, foodspots });
+  res.render("foodspots/time/edit-time", { foodspot: true, layout: "food", time, foodspots });
 });
 
 ///////EDIT Time/////////////////////                                         

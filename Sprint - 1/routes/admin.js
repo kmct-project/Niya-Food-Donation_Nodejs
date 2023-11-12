@@ -16,7 +16,7 @@ const verifySignedIn = (req, res, next) => {
 /////////////HOME PAGE ROUTER////////////////////////////////
 router.get("/", verifySignedIn, function (req, res, next) {
   let administator = req.session.admin;
-    res.render("admin/home", { admin: true, layout:"adminlayout", administator });
+  res.render("admin/home", { admin: true, layout: "adminlayout", administator });
 });
 
 /////////////SIGNUP PAGE ROUTER////////////////////////////////
@@ -27,7 +27,7 @@ router.route("/signup")
     } else {
       res.render("admin/signup", {
         admin: true,
-        layout: "adminlayout",
+        layout: "emptylayout",
         signUpErr: req.session.signUpErr,
       });
     }
@@ -47,14 +47,14 @@ router.route("/signup")
   });
 
 /////////////SIGNIN PAGE ROUTER////////////////////////////////
-  router.route("/signin")
+router.route("/signin")
   .get(function (req, res) {
     if (req.session.signedInAdmin) {
       res.redirect("/admin");
     } else {
       res.render("admin/signin", {
         admin: true,
-        layout: "adminlayout",
+        layout: "emptylayout",
         signInErr: req.session.signInErr,
       });
       req.session.signInErr = null;
@@ -85,7 +85,7 @@ router.get("/signout", function (req, res) {
 router.get("/all-cuisinereq", verifySignedIn, function (req, res) {
   let administator = req.session.admin;
   adminHelper.getAllcuisinereqs().then((cuisinereqs) => {
-    res.render("admin/all-cuisinereq", { admin: true, layout:"adminlayout", administator, cuisinereqs });
+    res.render("admin/all-cuisinereq", { admin: true, layout: "adminlayout", administator, cuisinereqs });
   });
 });
 
@@ -94,7 +94,7 @@ router.get("/all-cuisinereq", verifySignedIn, function (req, res) {
 router.get("/all-food-category", verifySignedIn, function (req, res) {
   let administator = req.session.admin;
   adminHelper.getfcats().then((fcats) => {
-    res.render("admin/all-food-category", { admin: true, layout:"adminlayout", administator, fcats });
+    res.render("admin/all-food-category", { admin: true, layout: "adminlayout", administator, fcats });
   });
 });
 
@@ -120,13 +120,13 @@ router.route("/all-food-category")
 
 
 
-  router.route("/edit-cat/:id")
+router.route("/edit-cat/:id")
   .get(verifySignedIn, async function (req, res) {
     let administator = req.session.admin;
     let fcatId = req.params.id;
     let fcat = await adminHelper.getcatdetails(fcatId);
     console.log(fcat);
-    res.render("admin/edit-cat", { admin: true, fcat, layout:"adminlayout", administator });
+    res.render("admin/edit-cat", { admin: true, fcat, layout: "adminlayout", administator });
   })
   .post(verifySignedIn, function (req, res) {
     let fcatId = req.params.id;
@@ -142,48 +142,48 @@ router.route("/all-food-category")
   });
 
 
-  router.get("/delete-fcat/:id", verifySignedIn, function (req, res) {
-    let fcatId = req.params.id;
-    adminHelper.deletefcat(fcatId).then((response) => {
-      fs.unlinkSync("./public/images/food-category-images/" + fcatId + ".png");
-      res.redirect("/admin/all-food-category");
-    });
+router.get("/delete-fcat/:id", verifySignedIn, function (req, res) {
+  let fcatId = req.params.id;
+  adminHelper.deletefcat(fcatId).then((response) => {
+    fs.unlinkSync("./public/images/food-category-images/" + fcatId + ".png");
+    res.redirect("/admin/all-food-category");
   });
+});
 
 
 
 router.get("/all-users", verifySignedIn, function (req, res) {
   let administator = req.session.admin;
   adminHelper.getAllUsers().then((users) => {
-    res.render("admin/all-users", { admin: true, layout:"adminlayout", administator, users });
+    res.render("admin/all-users", { admin: true, layout: "adminlayout", administator, users });
   });
 });
 
 router.get("/all-doners", verifySignedIn, function (req, res) {
   let administator = req.session.admin;
   adminHelper.getalldoners().then((doners) => {
-    res.render("admin/all-doners", { admin: true, layout:"adminlayout", administator, doners });
+    res.render("admin/all-doners", { admin: true, layout: "adminlayout", administator, doners });
   });
 });
 
 router.get("/all-volunteers", verifySignedIn, function (req, res) {
   let administator = req.session.admin;
   adminHelper.getallvolunteers().then((volunteers) => {
-    res.render("admin/all-volunteers", { admin: true, layout:"adminlayout", administator, volunteers });
+    res.render("admin/all-volunteers", { admin: true, layout: "adminlayout", administator, volunteers });
   });
 });
 
 router.get("/all-trusts", verifySignedIn, function (req, res) {
   let administator = req.session.admin;
   adminHelper.getalltrusts().then((trusts) => {
-    res.render("admin/all-trusts", { admin: true, layout:"adminlayout", administator, trusts });
+    res.render("admin/all-trusts", { admin: true, layout: "adminlayout", administator, trusts });
   });
 });
 
 router.get("/all-foodspots", verifySignedIn, function (req, res) {
   let administator = req.session.admin;
   adminHelper.getallfoodspots().then((foodspots) => {
-    res.render("admin/all-foodspots", { admin: true, layout:"adminlayout", administator, foodspots });
+    res.render("admin/all-foodspots", { admin: true, layout: "adminlayout", administator, foodspots });
   });
 });
 

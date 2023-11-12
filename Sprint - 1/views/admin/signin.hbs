@@ -1,26 +1,34 @@
+<style>
+    body {
+        background-color: black;
+    }
+</style>
+
 <div class="row mx-auto">
     <div class="col-md-6 mx-auto">
         <div class="container mt-5">
-            <h2 class="text-center">Sign In</h2>
-            <form action="/admin/signin" method="POST">
-                {{#if signInErr}}
+            <div class="card p-5 shadow">
+                <h2 class="text-center">Admin Panel</h2>
+                <form action="/admin/signin" method="POST">
+                    {{#if signInErr}}
                     <div class="alert alert-danger" role="alert">
                         <p class="error alert-heading">{{signInErr}}</p>
                     </div>
-                {{/if}}
-                <div class="form-group mt-4">
-                    <label>Email address</label>
-                    <input type="email" class="form-control" name="Email" placeholder="Enter Email">
-                </div>
-                <div class="form-group mt-4">
-                    <label>Password</label>
-                    <input type="password" class="form-control" name="Password" placeholder="Password">
-                </div>
-                <div class="row">
-                    <a href="/admin/signup" class="mt-4">Create a New Account ?</a>
-                    <button type="submit" class="btn btn-primary mt-2">Sign in</button>
-                </div>
-            </form>
+                    {{/if}}
+                    <div class="form-group mt-4">
+                        <label>Email address</label>
+                        <input type="email" class="form-control" name="Email" placeholder="Enter Email" required>
+                    </div>
+                    <div class="form-group mt-4">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="Password" placeholder="Password" required>
+                    </div>
+                    <div class="row">
+                        <a href="/admin/signup" class="mt-4">Create a New Account ?</a>
+                        <button type="submit" class="btn btn-primary mt-2">Sign in</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

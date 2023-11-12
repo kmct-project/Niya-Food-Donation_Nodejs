@@ -1,91 +1,81 @@
 <div class="row mx-auto">
     <div class="col-md-6 mx-auto">
         <div class="container mt-5">
-            <h2 class="text-center">Volunteer Sign Up</h2>
-            <form action="/volunteers/signup" method="POST">
-                {{#if signUpErr}}
-                <div class="alert alert-danger" role="alert">
-                    <p class="error alert-heading">{{signUpErr}}</p>
-                </div>
-                {{/if}}
-                 <div class="row">
-                <div class="col-md-6">
+            <div class="card p-5 mb-5 shadow">
+                <h2 class="text-center">Volunteer Sign Up</h2>
+                <form action="/volunteers/signup" method="POST">
+                    {{#if signUpErr}}
+                    <div class="alert alert-danger" role="alert">
+                        <p class="error alert-heading">{{signUpErr}}</p>
+                    </div>
+                    {{/if}}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mt-4">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" name="FName" placeholder="" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mt-4">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" name="LName" placeholder="" required>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mt-4">
+                                <label>Email</label>
+                                <input type="email" class="form-control" name="Email" placeholder="" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mt-4">
+                                <label>Phone Number</label>
+                                <input type="number" class="form-control" name="Phone" placeholder="" required>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group mt-4">
-                    <label>First Name</label>
-                    <input type="text" class="form-control" name="FName" placeholder="">
-                </div>
-                </div>
-                 <div class="col-md-6">
+                        <label>Emergency Phone Number</label>
+                        <input type="number" class="form-control" name="Ephone" placeholder="" required>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label>Physical Address</label>
+                        <input type="text" class="form-control" name="Address" placeholder="" required>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label>Age</label>
+                        <input type="number" class="form-control" name="Age" placeholder="" required>
+                    </div>
+                    <div class="form-group mt-3">
+                        <select class="form-select" name="Jstatus" aria-label="Default select example" required>
+                            <option selected>Select Your Status</option>
+                            <option value="Employee">Employee</option>
+                            <option value="Unemployee">Unemployee</option>
+                            <option value="Student">Student</option>
+                        </select>
+                    </div>
+
                     <div class="form-group mt-4">
-                    <label>Last Name</label>
-                    <input type="text" class="form-control" name="LName" placeholder="">
-                </div>
-                </div>
+                        <label>Availabe Time</label>
+                        <input type="text" class="form-control" name="Time" placeholder="" required>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="Password" placeholder="" required>
+                    </div>
+
+                    <div class="row">
+                        <a href="/volunteers/signin" class="mt-4 float-right">Already Have Account ?</a>
+                        <button type="submit" class="btn btn-primary mt-2">Sign Up</button>
+                    </div>
+                </form>
             </div>
-
-               
-                     <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mt-4">
-                    <label>Email</label>
-                    <input type="email" class="form-control" name="Email" placeholder="">
-                </div>
-                </div>
-                 <div class="col-md-6">
-                    <div class="form-group mt-4">
-                    <label>Phone Number</label>
-                    <input type="number" class="form-control" name="Phone" placeholder="">
-                </div>
-                </div>
-            </div>
-
-   <div class="form-group mt-4">
-                    <label>Emergency Phone Number</label>
-                    <input type="number" class="form-control" name="Ephone" placeholder="">
-                </div>
-                 <div class="form-group mt-3">
-                    <label>Physical Address</label>
-                    <input type="text" class="form-control" name="Address" placeholder="">
-                </div>
-                 <div class="form-group mt-3">
-                    <label>Age</label>
-                    <input type="number" class="form-control" name="Age" placeholder="">
-                </div>
-                 <div class="form-group mt-3">
-                   <select class="form-select" name="Jstatus" aria-label="Default select example">
-  <option selected>Select Your Status</option>
-  <option value="Employee">Employee</option>
-  <option value="Unemployee">Unemployee</option>
-  <option value="Student">Student</option>
-</select>
-                </div>
-
-                 <div class="form-group mt-4">
-                    <label>Availabe Time</label>
-                    <input type="text" class="form-control" name="Time" placeholder="">
-                </div>
-                <div class="form-group mt-3">
-                    <label>Password</label>
-                    <input type="password" class="form-control" name="Password" placeholder="">
-                </div>
-            
-                <div class="row">
-                    <a href="/volunteers/signin" class="mt-4 float-right">Already Have Account ?</a>
-                    <button type="submit" class="btn btn-primary mt-2">Sign Up</button>
-                </div>
-            </form>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-           

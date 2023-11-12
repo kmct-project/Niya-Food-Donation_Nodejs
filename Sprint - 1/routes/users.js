@@ -13,19 +13,19 @@ const verifySignedIn = (req, res, next) => {
 /* GET home page. */
 router.get("/", async function (req, res, next) {
   let user = req.session.user;
-    res.render("users/welcome", { admin: false, user });
+  res.render("users/welcome", { admin: false, user });
 });
 
 router.get("/home", async function (req, res, next) {
   let user = req.session.user;
-    res.render("users/home", { admin: false,  user });
+  res.render("users/home", { admin: false, user });
 });
 
 router.get("/signup", function (req, res) {
   if (req.session.signedIn) {
     res.redirect("/home");
   } else {
-    res.render("users/signup", { admin: false,layout: 'emptylayout', });
+    res.render("users/signup", { admin: false, layout: 'emptylayout', });
   }
 });
 
@@ -39,7 +39,7 @@ router.post("/signup", async function (req, res) {
   const nameRegex = /^[A-Za-z]+$/; // Regular expression for name validation (letters only)
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i; // Regular expression for email validation
 
-  const passwordCriteria = /^.{6,}$/;
+  const passwordCriteria = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
   let isValidMobile = mobileRegex.test(phone);
   let isValidPassword = passwordCriteria.test(password);
@@ -77,7 +77,7 @@ router.post("/signup", async function (req, res) {
     }
 
     if (!isValidPassword) {
-      errorMessage += "Password must be at least 6 characters.";
+      errorMessage += "Please enter a strong password with at least 8 characters, including uppercase, lowercase, numbers, and special characters.";
     }
 
     res.status(400).send(errorMessage.trim());
@@ -85,7 +85,7 @@ router.post("/signup", async function (req, res) {
 });
 
 
-  
+
 
 router.get("/signin", function (req, res) {
   if (req.session.signedIn) {
