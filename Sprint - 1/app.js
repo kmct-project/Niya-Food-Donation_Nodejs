@@ -41,7 +41,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(fileUpload());
-app.use(session({secret:"Key", cookie:{maxAge:600000}}))
+app.use(session({ secret: "Key", cookie: { maxAge: 600000 } }))
 db.connect((err) => {
   if (err) console.log("Error" + err);
   else console.log("Database Connected Successfully");
@@ -52,8 +52,6 @@ app.use("/doners", donerRouter);
 app.use("/volunteers", volunteerRouter);
 app.use("/trusts", trustRouter);
 app.use("/foodspots", foodspotRouter);
-app.use("/foodspots/menu", foodspotRouter);
-app.use("/foodspots/time", foodspotRouter);
 
 
 // catch 404 and forward to error handler

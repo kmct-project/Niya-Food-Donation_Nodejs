@@ -1,96 +1,401 @@
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="hero">
-    <div class="info d-flex align-items-center mt-5">
-      <div class="container">
-        <div class="row ">
-          <div class="col-lg-6 ">
-            <br><br><br>            <br><br><br>
+{{!-- <!-- ======= Hero Section ======= -->
+<section id="hero" class="hero">
+  <div class="info d-flex align-items-center mt-5">
+    <div class="container">
+      <div class="row ">
+        <div class="col-lg-6 ">
+          <br><br><br> <br><br><br>
 
 
-            <h2 data-aos="fade-down">Welcome to <br> Food Bank Management System</h2>
-            <p data-aos="fade-up">Food waste is a big problem, and we can be a solution. Too Good To Go is the app that lets you rescue unsold food at your favorite spots from an untimely fate..</p>
-            <a data-aos="fade-up" data-aos-delay="200" href="#get-started" class="btn-get-started mb-5">Get Started</a>    <br><br><br> 
-          </div>
+          <h2 data-aos="fade-down">Welcome to <br> Food Bank Management System</h2>
+          <p data-aos="fade-up">Food waste is a big problem, and we can be a solution. Too Good To Go is the app that
+            lets you rescue unsold food at your favorite spots from an untimely fate..</p>
+          <a data-aos="fade-up" data-aos-delay="200" href="#get-started" class="btn-get-started mb-5">Get Started</a>
+          <br><br><br>
         </div>
       </div>
     </div>
+  </div>
 
-    <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+  <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
 
-      <div class="carousel-item active" style="background-image: url('/images/bg1.jpg')"></div>
-      <div class="carousel-item" style="background-image: url('/images/bg2.jpg')"></div>
+    <div class="carousel-item active" style="background-image: url('/images/bg1.jpg')"></div>
+    <div class="carousel-item" style="background-image: url('/images/bg2.jpg')"></div>
 
-      <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
-      </a>
+    <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+    </a>
 
-      <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
-        <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
-      </a>
+    <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+    </a>
 
-    </div>
+  </div>
 
-  </section><!-- End Hero Section -->
+</section><!-- End Hero Section -->
 <section id="get-started" class="get-started section-bg">
-<div class="container">
-          <a href="/admin" class="btn btn-dark float-end mb-4">Admin Panel</a>
-</div>
+  <div class="container">
+    <a href="/admin" class="btn btn-dark float-end mb-4">Admin Panel</a>
+  </div>
 </section>
-  <main id="main">
+<main id="main">
 
-    <!-- ======= Get Started Section ======= -->
-    <section id="get-started" style="    margin-top: -152px;
+  <!-- ======= Get Started Section ======= -->
+  <section id="get-started" style="    margin-top: -152px;
 " class="get-started section-bg">
-      <div class="container">
+    <div class="container">
 
-        <div class="row justify-content-center gy-4">
+      <div class="row justify-content-center gy-4">
 
-          
 
-          <div class="col-lg-8" data-aos="fade">
-            <form action="forms/quote.php" method="post" class="php-email-form">
-             {{#if user}}<h1> Hi {{user.FName}} {{user.LName}}</h1><span class="mb-3"><a href="/signout">Signout</a></span>{{/if}}  
-              <h3>Welcome to Let's Feed</h3>
-              <p>Vel nobis odio laboriosam et hic voluptatem. Inventore vitae totam. Rerum repellendus enim linead sero park flows.</p>
-              <div class="row gy-3">
 
-                <div class="col-md-12">
-                  {{#if user}}
-                 <a href="#!" class="btn btn-success w-100 ">Order Your Food Now!!! </a>
-                 {{else}}
+        <div class="col-lg-8" data-aos="fade">
+          <form action="forms/quote.php" method="post" class="php-email-form">
+            {{#if user}}<h1> Hi {{user.FName}} {{user.LName}}</h1><span class="mb-3"><a
+                href="/signout">Signout</a></span>{{/if}}
+            <h3>Welcome to Let's Feed</h3>
+            <p>Vel nobis odio laboriosam et hic voluptatem. Inventore vitae totam. Rerum repellendus enim linead sero
+              park flows.</p>
+            <div class="row gy-3">
+
+              <div class="col-md-12">
+                {{#if user}}
+                <a href="#!" class="btn btn-success w-100 ">Order Your Food Now!!! </a>
+                {{else}}
                 <a href="/signin" class="btn btn-success w-100 ">Order Your Food Now!!! </a>
                 {{/if}}
-                </div>
-
-                <div class="col-md-12">
-                 <a href="/foodspots/signin" class="btn btn-primary w-100 ">Business Area</a>
-                </div>
-
-
-                  <div class="col-md-12">
-                 <a href="#!" class="btn btn-dark w-100 ">Donation Corner</a>
-                </div>
-
-
-              
-                </div>
-
               </div>
-            </form>
-          </div><!-- End Quote Form -->
-<h5 class="text-center mt-3">Are you interested to be a <a href="/volunteers">Volunteer</a>?</h5>
+
+              <div class="col-md-12">
+                <a href="/foodspots/signin" class="btn btn-primary w-100 ">Business Area</a>
+              </div>
+
+
+              <div class="col-md-12">
+                <a href="#!" class="btn btn-dark w-100 ">Donation Corner</a>
+              </div>
+
+
+
+            </div>
+
+        </div>
+        </form>
+      </div><!-- End Quote Form -->
+      <h5 class="text-center mt-3">Are you interested to be a <a href="/volunteers">Volunteer</a>?</h5>
+    </div>
+
+    </div>
+  </section><!-- End Get Started Section -->
+
+  <!-- ======= Constructions Section ======= -->
+
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+
+<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<div id="preloader"></div> --}}
+
+<style>
+  .hero {
+    width: 100%;
+    position: relative;
+    background: var(--color-primary);
+    padding: 154px 0 133px 0;
+  }
+</style>
+
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="hero" style=" padding: 229px 0 0px 0;">
+  <div class="container position-relative">
+    <div class="row gy-5" data-aos="fade-in">
+      <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start"
+        style="    margin-top: -85px;
+">
+        <h2 class="text-center"><b>LET'S FIGHT <font color="#fdf3a7">FOOD<br> WASTE</font> TOGETHER</b>
+          </span></h2><br><br>
+        <h5 class="text-center text-white ">Food waste is a big problem, and we can be a solution. Too Good To Go is the
+          app that
+          lets you rescue unsold food from an untimely fate at your favourite spots.
+
+
+        </h5>
+
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2">
+        <img src="/images/banner1.jpeg" style="width: 444px;
+    margin-top: -203px;
+    margin-left: 186px;" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100">
+      </div>
+    </div>
+  </div>
+
+  {{!-- <div class="icon-boxes position-relative">
+    <div class="container position-relative">
+      <div class="row gy-4 mt-5">
+
+        <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="icon-box">
+            <div class="icon"><i class="bi bi-easel"></i></div>
+            <h4 class="title"><a href="" class="stretched-link">Lorem Ipsum</a></h4>
+          </div>
+        </div><!--End Icon Box -->
+
+        <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="icon-box">
+            <div class="icon"><i class="bi bi-gem"></i></div>
+            <h4 class="title"><a href="" class="stretched-link">Sed ut perspiciatis</a></h4>
+          </div>
+        </div><!--End Icon Box -->
+
+        <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="icon-box">
+            <div class="icon"><i class="bi bi-geo-alt"></i></div>
+            <h4 class="title"><a href="" class="stretched-link">Magni Dolores</a></h4>
+          </div>
+        </div><!--End Icon Box -->
+
+        <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="500">
+          <div class="icon-box">
+            <div class="icon"><i class="bi bi-command"></i></div>
+            <h4 class="title"><a href="" class="stretched-link">Nemo Enim</a></h4>
+          </div>
+        </div><!--End Icon Box -->
+
+      </div>
+    </div>
+  </div> --}}
+
+  </div>
+</section>
+<!-- End Hero Section -->
+
+<main id="main">
+
+  <!-- ======= About Us Section ======= -->
+  <section id="about" style="background-color: #056365;" class="about">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-header">
+        <h1 class="text-white" style="font-weight: 900;"><b>MORE THAN <font color="#fdf3a7">1/3 </font>OF ALL FOOD IS
+            BEING WASTED
+          </b></h1>
+
+      </div>
+
+
+      <div class="row gy-4" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="col-lg-4 col-md-6">
+          <div class="service-item  position-relative">
+            <div class="icon">
+              <center><img src="/img/1.svg" width="50%"></center>
+            </div>
+            <h3 class="text-center text-white">ENVIRONMENTAL
+
+            </h3>
+            <p class="text-center text-white">Food waste is responsible for 10% of greenhouse gas emissions (that's more
+              than the whole aviation industry).
+
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+          <div class="service-item  position-relative">
+            <div class="icon">
+              <center><img src="/img/2.svg" width="50%"></center>
+            </div>
+            <h3 class="text-center text-white">SOCIAL
+
+            </h3>
+            <p class="text-center text-white">We waste 2.5 billion tonnes of food annually, whilst 828 million people go
+              hungry every day.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+          <div class="service-item  position-relative">
+            <div class="icon">
+              <center><img src="/img/3.svg" width="50%"></center>
+            </div>
+            <h3 class="text-center text-white">ECONOMIC
+
+            </h3>
+            <p class="text-center text-white">Wasting food costs us $1.2 trillion each year.
+
+            </p>
+          </div>
+        </div>
+
+
+
+
+      </div>
+
+    </div>
+  </section><!-- End About Us Section -->
+
+  <!-- ======= Clients Section ======= -->
+
+
+  <!-- ======= Stats Counter Section ======= -->
+  <section id="stats-counter" class="stats-counter">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row gy-4 align-items-center">
+
+        <div class="col-lg-6">
+          <img src="/img/img1.jpeg" style="    margin-left: 100px;
+" alt="" class="img-fluid">
+        </div>
+
+        <div class="col-lg-6">
+          <h1 style="color: #056365; font-weight:900
+          ">DOING GOOD MADE<br> TASTY</h1>
+          <h6>Feeling hungry? With the Too Good To Go app, you can eat well while making an impact. Save Surprise Bags
+            of good food at an even better price from restaurants and shops near you.
+
+          </h6>
+          <div class="stats-item d-flex align-items-center">
+
+            <h5 style="color: #056365;"><strong>RESCUE GOOD FOOD FROM LOCAL FAVOURITES.
+              </strong>
+            </h5>
+          </div><!-- End Stats Item -->
+
+          <div class="stats-item d-flex align-items-center">
+
+            <h5 style="color: #056365;"><strong>ENJOY FOR AT LEAST HALF OF THE PRICE</strong>
+            </h5>
+          </div><!-- End Stats Item -->
+
+          <div class="stats-item d-flex align-items-center">
+
+            <h5 style="color: #056365;"><strong>HELP THE PLANET BY PREVENTING WASTE.</strong>
+            </h5>
+          </div><!-- End Stats Item -->
+
         </div>
 
       </div>
-    </section><!-- End Get Started Section -->
 
-    <!-- ======= Constructions Section ======= -->
-  
+    </div>
+  </section><!-- End Stats Counter Section -->
 
-  </main><!-- End #main -->
+  <!-- ======= Stats Counter Section ======= -->
+  <section id="stats-counter" style="background-color: #056365;" class="stats-counter">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row gy-4 align-items-center">
+
+        <div class="col-lg-6">
+          <h1 style="color: #fff; font-weight:900
+          ">DOING GOOD MADE<br> TASTY</h1>
+          <h6 class="text-white">Unsold food at the end of the day? We can help! Join the thousands of businesses using
+            Too Good To Go and
+            put your surplus straight into the hands of happy customers. Let's give good food a second chance.
+          </h6>
+          <div class="stats-item d-flex align-items-center">
+
+            <h5 style="color: #fff;"><strong>TURN YOUR SURPLUS FOOD INTO EXTRA INCOME WITH MINIMAL EFFORT.
+              </strong>
+            </h5>
+          </div><!-- End Stats Item -->
+
+          <div class="stats-item d-flex align-items-center">
+
+            <h5 style="color: #fff;"><strong>INCREASE VISIBILITY AND ATTRACT NEW CUSTOMERS BOTH ON AND OFF THE APP.
+              </strong>
+            </h5>
+          </div><!-- End Stats Item -->
+
+          <div class="stats-item d-flex align-items-center">
+
+            <h5 style="color: #fff;"><strong>REDUCE YOUR WASTE AND HELP THE ENVIRONMENT..</strong>
+            </h5>
+          </div><!-- End Stats Item -->
+
+        </div>
+
+        <div class="col-lg-6">
+          <img src="/img/img2.jpeg" style="    margin-left: 150px;
+" alt="" class="img-fluid">
+        </div>
+
+
+
+      </div>
+
+    </div>
+  </section><!-- End Stats Counter Section -->
+
 
   <!-- ======= Footer ======= -->
- 
-  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <footer id="footer" class="footer">
+
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-5 col-md-12 footer-info">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span>Let's Feed</span>
+          </a>
+          <p>Food waste is a big problem, and we can be a solution. Too Good To Go is the app that lets you rescue
+            unsold food from an untimely fate at your favourite spots.</p>
+          <div class="social-links d-flex mt-4">
+            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Terms of service</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="#">Service 1</a></li>
+            <li><a href="#">Service 2</a></li>
+            <li><a href="#">Service 3</a></li>
+            <li><a href="#">Service 4</a></li>
+            <li><a href="#">Service 5</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+          <h4>Contact Us</h4>
+          <p>
+            Location Here <br><br>
+            <strong>Phone:</strong> +1 9999999 999<br>
+            <strong>Email:</strong> info@example.com<br>
+          </p>
+
+        </div>
+
+      </div>
+    </div>
+
+
+
+  </footer><!-- End Footer -->
+  <!-- End Footer -->
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <div id="preloader"></div>

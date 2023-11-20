@@ -17,16 +17,16 @@ module.exports = {
     });
   },
 
-//////////////////FOODSPOT SIGNUP FUNCTION/////////////////////////////
-    doSignup: async (foodspotData) => {
-        foodspotData.Password = await bcrypt.hash(foodspotData.Password, 10);
-        const result = await db.get()
-            .collection(collections.FOODSPOT_COLLECTION)
-            .insertOne(foodspotData);
-        return result.ops[0];
-    },
+  //////////////////FOODSPOT SIGNUP FUNCTION/////////////////////////////
+  doSignup: async (foodspotData) => {
+    foodspotData.Password = await bcrypt.hash(foodspotData.Password, 10);
+    const result = await db.get()
+      .collection(collections.FOODSPOT_COLLECTION)
+      .insertOne(foodspotData);
+    return result.ops[0];
+  },
 
-//////////////////FOODSPOT SIGNIN FUNCTION/////////////////////////////
+  //////////////////FOODSPOT SIGNIN FUNCTION/////////////////////////////
   doSignin: (foodspotData) => {
     return new Promise(async (resolve, reject) => {
       let response = {};
@@ -53,212 +53,221 @@ module.exports = {
     });
   },
 
- ///////ADD cuisinereq/////////////////////                                         
- addcuisinereq: (cuisinereq, callback) => {
-  console.log(cuisinereq);
-db.get()
-  .collection(collections.REQ_COLLECTION)
-  .insertOne(cuisinereq)
-  .then((data) => {
-    console.log(data);
-    callback(data.ops[0]._id);
-  });
-},
+  ///////ADD cuisinereq/////////////////////                                         
+  addcuisinereq: (cuisinereq, callback) => {
+    console.log(cuisinereq);
+    db.get()
+      .collection(collections.REQ_COLLECTION)
+      .insertOne(cuisinereq)
+      .then((data) => {
+        console.log(data);
+        callback(data.ops[0]._id);
+      });
+  },
 
-///////GET ALL menu/////////////////////                                            
-getAllgetAllcuisinereqs: () => {
-  return new Promise(async (resolve, reject) => {
-    let getAllcuisinereqs = await db
-    .get()
-    .collection(collections.REQ_COLLECTION)
-    .find()
-    .toArray();
-resolve(getAllcuisinereqs);
-  });
-},
+  ///////GET ALL menu/////////////////////                                            
+  getAllgetAllcuisinereqs: () => {
+    return new Promise(async (resolve, reject) => {
+      let getAllcuisinereqs = await db
+        .get()
+        .collection(collections.REQ_COLLECTION)
+        .find()
+        .toArray();
+      resolve(getAllcuisinereqs);
+    });
+  },
 
 
   ///////ADD menu/////////////////////                                         
   addmenu: (menu, callback) => {
     console.log(menu);
-  menu.Price = parseInt(menu.Price);
-  db.get()
-    .collection(collections.MENU_COLLECTION)
-    .insertOne(menu)
-    .then((data) => {
-      console.log(data);
-      callback(data.ops[0]._id);
-    });
+    menu.Price = parseInt(menu.Price);
+    db.get()
+      .collection(collections.MENU_COLLECTION)
+      .insertOne(menu)
+      .then((data) => {
+        console.log(data);
+        callback(data.ops[0]._id);
+      });
   },
 
-///////GET ALL menu/////////////////////                                            
-   getAllmenus: () => {
+  ///////GET ALL menu/////////////////////                                            
+  getAllmenus: () => {
     return new Promise(async (resolve, reject) => {
       let menus = await db
-      .get()
-      .collection(collections.MENU_COLLECTION)
-      .find()
-      .toArray();
-  resolve(menus);
+        .get()
+        .collection(collections.MENU_COLLECTION)
+        .find()
+        .toArray();
+      resolve(menus);
     });
   },
 
-///////ADD menu DETAILS/////////////////////                                            
+  ///////ADD menu DETAILS/////////////////////                                            
   getmenuDetails: (menuId) => {
     return new Promise((resolve, reject) => {
       db.get()
         .collection(collections.MENU_COLLECTION)
-      .findOne({ _id: objectId(menuId)
-  })
-      .then((response) => {
-    resolve(response);
-  });
-  });
+        .findOne({
+          _id: objectId(menuId)
+        })
+        .then((response) => {
+          resolve(response);
+        });
+    });
   },
 
-///////DELETE menu/////////////////////                                            
+  ///////DELETE menu/////////////////////                                            
   deletemenu: (menuId) => {
     return new Promise((resolve, reject) => {
       db.get()
         .collection(collections.MENU_COLLECTION)
-      .removeOne({ _id: objectId(menuId)
-  })
+        .removeOne({
+          _id: objectId(menuId)
+        })
         .then((response) => {
-    console.log(response);
-    resolve(response);
-  });
+          console.log(response);
+          resolve(response);
+        });
     });
   },
 
-///////UPDATE menu/////////////////////                                            
-   updatemenu: (menuId, menuDetails) => {
+  ///////UPDATE menu/////////////////////                                            
+  updatemenu: (menuId, menuDetails) => {
     return new Promise((resolve, reject) => {
       db.get()
         .collection(collections.MENU_COLLECTION)
-      .updateOne(
-        { _id: objectId(menuId)
-  },
-  {
-    $set: {
-      Name: menuDetails.Name,
-        Category: menuDetails.Category,
-          Price: menuDetails.Price,
-          size: menuDetails.size,
-          time: menuDetails.time,
-          timeampm: menuDetails.timeampm,
-          cuisine: menuDetails.cuisine,
+        .updateOne(
+          {
+            _id: objectId(menuId)
+          },
+          {
+            $set: {
+              Name: menuDetails.Name,
+              Category: menuDetails.Category,
+              Price: menuDetails.Price,
+              size: menuDetails.size,
+              time: menuDetails.time,
+              timeampm: menuDetails.timeampm,
+              cuisine: menuDetails.cuisine,
 
 
-            Description: menuDetails.Description,
+              Description: menuDetails.Description,
             },
           }
         )
         .then((response) => {
-              resolve();
-            });
+          resolve();
+        });
     });
   },
 
 
-///////DELETE ALL menu/////////////////////                                            
+  ///////DELETE ALL menu/////////////////////                                            
   deleteAllmenus: () => {
     return new Promise((resolve, reject) => {
       db.get()
         .collection(collections.MENU_COLLECTION)
-      .remove({})
-      .then(() => {
-        resolve();
-      });
-  });
+        .remove({})
+        .then(() => {
+          resolve();
+        });
+    });
   },
 
 
   ///////ADD Time/////////////////////                                         
   addtime: (time, callback) => {
     console.log(time);
-  time.Price = parseInt(time.Price);
-  db.get()
-    .collection(collections.TIME_COLLECTION)
-    .insertOne(time)
-    .then((data) => {
-      console.log(data);
-      callback(data.ops[0]._id);
-    });
+    time.Price = parseInt(time.Price);
+    db.get()
+      .collection(collections.TIME_COLLECTION)
+      .insertOne(time)
+      .then((data) => {
+        console.log(data);
+        callback(data.ops[0]._id);
+      });
   },
 
-///////GET ALL Time/////////////////////                                            
-   getAlltimes: () => {
+  ///////GET ALL Time/////////////////////                                            
+  getAlltimes: () => {
     return new Promise(async (resolve, reject) => {
       let times = await db
-      .get()
-      .collection(collections.TIME_COLLECTION)
-      .find()
-      .toArray();
-  resolve(times);
+        .get()
+        .collection(collections.TIME_COLLECTION)
+        .find()
+        .toArray();
+      resolve(times);
     });
   },
 
-///////ADD Time DETAILS/////////////////////                                            
+  ///////ADD Time DETAILS/////////////////////                                            
   gettimeDetails: (timeId) => {
     return new Promise((resolve, reject) => {
       db.get()
         .collection(collections.TIME_COLLECTION)
-      .findOne({ _id: objectId(timeId)
-  })
-      .then((response) => {
-    resolve(response);
-  });
-  });
+        .findOne({
+          _id: objectId(timeId)
+        })
+        .then((response) => {
+          resolve(response);
+        });
+    });
   },
 
-///////DELETE Time/////////////////////                                            
+  ///////DELETE Time/////////////////////                                            
   deletetime: (timeId) => {
     return new Promise((resolve, reject) => {
       db.get()
         .collection(collections.TIME_COLLECTION)
-      .removeOne({ _id: objectId(timeId)
-  })
+        .removeOne({
+          _id: objectId(timeId)
+        })
         .then((response) => {
-    console.log(response);
-    resolve(response);
-  });
+          console.log(response);
+          resolve(response);
+        });
     });
   },
 
-///////UPDATE Time/////////////////////                                            
-   updatetime: (timeId, timeDetails) => {
+  ///////UPDATE Time/////////////////////                                            
+  updatetime: (timeId, timeDetails) => {
     return new Promise((resolve, reject) => {
       db.get()
         .collection(collections.TIME_COLLECTION)
-      .updateOne(
-        { _id: objectId(timeId)
-  },
-  {
-    $set: {
-      from: timeDetails.from,
-        to: timeDetails.to,
+        .updateOne(
+          {
+            _id: objectId(timeId)
+          },
+          {
+            $set: {
+              from: timeDetails.from,
+              to: timeDetails.to,
+              fromampm: timeDetails.fromampm,
+              toampm: timeDetails.toampm,
+
             },
           }
         )
         .then((response) => {
-              resolve();
-            });
+          resolve();
+        });
     });
   },
 
 
-///////DELETE ALL Time/////////////////////                                            
+  ///////DELETE ALL Time/////////////////////                                            
   deleteAlltimes: () => {
     return new Promise((resolve, reject) => {
       db.get()
         .collection(collections.TIME_COLLECTION)
-      .remove({})
-      .then(() => {
-        resolve();
-      });
-  });
+        .remove({})
+        .then(() => {
+          resolve();
+        });
+    });
   },
-  
+
 
 
 

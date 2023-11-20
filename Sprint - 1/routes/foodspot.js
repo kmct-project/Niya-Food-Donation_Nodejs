@@ -31,7 +31,7 @@ router.post("/cuisinereq", function (req, res) {
           const message = "${successMessage}";
           const confirmation = confirm(message);
           if (confirmation) {
-              window.location.href = "/foodspots/menu/all-menus"; // Redirect to the home page
+              window.location.href = "/foodspots/all-menus"; // Redirect to the home page
           }
       </script>`);
   });
@@ -134,24 +134,24 @@ router.get("/signout", function (req, res) {
 
 ///////ALL menu/////////////////////                                         
 router.get("/all-menus", verifySignedIn, function (req, res) {
-  let foodspots = req.session.foodspots;
+  let foodspots = req.session.foodspot;
   foodspotHelper.getAllmenus().then((menus) => {
-    res.render("foodspots/menu/all-menus", { foodspot: true, layout: "food", menus, foodspots });
+    res.render("foodspots/all-menus", { foodspot: true, layout: "food", menus, foodspots });
   });
 });
 
 ///////ADD menu/////////////////////                                         
 router.get("/add-menu", verifySignedIn, async function (req, res) {
-  let foodspots = req.session.foodspots;
+  let foodspots = req.session.foodspot;
   let fcatId = req.params.id;
   let fcats = await foodspotHelper.getfcats(fcatId);
-  res.render("foodspots/menu/add-menu", { foodspot: true, layout: "food", fcats, foodspots });
+  res.render("foodspots/add-menu", { foodspot: true, layout: "food", fcats, foodspots });
 });
 
 ///////ADD menu/////////////////////                                         
 router.post("/add-menu", function (req, res) {
   foodspotHelper.addmenu(req.body, (id) => {
-    res.redirect("/foodspots/menu/all-menus");
+    res.redirect("/foodspots/all-menus");
   });
 });
 
@@ -159,13 +159,13 @@ router.post("/add-menu", function (req, res) {
 
 ///////EDIT menu/////////////////////                                         
 router.get("/edit-menu/:id", verifySignedIn, async function (req, res) {
-  let foodspots = req.session.foodspots;
+  let foodspots = req.session.foodspot;
   let menuId = req.params.id;
   let menu = await foodspotHelper.getmenuDetails(menuId);
   let fcatId = req.params.id;
   let fcats = await foodspotHelper.getfcats(fcatId);
   console.log(menu);
-  res.render("foodspots/menu/edit-menu", { foodspot: true, layout: "food", menu, fcats, foodspots });
+  res.render("foodspots/edit-menu", { foodspot: true, layout: "food", menu, fcats, foodspots });
 });
 
 ///////EDIT menu/////////////////////                                         
@@ -178,7 +178,7 @@ router.post("/edit-menu/:id", verifySignedIn, function (req, res) {
         image.mv("./public/images/menu-images/" + menuId + ".png");
       }
     }
-    res.redirect("/foodspots/menu/all-menus");
+    res.redirect("/foodspots/all-menus");
   });
 });
 
@@ -186,14 +186,14 @@ router.post("/edit-menu/:id", verifySignedIn, function (req, res) {
 router.get("/delete-menu/:id", verifySignedIn, function (req, res) {
   let menuId = req.params.id;
   foodspotHelper.deletemenu(menuId).then((response) => {
-    res.redirect("/foodspots/menu/all-menus");
+    res.redirect("/foodspots/all-menus");
   });
 });
 
 ///////DELETE ALL menu/////////////////////                                         
 router.get("/delete-all-menus", verifySignedIn, function (req, res) {
   foodspotHelper.deleteAllmenus().then(() => {
-    res.redirect("/foodspots/menu/all-menus");
+    res.redirect("/foodspots/all-menus");
   });
 });
 
@@ -202,40 +202,40 @@ router.get("/delete-all-menus", verifySignedIn, function (req, res) {
 
 ///////ALL time/////////////////////                                         
 router.get("/all-times", verifySignedIn, function (req, res) {
-  let foodspots = req.session.foodspots;
+  let foodspots = req.session.foodspot;
   foodspotHelper.getAlltimes().then((times) => {
-    res.render("foodspots/time/all-times", { foodspot: true, layout: "food", times, foodspots });
+    res.render("foodspots/all-times", { foodspot: true, layout: "food", times, foodspots });
   });
 });
 
 ///////ADD Time/////////////////////                                         
 router.get("/add-time", verifySignedIn, function (req, res) {
-  let foodspots = req.session.foodspots;
-  res.render("foodspots/time/add-time", { foodspot: true, layout: "food", foodspots });
+  let foodspots = req.session.foodspot;
+  res.render("foodspots/add-time", { foodspot: true, layout: "food", foodspots });
 });
 
 ///////ADD Time/////////////////////                                         
 router.post("/add-time", function (req, res) {
   foodspotHelper.addtime(req.body, (id) => {
-    res.redirect("/foodspots/time/all-times");
+    res.redirect("/foodspots/all-times");
 
   });
 });
 
 ///////EDIT Time/////////////////////                                         
 router.get("/edit-time/:id", verifySignedIn, async function (req, res) {
-  let foodspots = req.session.foodspots;
+  let foodspots = req.session.foodspot;
   let timeId = req.params.id;
   let time = await foodspotHelper.gettimeDetails(timeId);
   console.log(time);
-  res.render("foodspots/time/edit-time", { foodspot: true, layout: "food", time, foodspots });
+  res.render("foodspots/edit-time", { foodspot: true, layout: "food", time, foodspots });
 });
 
 ///////EDIT Time/////////////////////                                         
 router.post("/edit-time/:id", verifySignedIn, function (req, res) {
   let timeId = req.params.id;
   foodspotHelper.updatetime(timeId, req.body).then(() => {
-    res.redirect("/foodspots/time/all-times");
+    res.redirect("/foodspots/all-times");
   });
 });
 
@@ -243,14 +243,14 @@ router.post("/edit-time/:id", verifySignedIn, function (req, res) {
 router.get("/delete-time/:id", verifySignedIn, function (req, res) {
   let timeId = req.params.id;
   foodspotHelper.deletetime(timeId).then((response) => {
-    res.redirect("/foodspots/time/all-times");
+    res.redirect("/foodspots/all-times");
   });
 });
 
 ///////DELETE ALL Time/////////////////////                                         
 router.get("/delete-all-times", verifySignedIn, function (req, res) {
   foodspotHelper.deleteAlltimes().then(() => {
-    res.redirect("/foodspots/time/all-times");
+    res.redirect("/foodspots/all-times");
   });
 });
 

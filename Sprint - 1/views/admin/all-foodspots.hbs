@@ -1,6 +1,3 @@
-
-
-
 <div class="page-wrapper">
 
     <div class="page-breadcrumb">
@@ -27,12 +24,12 @@
                                 <th>Name</th>
                                 <th>Phone Number</th>
                                 <th>Email</th>
-                                <th>Place</th>
+                                {{!-- <th>Place</th> --}}
                                 <th>Address</th>
-                                <th>Pincode</th>
+                                {{!-- <th>Pincode</th> --}}
                                 <th>Manage</th>
 
-                               
+
                             </tr>
                         </thead>
                         <tbody>
@@ -42,10 +39,12 @@
                                 <td>{{this.Name}}</td>
                                 <td>{{this.Phone}}</td>
                                 <td>{{this.Email}}</td>
-                                <td>{{this.Place}}</td>
+                                {{!-- <td>{{this.Place}}</td> --}}
                                 <td>{{this.Address}}</td>
-                                <td>{{this.Pincode}}</td>
-                                <td><a href="/admin/remove-foodspot/{{this._id}}" class="btn btn-danger" onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                                {{!-- <td>{{this.Pincode}}</td> --}}
+                                <td><a href="/admin/remove-foodspot/{{this._id}}" class="btn btn-danger"
+                                        onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')"><i
+                                            class="fa fa-trash" aria-hidden="true"></i></a></td>
 
                             </tr>
                             {{/each}}
