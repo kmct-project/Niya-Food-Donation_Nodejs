@@ -25,7 +25,11 @@
   }
 
   /* Outer card */
-    {{#if user}}
+    {
+      {
+      #if user
+    }
+  }
 
   .outer-card {
     width: 200px;
@@ -38,20 +42,28 @@
     margin-right: 515px;
   }
 
-    {{else}}
+    {
+      {
+      else
+    }
+  }
 
   .outer-card {
-    width: 200px;
+    width: 193px;
     height: 50px;
     background-color: #e0e0e0;
     border-radius: 50px;
     display: flex;
     align-items: center;
     position: relative;
-    margin-right: 702px;
+    margin-right: 551px;
   }
 
-    {{/if}}
+    {
+      {
+      /if
+    }
+  }
 
   /* Inner card */
   .inner-card {
@@ -103,19 +115,22 @@
       </a>
     </div>
 
-    {{#if user}}
 
     <nav id="navbar" style="display:;" class="navbar">
       <ul>
+        <li><a href="/admin">Admin Panel</a></li>
+        {{#if user}}
+
         <li class="dropdown"><a href="#"><span>{{user.FName}}</span> <i
               class="bi bi-chevron-down dropdown-indicator"></i></a>
           <ul>
             <li><a href="/signout">Logout</a></li>
           </ul>
         </li>
+        {{/if}}
+
       </ul>
     </nav><!-- .navbar -->
-    {{/if}}
     <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
     <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
 
