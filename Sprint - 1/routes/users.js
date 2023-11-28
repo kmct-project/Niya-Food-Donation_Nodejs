@@ -30,6 +30,7 @@ router.get("/signup", function (req, res) {
 });
 
 
+
 router.post("/signup", async function (req, res) {
   const mobileRegex = /^[0-9\s-]{10}$/;
   const phone = req.body.Phone;

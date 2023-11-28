@@ -103,6 +103,19 @@ module.exports = {
     });
   },
 
+  getmenusById:(id)=>{
+    return new Promise(async (resolve, reject) => {
+      console.log(id,"kkk")
+      let menus = await db
+        .get()
+        .collection(collections.MENU_COLLECTION)
+        .find({spot_id:id})
+        .toArray();
+      resolve(menus);
+    });
+
+  },
+
   ///////ADD menu DETAILS/////////////////////                                            
   getmenuDetails: (menuId) => {
     return new Promise((resolve, reject) => {
@@ -150,8 +163,6 @@ module.exports = {
               time: menuDetails.time,
               timeampm: menuDetails.timeampm,
               cuisine: menuDetails.cuisine,
-
-
               Description: menuDetails.Description,
             },
           }
@@ -201,6 +212,17 @@ module.exports = {
     });
   },
 
+  gettimesById:(id)=>{
+    return new Promise(async (resolve, reject) => {
+      let times = await db
+        .get()
+        .collection(collections.TIME_COLLECTION)
+        .find({spot_id:id})
+        .toArray();
+      resolve(times);
+    });
+
+  },
   ///////ADD Time DETAILS/////////////////////                                            
   gettimeDetails: (timeId) => {
     return new Promise((resolve, reject) => {

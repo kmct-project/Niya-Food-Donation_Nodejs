@@ -15,7 +15,7 @@ const verifySignedIn = (req, res, next) => {
 /* GET volunteers listing. */
 router.get("/", verifySignedIn, function (req, res, next) {
   let volunteering = req.session.volunteer;
-    res.render("volunteers/home", { volunteer: true, volunteering });
+    res.render("volunteers/home", { volunteer: true, layout:"volunteer", volunteering });
 });
 
 

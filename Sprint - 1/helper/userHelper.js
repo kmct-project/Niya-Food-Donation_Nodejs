@@ -46,5 +46,10 @@ module.exports = {
     });
   },
 
+  doenc:async (data)=>{
+   let Password = await bcrypt.hash(data, 10); 
+   console.log(Password, ':""') 
+  }
  
 };
+

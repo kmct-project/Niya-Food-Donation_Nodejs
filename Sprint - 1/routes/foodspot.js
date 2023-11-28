@@ -22,7 +22,7 @@ router.get("/cuisinereq", verifySignedIn, function (req, res, next) {
   res.render("foodspots/cuisinereq", { foodspot: true, layout: 'food', foodspots });
 });
 
-router.post("/cuisinereq", function (req, res) {
+router.post("/cuisinereq", verifySignedIn,function (req, res) {
   foodspotHelper.addcuisinereq(req.body, (id) => {
     const successMessage = "Your request was submitted successfully";
 
@@ -140,6 +140,13 @@ router.get("/all-menus", verifySignedIn, function (req, res) {
   });
 });
 
+router.get("/menus", verifySignedIn, function (req, res) {
+  let foodspots = req.session.foodspot;
+  let id=req.query.id;
+  foodspotHelper.getmenusById(id).then((menus) => {
+    res.render("foodspots/all-menus", { foodspot: true, layout: "food", menus, foodspots });
+  });
+});
 ///////ADD menu/////////////////////                                         
 router.get("/add-menu", verifySignedIn, async function (req, res) {
   let foodspots = req.session.foodspot;
@@ -149,9 +156,11 @@ router.get("/add-menu", verifySignedIn, async function (req, res) {
 });
 
 ///////ADD menu/////////////////////                                         
-router.post("/add-menu", function (req, res) {
+router.post("/add-menu", verifySignedIn, function (req, res) {
+  let foodspots = req.session.foodspot;
+  req.body.spot_id =foodspots._id;
   foodspotHelper.addmenu(req.body, (id) => {
-    res.redirect("/foodspots/all-menus");
+    res.redirect(`/foodspots/menus?id=${foodspots._id}`);
   });
 });
 
@@ -171,6 +180,7 @@ router.get("/edit-menu/:id", verifySignedIn, async function (req, res) {
 ///////EDIT menu/////////////////////                                         
 router.post("/edit-menu/:id", verifySignedIn, function (req, res) {
   let menuId = req.params.id;
+  let foodspots = req.session.foodspot;
   foodspotHelper.updatemenu(menuId, req.body).then(() => {
     if (req.files) {
       let image = req.files.Image;
@@ -178,15 +188,16 @@ router.post("/edit-menu/:id", verifySignedIn, function (req, res) {
         image.mv("./public/images/menu-images/" + menuId + ".png");
       }
     }
-    res.redirect("/foodspots/all-menus");
+    res.redirect(`/foodspots/menus?id=${foodspots._id}`);
   });
 });
 
 ///////DELETE menu/////////////////////                                         
 router.get("/delete-menu/:id", verifySignedIn, function (req, res) {
+  let foodspots = req.session.foodspot;
   let menuId = req.params.id;
   foodspotHelper.deletemenu(menuId).then((response) => {
-    res.redirect("/foodspots/all-menus");
+    res.redirect(`/foodspots/menus?id=${foodspots._id}`);
   });
 });
 
@@ -208,6 +219,12 @@ router.get("/all-times", verifySignedIn, function (req, res) {
   });
 });
 
+router.get("/times", verifySignedIn, function (req, res) {
+  let foodspots = req.session.foodspot;
+  foodspotHelper.gettimesById(foodspots._id).then((times) => {
+    res.render("foodspots/all-times", { foodspot: true, layout: "food", times, foodspots });
+  });
+});
 ///////ADD Time/////////////////////                                         
 router.get("/add-time", verifySignedIn, function (req, res) {
   let foodspots = req.session.foodspot;
@@ -216,8 +233,10 @@ router.get("/add-time", verifySignedIn, function (req, res) {
 
 ///////ADD Time/////////////////////                                         
 router.post("/add-time", function (req, res) {
+  let foodspots = req.session.foodspot;
+  req.body.spot_id =foodspots._id;
   foodspotHelper.addtime(req.body, (id) => {
-    res.redirect("/foodspots/all-times");
+    res.redirect(`/foodspots/times?id=${foodspots._id}`);
 
   });
 });
@@ -234,16 +253,18 @@ router.get("/edit-time/:id", verifySignedIn, async function (req, res) {
 ///////EDIT Time/////////////////////                                         
 router.post("/edit-time/:id", verifySignedIn, function (req, res) {
   let timeId = req.params.id;
+  let foodspots = req.session.foodspot;
   foodspotHelper.updatetime(timeId, req.body).then(() => {
-    res.redirect("/foodspots/all-times");
+    res.redirect(`/foodspots/times?id=${foodspots._id}`);
   });
 });
 
 ///////DELETE Time/////////////////////                                         
 router.get("/delete-time/:id", verifySignedIn, function (req, res) {
   let timeId = req.params.id;
+  let foodspots = req.session.foodspot;
   foodspotHelper.deletetime(timeId).then((response) => {
-    res.redirect("/foodspots/all-times");
+    res.redirect(`/foodspots/times?id=${foodspots._id}`);
   });
 });
 

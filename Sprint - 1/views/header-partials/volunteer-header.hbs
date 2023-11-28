@@ -16,12 +16,12 @@
                 <!-- ============================================================== -->
                 <!-- Logo -->
                 <!-- ============================================================== -->
-                <a class="navbar-brand" href="/admin">
+                <a class="navbar-brand" href="/volunteers">
                     <!-- Logo icon -->
                     <b class="logo-icon ps-2">
                         <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                         <!-- Dark Logo icon -->
-                        <h3 class="mt-3">FoodSpot Panel</h3>
+                        <h3 class="mt-3">Volunteer Panel</h3>
                     </b>
                     <!--End Logo icon -->
                     <!-- Logo text -->
@@ -75,13 +75,13 @@
                             <img src="/assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31" />
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
-                            {{#if foodspots}}
+                            {{#if volunteer}}
                             <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-wallet me-1 ms-1"></i>
-                                {{foodspots.Name}}</a>
+                            {{volunteer.Name}}</a>
                             {{!-- <a class="dropdown-item" href="/foodspot/profile"><i
                                     class="mdi mdi-wallet me-1 ms-1"></i>
                                 My Profile</a> --}}
-                            <a class="dropdown-item" href="/foodspots/signout"><i class="mdi mdi-account me-1 ms-1"></i>
+                            <a class="dropdown-item" href="/volunteers/signout"><i class="mdi mdi-account me-1 ms-1"></i>
                                 Logout</a>
                             {{/if}}
 
@@ -107,7 +107,7 @@
             <nav class="sidebar-nav">
                 <ul id="sidebarnav" class="pt-4">
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/foodspots"
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/volunteers"
                             aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
                                 class="hide-menu">Home</span></a>
                     </li>
