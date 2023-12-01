@@ -1,5 +1,6 @@
 var express = require("express");
 var userHelper = require("../helper/userHelper");
+var donerHelper = require("../helper/donerHelper");
 var router = express.Router();
 
 const verifySignedIn = (req, res, next) => {
@@ -13,12 +14,14 @@ const verifySignedIn = (req, res, next) => {
 /* GET home page. */
 router.get("/", async function (req, res, next) {
   let user = req.session.user;
+
   res.render("users/welcome", { admin: false, layout: "welcome", user });
 });
 
 router.get("/home", async function (req, res, next) {
   let user = req.session.user;
-  res.render("users/home", { admin: false, user });
+  donates = await donerHelper.getAlldonates();
+  res.render("users/home", { admin: false, user, donates });
 });
 
 router.get("/signup", function (req, res) {

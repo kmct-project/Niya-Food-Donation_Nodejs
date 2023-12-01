@@ -15,7 +15,7 @@ const verifySignedIn = (req, res, next) => {
 /* GET trusts listing. */
 router.get("/", verifySignedIn, function (req, res, next) {
   let trusts = req.session.trust;
-    res.render("trusts/home", { trust: true, trusts });
+  res.render("trusts/home", { trust: true, trusts, layout: "trust" });
 });
 
 
@@ -45,7 +45,7 @@ router.route("/signup")
   });
 
 
-  router.route("/signin")
+router.route("/signin")
   .get(function (req, res) {
     if (req.session.signedInTrust) {
       res.redirect("/trusts");
