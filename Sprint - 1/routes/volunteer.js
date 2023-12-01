@@ -1,6 +1,8 @@
 var express = require("express");
 var fs = require("fs");
 const volunteerHelper = require("../helper/volunteerHelper");
+var donerHelper = require("../helper/donerHelper");
+
 
 var router = express.Router();
 
@@ -15,7 +17,9 @@ const verifySignedIn = (req, res, next) => {
 /* GET volunteers listing. */
 router.get("/", verifySignedIn, function (req, res, next) {
   let volunteering = req.session.volunteer;
-    res.render("volunteers/home", { volunteer: true, layout:"volunteer", volunteering });
+  donerHelper.getAllProducts().then((products) => {
+    res.render("volunteers/home", { volunteer: true, layout: "volunteer", volunteering, products });
+  })
 });
 
 
@@ -45,7 +49,7 @@ router.route("/signup")
   });
 
 
-  router.route("/signin")
+router.route("/signin")
   .get(function (req, res) {
     if (req.session.signedInVolunteer) {
       res.redirect("/volunteers");

@@ -106,6 +106,12 @@
     background: var(--color-primary);
     padding: 154px 0 133px 0;
   }
+
+  .bttn {
+    background-color: #008374;
+    color: white;
+    border: #008374;
+  }
 </style>
 
 
@@ -247,7 +253,7 @@
       <h2 class="text-center mb-5">Buy Some Donated Foods</h2>
 
       <div class="row">
-        {{#each donates}}
+        {{#each products}}
         <div class="col-md-12 col-lg-4 mb-4 mb-lg-0">
           <div class="card">
 
@@ -263,9 +269,14 @@
               </div>
 
               <div class="d-flex justify-content-between mb-2">
-                <p class="text-muted mb-0">Available Quantity : <span class="fw-bold">{{this.quantity}}</span></p>
+                <p class="text-muted mb-0">Available For <span class="fw-bold">{{this.quantity}}</span> Heads</p>
 
               </div>
+              <h6>Donated By {{this.donername}}</h6>
+
+              <button onclick="addToCart('{{this._id}}')" class="add-to-cart-btn btn bttn btn-info mt-3">Add to
+                Cart</button>
+
             </div>
           </div>
         </div>
@@ -278,159 +289,236 @@
   </section>
 
 
-  < <!--=======Stats Counter Section=======-->
-    <section id="stats-counter" class="stats-counter">
-      <div class="container" data-aos="fade-up">
+  <!--=======Stats Counter Section=======-->
+  <section id="stats-counter" class="stats-counter">
+    <div class="container" data-aos="fade-up">
 
-        <div class="row gy-4 align-items-center">
+      <div class="row gy-4 align-items-center">
 
-          <div class="col-lg-6">
-            <img src="/img/img1.jpeg" style="    margin-left: 100px;
+        <div class="col-lg-6">
+          <img src="/img/img1.jpeg" style="    margin-left: 100px;
 " alt="" class="img-fluid">
-          </div>
+        </div>
 
-          <div class="col-lg-6">
-            <h1 style="color: #056365; font-weight:900
+        <div class="col-lg-6">
+          <h1 style="color: #056365; font-weight:900
           ">DOING GOOD MADE<br> TASTY</h1>
-            <h6>Feeling hungry? With the Too Good To Go app, you can eat well while making an impact. Save Surprise Bags
-              of good food at an even better price from restaurants and shops near you.
+          <h6>Feeling hungry? With the Too Good To Go app, you can eat well while making an impact. Save Surprise Bags
+            of good food at an even better price from restaurants and shops near you.
 
-            </h6>
-            <div class="stats-item d-flex align-items-center">
+          </h6>
+          <div class="stats-item d-flex align-items-center">
 
-              <h5 style="color: #056365;"><strong>RESCUE GOOD FOOD FROM LOCAL FAVOURITES.
-                </strong>
-              </h5>
-            </div><!-- End Stats Item -->
+            <h5 style="color: #056365;"><strong>RESCUE GOOD FOOD FROM LOCAL FAVOURITES.
+              </strong>
+            </h5>
+          </div><!-- End Stats Item -->
 
-            <div class="stats-item d-flex align-items-center">
+          <div class="stats-item d-flex align-items-center">
 
-              <h5 style="color: #056365;"><strong>ENJOY FOR AT LEAST HALF OF THE PRICE</strong>
-              </h5>
-            </div><!-- End Stats Item -->
+            <h5 style="color: #056365;"><strong>ENJOY FOR AT LEAST HALF OF THE PRICE</strong>
+            </h5>
+          </div><!-- End Stats Item -->
 
-            <div class="stats-item d-flex align-items-center">
+          <div class="stats-item d-flex align-items-center">
 
-              <h5 style="color: #056365;"><strong>HELP THE PLANET BY PREVENTING WASTE.</strong>
-              </h5>
-            </div><!-- End Stats Item -->
-
-          </div>
+            <h5 style="color: #056365;"><strong>HELP THE PLANET BY PREVENTING WASTE.</strong>
+            </h5>
+          </div><!-- End Stats Item -->
 
         </div>
 
       </div>
-    </section><!-- End Stats Counter Section -->
 
-    <!-- ======= Stats Counter Section ======= -->
-    <section id="stats-counter" style="background-color: #056365;" class="stats-counter">
-      <div class="container" data-aos="fade-up">
+    </div>
+  </section><!-- End Stats Counter Section -->
 
-        <div class="row gy-4 align-items-center">
+  <!-- ======= Stats Counter Section ======= -->
+  <section id="stats-counter" style="background-color: #056365;" class="stats-counter">
+    <div class="container" data-aos="fade-up">
 
-          <div class="col-lg-6">
-            <h1 style="color: #fff; font-weight:900
+      <div class="row gy-4 align-items-center">
+
+        <div class="col-lg-6">
+          <h1 style="color: #fff; font-weight:900
           ">DOING GOOD MADE<br> TASTY</h1>
-            <h6 class="text-white">Unsold food at the end of the day? We can help! Join the thousands of businesses
-              using
-              Too Good To Go and
-              put your surplus straight into the hands of happy customers. Let's give good food a second chance.
-            </h6>
-            <div class="stats-item d-flex align-items-center">
+          <h6 class="text-white">Unsold food at the end of the day? We can help! Join the thousands of businesses
+            using
+            Too Good To Go and
+            put your surplus straight into the hands of happy customers. Let's give good food a second chance.
+          </h6>
+          <div class="stats-item d-flex align-items-center">
 
-              <h5 style="color: #fff;"><strong>TURN YOUR SURPLUS FOOD INTO EXTRA INCOME WITH MINIMAL EFFORT.
-                </strong>
-              </h5>
-            </div><!-- End Stats Item -->
+            <h5 style="color: #fff;"><strong>TURN YOUR SURPLUS FOOD INTO EXTRA INCOME WITH MINIMAL EFFORT.
+              </strong>
+            </h5>
+          </div><!-- End Stats Item -->
 
-            <div class="stats-item d-flex align-items-center">
+          <div class="stats-item d-flex align-items-center">
 
-              <h5 style="color: #fff;"><strong>INCREASE VISIBILITY AND ATTRACT NEW CUSTOMERS BOTH ON AND OFF THE APP.
-                </strong>
-              </h5>
-            </div><!-- End Stats Item -->
+            <h5 style="color: #fff;"><strong>INCREASE VISIBILITY AND ATTRACT NEW CUSTOMERS BOTH ON AND OFF THE APP.
+              </strong>
+            </h5>
+          </div><!-- End Stats Item -->
 
-            <div class="stats-item d-flex align-items-center">
+          <div class="stats-item d-flex align-items-center">
 
-              <h5 style="color: #fff;"><strong>REDUCE YOUR WASTE AND HELP THE ENVIRONMENT..</strong>
-              </h5>
-            </div><!-- End Stats Item -->
+            <h5 style="color: #fff;"><strong>REDUCE YOUR WASTE AND HELP THE ENVIRONMENT..</strong>
+            </h5>
+          </div><!-- End Stats Item -->
 
-          </div>
+        </div>
 
-          <div class="col-lg-6">
-            <img src="/img/img2.jpeg" style="    margin-left: 150px;
+        <div class="col-lg-6">
+          <img src="/img/img2.jpeg" style="    margin-left: 150px;
 " alt="" class="img-fluid">
+        </div>
+
+
+
+      </div>
+
+    </div>
+  </section><!-- End Stats Counter Section -->
+
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-5 col-md-12 footer-info">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span>Let's Feed</span>
+          </a>
+          <p>Food waste is a big problem, and we can be a solution. Too Good To Go is the app that lets you rescue
+            unsold food from an untimely fate at your favourite spots.</p>
+          <div class="social-links d-flex mt-4">
+            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
           </div>
+        </div>
 
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Terms of service</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
 
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="#">Service 1</a></li>
+            <li><a href="#">Service 2</a></li>
+            <li><a href="#">Service 3</a></li>
+            <li><a href="#">Service 4</a></li>
+            <li><a href="#">Service 5</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+          <h4>Contact Us</h4>
+          <p>
+            Location Here <br><br>
+            <strong>Phone:</strong> +1 9999999 999<br>
+            <strong>Email:</strong> info@example.com<br>
+          </p>
 
         </div>
 
       </div>
-    </section><!-- End Stats Counter Section -->
-
-
-    <!-- ======= Footer ======= -->
-    <footer id="footer" class="footer">
-
-      <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-5 col-md-12 footer-info">
-            <a href="index.html" class="logo d-flex align-items-center">
-              <span>Let's Feed</span>
-            </a>
-            <p>Food waste is a big problem, and we can be a solution. Too Good To Go is the app that lets you rescue
-              unsold food from an untimely fate at your favourite spots.</p>
-            <div class="social-links d-flex mt-4">
-              <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-              <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-            </div>
-          </div>
-
-          <div class="col-lg-2 col-6 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#">Terms of service</a></li>
-              <li><a href="#">Privacy policy</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-2 col-6 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><a href="#">Service 1</a></li>
-              <li><a href="#">Service 2</a></li>
-              <li><a href="#">Service 3</a></li>
-              <li><a href="#">Service 4</a></li>
-              <li><a href="#">Service 5</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-            <h4>Contact Us</h4>
-            <p>
-              Location Here <br><br>
-              <strong>Phone:</strong> +1 9999999 999<br>
-              <strong>Email:</strong> info@example.com<br>
-            </p>
-
-          </div>
-
-        </div>
-      </div>
+    </div>
 
 
 
-    </footer><!-- End Footer -->
-    <!-- End Footer -->
+  </footer><!-- End Footer -->
+  <!-- End Footer -->
 
-    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
-        class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
-    <div id="preloader"></div>
+  <div id="preloader"></div>
+
+  <script>
+    function addToCart(productId) {
+      $.ajax({
+        url: "/add-to-cart/" + productId,
+        method: "get",
+        success: (response) => {
+          if (response.status) {
+            let count = $("#cart-count").html();
+            count = parseInt(count) + 1;
+            $("#cart-count").html(count);
+          }
+        },
+      });
+    }
+  </script>
+
+  <script>
+    $(document).ready(function () {
+
+      $(".filter-button").click(function () {
+        var value = $(this).attr('data-filter');
+
+        if (value == "all") {
+          //$('.filter').removeClass('hidden');
+          $('.filter').show('1000');
+        }
+        else {
+          //            $('.filter[filter-item="'+value+'"]').removeClass('hidden');
+          //            $(".filter").not('.filter[filter-item="'+value+'"]').addClass('hidden');
+          $(".filter").not('.' + value).hide('3000');
+          $('.filter').filter('.' + value).show('3000');
+
+        }
+      });
+
+      if ($(".filter-button").removeClass("active")) {
+        $(this).removeClass("active");
+      }
+      $(this).addClass("active");
+
+    });
+  </script>
+  <script>
+    // Get all the "Add to Cart" buttons
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+    // Add a click event listener to each button
+    addToCartButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        // Change the button color
+        button.classList.add('added');
+
+        // Change the button text
+        button.textContent = 'Selected!';
+        button.style.backgroundColor = "#f85a40";
+        button.style.border = "0px";
+        button.style.color = "#fff"
+
+
+        const svgIcon = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+            </svg> `;
+
+        // Add a class to show the "Added!" text
+        const addedText = document.createElement('span');
+        addedText.classList.add('added-text');
+        button.insertAdjacentHTML('afterbegin', svgIcon);
+        button.appendChild(addedText);
+
+        // Disable the button to prevent multiple clicks
+        button.disabled = true;
+      });
+    });
+
+  </script>

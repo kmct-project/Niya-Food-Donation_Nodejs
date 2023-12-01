@@ -40,7 +40,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{#each donates}}
+                                        {{#each products}}
                                         <tr>
                                             <td>{{incremented @index}}</td>
                                             <td>{{this.name}}</td>
@@ -68,8 +68,17 @@
 
 
             {{else}}
-            <h3>Welcome</h3>
-            <a href="/doners/signin" class="btn btn-primary">Login</a>
+            <div class="card p-5 shadow">
+                <h3>Welcome To Doner's Hub</h3>
+                <p>Join us in the mission to make a difference! Become a Food Donor and contribute to reducing food
+                    waste. Your surplus food can nourish those in need, fostering a community of compassion and
+                    sustainability. Contact us to make a positive impact today."</p>
+                <div class=" justify-content-between">
+                    <a href="/doners/signin" class="btn btn-primary w-25  mr-5">Login</a>
+                    <a href="/doners/signup" class="btn btn-dark w-25">Create New Account</a>
+                </div>
+            </div>
+
 
             {{/if}}
         </center>
@@ -90,7 +99,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/doners/add-donate" enctype="multipart/form-data" method="POST">
+                <form action="/doners/add-product" enctype="multipart/form-data" method="POST">
+                    <input type="hidden" class="form-control" name="donername" {{#if doner}} value="{{doner.Orgname}}"
+                        {{/if}}>
+
                     <div class="mb-3">
                         <label for="" class="form-label">Item Name</label>
                         <input type="text" class="form-control" name="name">

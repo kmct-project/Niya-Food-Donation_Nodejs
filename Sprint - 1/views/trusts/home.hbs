@@ -33,14 +33,13 @@
                                             <th>Quantity</th>
                                             <th>Price</th>
                                             <th>Location</th>
-                                            <th>Image</th>
                                             <th>Edit</th>
                                             <th>Delete</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{#each donates}}
+                                        {{#each trustreqs}}
                                         <tr>
                                             <td>{{incremented @index}}</td>
                                             <td>{{this.name}}</td>
@@ -48,12 +47,11 @@
                                             <td>{{this.quantity}}</td>
                                             <td>{{this.Price}}</td>
                                             <td>{{this.location}}</td>
-                                            <td><img src="/images/donate-images/{{this._id}}.png" alt=""
-                                                    style="width: 3rem"></td>
-                                            <td><a href="/doners/edit-donate/{{this._id}}" class="btn btn-primary"><i
+
+                                            <td><a href="/trusts/edit-trustreq/{{this._id}}" class="btn btn-primary"><i
                                                         class="bi bi-pen" aria-hidden="true"></i></a></td>
-                                            <td><a href="/doners/delete-donate/{{this._id}}" class="btn btn-danger"
-                                                    onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')"><i
+                                            <td><a href="/trusts/delete-trustreq/{{this._id}}" class="btn btn-danger"
+                                                    onclick="return confirm('Are You Sure to Delete {{this.name}} ?')"><i
                                                         class="bi bi-trash" aria-hidden="true"></i></a></td>
 
                                         </tr>
@@ -69,7 +67,7 @@
 
             {{else}}
             <h3>Welcome</h3>
-            <a href="/doners/signin" class="btn btn-primary">Login</a>
+            <a href="/trusts/signin" class="btn btn-primary">Login</a>
 
             {{/if}}
         </center>
@@ -90,40 +88,37 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/doners/add-donate" enctype="multipart/form-data" method="POST">
+                <form action="/trusts/add-trustreq" enctype="multipart/form-data" method="POST">
                     <div class="mb-3">
                         <label for="" class="form-label">Item Name</label>
-                        <input type="text" class="form-control" name="name">
+                        <input type="text" class="form-control" name="name" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="" class="form-label">Item Type</label>
-                        <input type="text" class="form-control" name="type">
+                        <input type="text" class="form-control" name="type" required>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label for="" class="form-label">Quantity</label>
-                                <input type="number" class="form-control" name="quantity">
+                                <input type="number" class="form-control" name="quantity" required>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label for="" class="form-label">Price</label>
-                                <input type="number" class="form-control" name="Price">
+                                <input type="number" class="form-control" name="Price" required>
                             </div>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="" class="form-label">Location</label>
-                        <input type="text" class="form-control" name="location">
+                        <label for="" class="form-label">Your Location</label>
+                        <input type="text" class="form-control" name="location" required>
                     </div>
-                    <div class="mb-5">
-                        <label for="">Image</label>
-                        <input type="file" name="Image" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                    <button type="submit" class="btn btn-primary">Send Request</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
                 </form>

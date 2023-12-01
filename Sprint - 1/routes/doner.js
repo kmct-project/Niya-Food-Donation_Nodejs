@@ -14,33 +14,40 @@ const verifySignedIn = (req, res, next) => {
 /* GET home page. */
 router.get("/", async function (req, res, next) {
   let doner = req.session.doner;
-  donerHelper.getAlldonates().then((donates) => {
-    res.render("doners/home", { admin: false, doner, layout: "doner", donates });
+  donerHelper.getAllProducts().then((products) => {
+    res.render("doners/home", { admin: false, doner, layout: "doner", products });
+  })
+});
+
+router.get("/home", async function (req, res, next) {
+  let doner = req.session.doner;
+  donerHelper.getAllProducts().then((products) => {
+    res.render("doners/home", { admin: false, doner, layout: "doner", products });
   })
 });
 
 
 ///////ALL donate/////////////////////                                         
-// router.get("/all-donates", verifySignedIn, function (req, res) {
+// router.get("/all-products", verifySignedIn, function (req, res) {
 //   let doner = req.session.doner;
-//   donerHelper.getAlldonates().then((donates) => {
-//     res.render("doners/all-donates", { admin: false, layout: "", donates, doner });
+//   donerHelper.getAllproducts().then((products) => {
+//     res.render("doners/all-products", { admin: false, layout: "", products, doner });
 //   });
 // });
 
 ///////ADD donate/////////////////////                                         
-router.get("/add-donate", verifySignedIn, function (req, res) {
+router.get("/add-product", verifySignedIn, function (req, res) {
   let doner = req.session.doner;
-  res.render("doners/add-donate", { admin: false, layout: "", doner });
+  res.render("doners/add-product", { admin: false, layout: "", doner });
 });
 
 ///////ADD donate/////////////////////                                         
-router.post("/add-donate", function (req, res) {
-  donerHelper.adddonate(req.body, (id) => {
+router.post("/add-product", function (req, res) {
+  donerHelper.addProduct(req.body, (id) => {
     let image = req.files.Image;
     image.mv("./public/images/donate-images/" + id + ".png", (err, done) => {
       if (!err) {
-        res.redirect("/doners");
+        res.redirect("/doners/home");
       } else {
         console.log(err);
       }
@@ -51,39 +58,39 @@ router.post("/add-donate", function (req, res) {
 ///////EDIT donate/////////////////////                                         
 router.get("/edit-donate/:id", verifySignedIn, async function (req, res) {
   let doner = req.session.doner;
-  let donateId = req.params.id;
-  let donate = await donerHelper.getdonateDetails(donateId);
-  console.log(donate);
-  res.render("doners/edit-donate", { admin: false, layout: "doner", donate, doner });
+  let productId = req.params.id;
+  let product = await donerHelper.getProductDetails(productId);
+  console.log(product);
+  res.render("doners/edit-donate", { admin: false, layout: "doner", product, doner });
 });
 
 ///////EDIT donate/////////////////////                                         
 router.post("/edit-donate/:id", verifySignedIn, function (req, res) {
-  let donateId = req.params.id;
-  donerHelper.updatedonate(donateId, req.body).then(() => {
+  let productId = req.params.id;
+  donerHelper.updateProduct(productId, req.body).then(() => {
     if (req.files) {
       let image = req.files.Image;
       if (image) {
-        image.mv("./public/images/donate-images/" + donateId + ".png");
+        image.mv("./public/images/donate-images/" + productId + ".png");
       }
     }
-    res.redirect("/doners/");
+    res.redirect("/doners/home");
   });
 });
 
 ///////DELETE donate/////////////////////                                         
 router.get("/delete-donate/:id", verifySignedIn, function (req, res) {
-  let donateId = req.params.id;
-  donerHelper.deletedonate(donateId).then((response) => {
-    fs.unlinkSync("./public/images/donate-images/" + donateId + ".png");
-    res.redirect("/doners/");
+  let productId = req.params.id;
+  donerHelper.deleteProduct(productId).then((response) => {
+    fs.unlinkSync("./public/images/donate-images/" + productId + ".png");
+    res.redirect("/doners/home");
   });
 });
 
 ///////DELETE ALL donate/////////////////////                                         
-router.get("/delete-all-donates", verifySignedIn, function (req, res) {
-  donerHelper.deleteAlldonates().then(() => {
-    res.redirect("/doners/");
+router.get("/delete-all-products", verifySignedIn, function (req, res) {
+  donerHelper.deleteAllProducts().then(() => {
+    res.redirect("/doners/home");
   });
 });
 
@@ -94,7 +101,7 @@ router.get("/delete-all-donates", verifySignedIn, function (req, res) {
 
 router.get("/signup", function (req, res) {
   if (req.session.signedIn) {
-    res.redirect("/doners");
+    res.redirect("/doners/home");
   } else {
     res.render("doners/signup", { admin: false, layout: "emptylayout" });
   }
@@ -104,13 +111,13 @@ router.post("/signup", function (req, res) {
   donerHelper.doSignup(req.body).then((response) => {
     req.session.signedIn = true;
     req.session.doner = response;
-    res.redirect("/doners");
+    res.redirect("/doners/home");
   });
 });
 
 router.get("/signin", function (req, res) {
   if (req.session.signedIn) {
-    res.redirect("/doners");
+    res.redirect("/doners/home");
   } else {
     res.render("doners/signin", {
       admin: false,
@@ -126,7 +133,7 @@ router.post("/signin", function (req, res) {
     if (response.status) {
       req.session.signedIn = true;
       req.session.doner = response.doner;
-      res.redirect("/doners");
+      res.redirect("/doners/home");
     } else {
       req.session.signInErr = "Invalid Email/Password";
       res.redirect("/doners/signin");
@@ -137,7 +144,7 @@ router.post("/signin", function (req, res) {
 router.get("/signout", function (req, res) {
   req.session.signedIn = false;
   req.session.doner = null;
-  res.redirect("/doners");
+  res.redirect("/doners/home");
 });
 
 module.exports = router;

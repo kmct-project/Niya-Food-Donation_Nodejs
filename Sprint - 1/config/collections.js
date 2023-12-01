@@ -1,6 +1,7 @@
 
 //////////COLLOCTIONS TO MONGODB////////////////
 module.exports = {
+    PRODUCTS_COLLECTION: 'products',
     USERS_COLLECTION: 'users',
     ADMIN_COLLECTION: 'admin',
     VOLUNTEER_COLLECTION: "volunteer",
@@ -12,5 +13,7 @@ module.exports = {
     TIME_COLLECTION: "time",
     REQ_COLLECTION: "cuisinereq",
     DONATE_COLLECTION: "donate",
-
+    TRUSTREQ_COLLECTION: "trustreq",
+    CART_COLLECTION: 'cart',
+    ORDER_COLLECTION: 'order',
 }

@@ -8,12 +8,12 @@ module.exports = {
 
 
   ///////ADD donate/////////////////////                                         
-  adddonate: (donate, callback) => {
-    console.log(donate);
-    donate.Price = parseInt(donate.Price);
+  addProduct: (product, callback) => {
+    console.log(product);
+    product.Price = parseInt(product.Price);
     db.get()
-      .collection(collections.DONATE_COLLECTION)
-      .insertOne(donate)
+      .collection(collections.PRODUCTS_COLLECTION)
+      .insertOne(product)
       .then((data) => {
         console.log(data);
         callback(data.ops[0]._id);
@@ -21,25 +21,24 @@ module.exports = {
   },
 
   ///////GET ALL donate/////////////////////                                            
-  getAlldonates: () => {
+  getAllProducts: () => {
     return new Promise(async (resolve, reject) => {
-      let donates = await db
+      let products = await db
         .get()
-        .collection(collections.DONATE_COLLECTION)
+        .collection(collections.PRODUCTS_COLLECTION)
         .find()
         .toArray();
-      resolve(donates);
+      resolve(products);
     });
   },
 
+
   ///////ADD donate DETAILS/////////////////////                                            
-  getdonateDetails: (donateId) => {
+  getProductDetails: (productId) => {
     return new Promise((resolve, reject) => {
       db.get()
-        .collection(collections.DONATE_COLLECTION)
-        .findOne({
-          _id: objectId(donateId)
-        })
+        .collection(collections.PRODUCTS_COLLECTION)
+        .findOne({ _id: objectId(productId) })
         .then((response) => {
           resolve(response);
         });
@@ -47,13 +46,11 @@ module.exports = {
   },
 
   ///////DELETE donate/////////////////////                                            
-  deletedonate: (donateId) => {
+  deleteProduct: (productId) => {
     return new Promise((resolve, reject) => {
       db.get()
-        .collection(collections.DONATE_COLLECTION)
-        .removeOne({
-          _id: objectId(donateId)
-        })
+        .collection(collections.PRODUCTS_COLLECTION)
+        .removeOne({ _id: objectId(productId) })
         .then((response) => {
           console.log(response);
           resolve(response);
@@ -61,22 +58,21 @@ module.exports = {
     });
   },
 
-  ///////UPDATE donate/////////////////////                                            
-  updatedonate: (donateId, donateDetails) => {
+  ///////UPDATE donate/////////////////////   
+
+  updateProduct: (productId, productDetails) => {
     return new Promise((resolve, reject) => {
       db.get()
-        .collection(collections.DONATE_COLLECTION)
+        .collection(collections.PRODUCTS_COLLECTION)
         .updateOne(
-          {
-            _id: objectId(donateId)
-          },
+          { _id: objectId(productId) },
           {
             $set: {
-              name: donateDetails.name,
-              type: donateDetails.type,
-              quantity: donateDetails.quantity,
-              Price: donateDetails.Price,
-              location: donateDetails.location,
+              name: productDetails.name,
+              type: productDetails.type,
+              quantity: productDetails.quantity,
+              Price: productDetails.Price,
+              location: productDetails.location,
             },
           }
         )
@@ -86,12 +82,11 @@ module.exports = {
     });
   },
 
-
   ///////DELETE ALL donate/////////////////////                                            
-  deleteAlldonates: () => {
+  deleteAllProducts: () => {
     return new Promise((resolve, reject) => {
       db.get()
-        .collection(collections.DONATE_COLLECTION)
+        .collection(collections.PRODUCTS_COLLECTION)
         .remove({})
         .then(() => {
           resolve();
