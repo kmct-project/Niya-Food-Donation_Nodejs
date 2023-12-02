@@ -1,0 +1,111 @@
+<style>
+    .header.sticked {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 112px;
+        box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Outer card */
+        {
+            {
+            #if user
+        }
+    }
+
+    .outer-card {
+        width: 200px;
+        height: 50px;
+        background-color: #e0e0e0;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-right: 515px;
+    }
+
+        {
+            {
+            else
+        }
+    }
+
+    .outer-card {
+        width: 193px;
+        height: 50px;
+        background-color: #e0e0e0;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-right: 551px;
+    }
+
+        {
+            {
+            /if
+        }
+    }
+
+    /* Inner card */
+    .inner-card {
+        width: 85px;
+        height: 51px;
+        background-color: white;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin-left: 0px;
+    }
+
+    /* Text inside inner card */
+    .inner-text {
+        color: #056365;
+        font-weight: 900;
+    }
+
+    /* Text on the right side of outer card */
+    .outer-text {
+        position: absolute;
+        right: 15px;
+        margin-top: -12px;
+        text-align: center;
+        color: #056365;
+        font-weight: 900;
+    }
+</style>
+<header id="header" class="header d-flex align-items-center">
+
+
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+        <a href="/doners" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
+            <h1 style="font-weight: 900;">Let's Feed<span>.</span></h1>
+        </a>
+
+
+        <nav id="navbar" style="display:;" class="navbar">
+            <ul>
+                {{#if doner}}
+
+                <li class="dropdown"><a href="#"><span>{{doner.Orgname}}</span> <i
+                            class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                        <li><a href="/doners/signout">Logout</a></li>
+                    </ul>
+                </li>
+                {{/if}}
+
+            </ul>
+        </nav><!-- .navbar -->
+        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+
+    </div>
+</header><!-- End Header -->
+<!-- End Header -->

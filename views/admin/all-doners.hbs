@@ -1,0 +1,47 @@
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">All Doners</h4>
+                <div class="ms-auto text-end">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="zero_config" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Name of Org</th>
+                                <th>Phone Number</th>
+                                <th>Email</th>
+                                <th>Place</th>
+                                <th>Address</th>
+                                <th>Manage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each doners}}
+                            <tr>
+                                <td>{{incremented @index}}</td>
+                                <td>{{this.Orgname}}</td>
+                                <td>{{this.Phone}}</td>
+                                <td>{{this.Email}}</td>
+                                <td>{{this.Place}}</td>
+                                <td>{{this.Address}}</td>
+                                <td><a href="/admin/remove-doner/{{this._id}}" class="btn btn-danger" onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

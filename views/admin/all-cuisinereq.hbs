@@ -1,0 +1,40 @@
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">All Requests</h4>
+                <div class="ms-auto text-end">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="zero_config" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Name of Requested Person</th>
+                                <th>Requested Cuisine</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each cuisinereqs}}
+                            <tr>
+                                <td>{{incremented @index}}</td>
+                                <td>{{this.Name}}</td>
+                                <td>{{this.cname}}</td>
+
+
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

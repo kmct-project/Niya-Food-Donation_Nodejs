@@ -1,0 +1,250 @@
+<style>
+  .bttn {
+    background-color: #008374;
+    color: white;
+    border: #008374;
+  }
+</style>
+<section>
+  <div class="container mt-2">
+    {{#if user}}
+    <h5>Hi {{user.Name}}, Welcome</h5>
+
+    {{!-- <div class="page-breadcrumb">
+      <div class="row">
+        <div class="col-lg-16 d-flex no-block ">
+          <h4 class="page-title">Your Food Requets</h4><br>
+        </div>
+        <div class="col-lg-16 d-flex no-block ">
+          <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Send Request For Food
+          </button>
+        </div>
+      </div>
+
+    </div> --}}
+
+    {{!-- <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table id="zero_config" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Item Name</th>
+                  <th>Item Type</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Location</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                {{#each trustreqs}}
+                <tr>
+                  <td>{{incremented @index}}</td>
+                  <td>{{this.name}}</td>
+                  <td>{{this.type}}</td>
+                  <td>{{this.quantity}}</td>
+                  <td>{{this.Price}}</td>
+                  <td>{{this.location}}</td>
+
+                  <td><a href="/trusts/edit-trustreq/{{this._id}}" class="btn btn-primary"><i class="bi bi-pen"
+                        aria-hidden="true"></i></a></td>
+                  <td><a href="/trusts/delete-trustreq/{{this._id}}" class="btn btn-danger"
+                      onclick="return confirm('Are You Sure to Delete {{this.name}} ?')"><i class="bi bi-trash"
+                        aria-hidden="true"></i></a></td>
+
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div> --}}
+
+    <!-- ======= Clients Section ======= -->
+    <section style="">
+      <div class="container py-5">
+        <h2 class="text-center mb-5">Buy Some Donated Foods</h2>
+
+        <div class="row">
+          {{#each products}}
+          <div class="col-md-12 col-lg-4 mb-4 mb-lg-0">
+            <div class="card">
+
+              <img src="/images/donate-images/{{this._id}}.png" class="card-img-top" alt="Laptop" />
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <p class="small"><a href="#!" class="text-muted">{{this.type}}</a></p>
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+                  <h5 class="mb-0">{{this.name}}</h5>
+                  <h5 class="text-dark mb-0">Rs.{{this.Price}}/-</h5>
+                </div>
+
+                <div class="d-flex justify-content-between mb-2">
+                  <p class="text-muted mb-0">Available For <span class="fw-bold">{{this.quantity}}</span> Heads</p>
+
+                </div>
+                <h6>Donated By {{this.donername}}</h6>
+
+                <button onclick="addToCart('{{this._id}}')" class="add-to-cart-btn btn bttn btn-info mt-3">Add to
+                  Cart</button>
+
+              </div>
+            </div>
+          </div>
+
+          {{/each}}
+
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+  {{else}}
+  <h3>Welcome</h3>
+  <a href="/trusts/signin" class="btn btn-primary">Login</a>
+
+  {{/if}}
+
+</section>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/trusts/add-trustreq" enctype="multipart/form-data" method="POST">
+          <div class="mb-3">
+            <label for="" class="form-label">Item Name</label>
+            <input type="text" class="form-control" name="name" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="" class="form-label">Item Type</label>
+            <input type="text" class="form-control" name="type" required>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="" class="form-label">Quantity</label>
+                <input type="number" class="form-control" name="quantity" required>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="" class="form-label">Price</label>
+                <input type="number" class="form-control" name="Price" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="" class="form-label">Your Location</label>
+            <input type="text" class="form-control" name="location" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Send Request</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function addToCart(productId) {
+    $.ajax({
+      url: "/add-to-cart/" + productId,
+      method: "get",
+      success: (response) => {
+        if (response.status) {
+          let count = $("#cart-count").html();
+          count = parseInt(count) + 1;
+          $("#cart-count").html(count);
+        }
+      },
+    });
+  }
+</script>
+
+<script>
+  $(document).ready(function () {
+
+    $(".filter-button").click(function () {
+      var value = $(this).attr('data-filter');
+
+      if (value == "all") {
+        //$('.filter').removeClass('hidden');
+        $('.filter').show('1000');
+      }
+      else {
+        //            $('.filter[filter-item="'+value+'"]').removeClass('hidden');
+        //            $(".filter").not('.filter[filter-item="'+value+'"]').addClass('hidden');
+        $(".filter").not('.' + value).hide('3000');
+        $('.filter').filter('.' + value).show('3000');
+
+      }
+    });
+
+    if ($(".filter-button").removeClass("active")) {
+      $(this).removeClass("active");
+    }
+    $(this).addClass("active");
+
+  });
+</script>
+<script>
+  // Get all the "Add to Cart" buttons
+  const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+  // Add a click event listener to each button
+  addToCartButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      // Change the button color
+      button.classList.add('added');
+
+      // Change the button text
+      button.textContent = 'Selected!';
+      button.style.backgroundColor = "#f85a40";
+      button.style.border = "0px";
+      button.style.color = "#fff"
+
+
+      const svgIcon = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+            </svg> `;
+
+      // Add a class to show the "Added!" text
+      const addedText = document.createElement('span');
+      addedText.classList.add('added-text');
+      button.insertAdjacentHTML('afterbegin', svgIcon);
+      button.appendChild(addedText);
+
+      // Disable the button to prevent multiple clicks
+      button.disabled = true;
+    });
+  });
+
+</script>

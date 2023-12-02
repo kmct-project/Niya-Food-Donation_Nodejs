@@ -1,0 +1,58 @@
+<div class="page-wrapper">
+
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">All Charity Trusts</h4>
+
+                <div class="ms-auto text-end">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="zero_config" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Org Name</th>
+                                <th>Reg/GST Number</th>
+                                <th>Phone Number</th>
+                                <th>Location</th>
+                                <th>Email</th>
+                                <th>Manage</th>
+
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each trusts}}
+                            <tr>
+                                <td>{{incremented @index}}</td>
+                                <td>{{this.Orgname}}</td>
+                                <td>{{this.Rnumber}}</td>
+                                <td>{{this.Phone}}</td>
+                                <td>{{this.Address}}</td>
+                                <td>{{this.Email}}</td>
+
+                                <td><a href="/admin/remove-trust/{{this._id}}" class="btn btn-danger" onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
+                            </tr>
+                            {{/each}}
+
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
