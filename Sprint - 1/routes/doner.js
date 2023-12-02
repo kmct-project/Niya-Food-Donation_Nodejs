@@ -103,7 +103,7 @@ router.get("/signup", function (req, res) {
   if (req.session.signedIn) {
     res.redirect("/doners/home");
   } else {
-    res.render("doners/signup", { admin: false, layout: "emptylayout" });
+    res.render("doners/signup", { admin: false, layout: "doner" });
   }
 });
 
@@ -121,7 +121,7 @@ router.get("/signin", function (req, res) {
   } else {
     res.render("doners/signin", {
       admin: false,
-      layout: "emptylayout",
+      layout: "doner",
       signInErr: req.session.signInErr,
     });
     req.session.signInErr = null;

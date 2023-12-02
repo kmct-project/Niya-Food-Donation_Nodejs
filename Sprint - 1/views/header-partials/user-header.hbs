@@ -48,22 +48,21 @@
     }
   }
 
-  .outer-card {
-    width: 193px;
-    height: 50px;
-    background-color: #e0e0e0;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    position: relative;
-    margin-right: 551px;
-  }
+.outer-card {
+  width: 192px;
+  height: 50px;
+  background-color: #e0e0e0;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-right: 271px;
+}
 
     {
       {
-      /if
-    }
-  }
+      /if}
+}
 
   /* Inner card */
   .inner-card {
@@ -98,7 +97,7 @@
 
 
   <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-    <a href="index.html" class="logo d-flex align-items-center">
+    <a href="/home" class="logo d-flex align-items-center">
       <!-- Uncomment the line below if you also wish to use an image logo -->
       <!-- <img src="assets/img/logo.png" alt=""> -->
       <h1 style="font-weight: 900;">Let's Feed<span>.</span></h1>
@@ -119,6 +118,8 @@
     <nav id="navbar" style="display:;" class="navbar">
       <ul>
         <li><a href="/admin">Admin Panel</a></li>
+                <li><a href="/doners">Food Donation Corner</a></li>
+
         {{#if user}}
 
         <li class="dropdown"><a href="#"><span>{{user.FName}}</span> <i

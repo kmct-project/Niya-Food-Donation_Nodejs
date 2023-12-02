@@ -1,6 +1,8 @@
 var express = require("express");
 var fs = require("fs");
 const trustHelper = require("../helper/trustHelper");
+var donerHelper = require("../helper/donerHelper");
+
 
 var router = express.Router();
 
@@ -13,10 +15,10 @@ const verifySignedIn = (req, res, next) => {
 };
 
 /* GET trusts listing. */
-router.get("/", verifySignedIn, function (req, res, next) {
+router.get("/", verifySignedIn, async function (req, res, next) {
   let trusts = req.session.trust;
-  trustHelper.getAlltrustreqs().then((trustreqs) => {
-    res.render("trusts/home", { trust: true, trusts, layout: "trust", trustreqs });
+  donerHelper.getAllProducts().then((products) => {
+    res.render("trusts/home", { trust: true, trusts, layout: "trust", products });
   })
 });
 
@@ -142,6 +144,130 @@ router.get("/signout", function (req, res) {
   req.session.trust = null;
   res.redirect("/trusts");
 });
+
+
+
+router.get("/cart", verifySignedIn, async function (req, res) {
+  let trusts = req.session.trust;
+  let userId = req.session.user._id;
+  let cartCount = await userHelper.getCartCount(userId);
+  let cartProducts = await userHelper.getCartProducts(userId);
+  let total = null;
+  if (cartCount != 0) {
+    total = await userHelper.getTotalAmount(userId);
+  }
+  res.render("users/cart", {
+    admin: false,
+    trusts,
+    cartCount,
+    cartProducts,
+    total,
+  });
+});
+
+router.get("/add-to-cart/:id", verifySignedIn, function (req, res) {
+  console.log("api call");
+  let productId = req.params.id;
+  let userId = req.session.user._id;
+  userHelper.addToCart(productId, userId).then(() => {
+    res.json({ status: true });
+  });
+});
+
+router.post("/change-product-quantity", function (req, res) {
+  console.log(req.body);
+  userHelper.changeProductQuantity(req.body).then((response) => {
+    res.json(response);
+  });
+});
+
+router.post("/remove-cart-product", (req, res, next) => {
+  userHelper.removeCartProduct(req.body).then((response) => {
+    res.json(response);
+  });
+});
+
+router.get("/place-order", verifySignedIn, async (req, res) => {
+  let trusts = req.session.trust;
+  let userId = req.session.user._id;
+  let cartCount = await userHelper.getCartCount(userId);
+  let total = await userHelper.getTotalAmount(userId);
+  res.render("users/place-order", { admin: false, trusts, cartCount, total });
+});
+
+router.post("/place-order", async (req, res) => {
+  let trusts = req.session.trust;
+  let products = await userHelper.getCartProductList(req.body.userId);
+  let totalPrice = await userHelper.getTotalAmount(req.body.userId);
+  userHelper
+    .placeOrder(req.body, products, totalPrice, user)
+    .then((orderId) => {
+      if (req.body["payment-method"] === "COD") {
+        res.json({ codSuccess: true });
+      } else {
+        userHelper.generateRazorpay(orderId, totalPrice).then((response) => {
+          res.json(response);
+        });
+      }
+    });
+});
+
+router.post("/verify-payment", async (req, res) => {
+  console.log(req.body);
+  userHelper
+    .verifyPayment(req.body)
+    .then(() => {
+      userHelper.changePaymentStatus(req.body["order[receipt]"]).then(() => {
+        res.json({ status: true });
+      });
+    })
+    .catch((err) => {
+      res.json({ status: false, errMsg: "Payment Failed" });
+    });
+});
+
+router.get("/order-placed", verifySignedIn, async (req, res) => {
+  let trusts = req.session.trust;
+  let userId = req.session.user._id;
+  let cartCount = await userHelper.getCartCount(userId);
+  res.render("users/order-placed", { admin: false, trusts, cartCount });
+});
+
+router.get("/orders", verifySignedIn, async function (req, res) {
+  let trusts = req.session.trust;
+  let userId = req.session.user._id;
+  let cartCount = await userHelper.getCartCount(userId);
+  let orders = await userHelper.getUserOrder(userId);
+  res.render("users/orders", { admin: false, trusts, cartCount, orders });
+});
+
+router.get(
+  "/view-ordered-products/:id",
+  verifySignedIn,
+  async function (req, res) {
+    let trusts = req.session.trust;
+    let userId = req.session.user._id;
+    let cartCount = await userHelper.getCartCount(userId);
+    let orderId = req.params.id;
+    const order = await userHelper.getOrderById(orderId);
+    let products = await userHelper.getOrderProducts(orderId);
+    res.render("users/order-products", {
+      admin: false,
+      trusts,
+      cartCount,
+      products,
+      order
+    });
+  }
+);
+
+router.get("/cancel-order/:id", verifySignedIn, function (req, res) {
+  let orderId = req.params.id;
+  userHelper.cancelOrder(orderId).then(() => {
+    res.redirect("/orders");
+  });
+});
+
 
 
 

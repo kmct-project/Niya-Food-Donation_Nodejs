@@ -1,11 +1,19 @@
+
+<style>
+      .bttn {
+    background-color: #008374;
+    color: white;
+    border: #008374;
+  }
+</style>
 <section>
     <div class="container mt-2">
         <center>
             {{#if trusts}}
             <h5>Hi {{trusts.Orgname}}, Welcome</h5>
 
-            <div class="page-wrapper mt-5">
-                <div class="page-breadcrumb">
+            <div class="page-wrapper mt-1">
+                {{!-- <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-lg-16 d-flex no-block ">
                             <h4 class="page-title">Your Food Requets</h4><br>
@@ -18,9 +26,9 @@
                         </div>
                     </div>
 
-                </div>
+                </div> --}}
 
-                <div class="container-fluid">
+                {{!-- <div class="container-fluid">
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -61,7 +69,48 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
+
+                <!-- ======= Clients Section ======= -->
+  <section style="">
+    <div class="container py-5">
+      <h2 class="text-center mb-5">Buy Some Donated Foods</h2>
+
+      <div class="row">
+        {{#each products}}
+        <div class="col-md-12 col-lg-4 mb-4 mb-lg-0">
+          <div class="card">
+
+            <img src="/images/donate-images/{{this._id}}.png" class="card-img-top" alt="Laptop" />
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <p class="small"><a href="#!" class="text-muted">{{this.type}}</a></p>
+              </div>
+
+              <div class="d-flex justify-content-between mb-3">
+                <h5 class="mb-0">{{this.name}}</h5>
+                <h5 class="text-dark mb-0">Rs.{{this.Price}}/-</h5>
+              </div>
+
+              <div class="d-flex justify-content-between mb-2">
+                <p class="text-muted mb-0">Available For <span class="fw-bold">{{this.quantity}}</span> Heads</p>
+
+              </div>
+              <h6>Donated By {{this.donername}}</h6>
+
+              <button onclick="addToCart('{{this._id}}')" class="add-to-cart-btn btn bttn btn-info mt-3">Add to
+                Cart</button>
+
+            </div>
+          </div>
+        </div>
+
+        {{/each}}
+
+
+      </div>
+    </div>
+  </section>
             </div>
 
 
@@ -127,3 +176,81 @@
         </div>
     </div>
 </div>
+
+
+ <script>
+    function addToCart(productId) {
+      $.ajax({
+        url: "/add-to-cart/" + productId,
+        method: "get",
+        success: (response) => {
+          if (response.status) {
+            let count = $("#cart-count").html();
+            count = parseInt(count) + 1;
+            $("#cart-count").html(count);
+          }
+        },
+      });
+    }
+  </script>
+
+  <script>
+    $(document).ready(function () {
+
+      $(".filter-button").click(function () {
+        var value = $(this).attr('data-filter');
+
+        if (value == "all") {
+          //$('.filter').removeClass('hidden');
+          $('.filter').show('1000');
+        }
+        else {
+          //            $('.filter[filter-item="'+value+'"]').removeClass('hidden');
+          //            $(".filter").not('.filter[filter-item="'+value+'"]').addClass('hidden');
+          $(".filter").not('.' + value).hide('3000');
+          $('.filter').filter('.' + value).show('3000');
+
+        }
+      });
+
+      if ($(".filter-button").removeClass("active")) {
+        $(this).removeClass("active");
+      }
+      $(this).addClass("active");
+
+    });
+  </script>
+  <script>
+    // Get all the "Add to Cart" buttons
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+    // Add a click event listener to each button
+    addToCartButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        // Change the button color
+        button.classList.add('added');
+
+        // Change the button text
+        button.textContent = 'Selected!';
+        button.style.backgroundColor = "#f85a40";
+        button.style.border = "0px";
+        button.style.color = "#fff"
+
+
+        const svgIcon = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+            </svg> `;
+
+        // Add a class to show the "Added!" text
+        const addedText = document.createElement('span');
+        addedText.classList.add('added-text');
+        button.insertAdjacentHTML('afterbegin', svgIcon);
+        button.appendChild(addedText);
+
+        // Disable the button to prevent multiple clicks
+        button.disabled = true;
+      });
+    });
+
+  </script>
