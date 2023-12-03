@@ -9,11 +9,10 @@ module.exports = {
 
   ///////ADD donate/////////////////////                                         
   addProduct: (product, callback) => {
-    console.log(product);
     product.Price = parseInt(product.Price);
     db.get()
       .collection(collections.PRODUCTS_COLLECTION)
-      .insertOne(product)
+      .insertOne({ ...product, status: 'active', })
       .then((data) => {
         console.log(data);
         callback(data.ops[0]._id);
@@ -26,11 +25,23 @@ module.exports = {
       let products = await db
         .get()
         .collection(collections.PRODUCTS_COLLECTION)
-        .find()
+        .find({ status: 'active' })
         .toArray();
       resolve(products);
     });
   },
+
+  getProductById: (donarId) => {
+    return new Promise(async (resolve, reject) => {
+      let products = await db
+        .get()
+        .collection(collections.PRODUCTS_COLLECTION)
+        .find({ donatedBy: donarId })
+        .toArray();
+      resolve(products);
+    });
+  },
+
 
 
   ///////ADD donate DETAILS/////////////////////                                            
@@ -73,6 +84,7 @@ module.exports = {
               quantity: productDetails.quantity,
               Price: productDetails.Price,
               location: productDetails.location,
+              status: 'active'
             },
           }
         )

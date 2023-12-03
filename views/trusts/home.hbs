@@ -94,8 +94,7 @@
                 </div>
                 <h6>Donated By {{this.donername}}</h6>
 
-                <button onclick="addToCart('{{this._id}}')" class="add-to-cart-btn btn bttn btn-info mt-3">Add to
-                  Cart</button>
+                <button onclick="ChooseThis('{{this._id}}')" class="add-to-cart-btn btn bttn btn-info mt-3">Choose This</button>
 
               </div>
             </div>
@@ -173,18 +172,8 @@
 
 
 <script>
-  function addToCart(productId) {
-    $.ajax({
-      url: "/add-to-cart/" + productId,
-      method: "get",
-      success: (response) => {
-        if (response.status) {
-          let count = $("#cart-count").html();
-          count = parseInt(count) + 1;
-          $("#cart-count").html(count);
-        }
-      },
-    });
+  function ChooseThis(productId) {
+      window.location.href = `/trusts/accept-donation/${productId}`;
   }
 </script>
 

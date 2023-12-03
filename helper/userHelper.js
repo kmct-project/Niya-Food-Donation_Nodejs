@@ -321,6 +321,31 @@ module.exports = {
     });
   },
 
+
+  addToTrustCart: (productId, userId) => {
+    return new Promise(async (resolve, reject) => {
+      let orderObject = {
+        productId: productId,
+        date: new Date(),
+        trust_id: userId,
+        status: 'active'
+      };
+
+      try {
+        await db.get().collection(collections.TRUST_CART).insertOne(orderObject);
+
+        await db.get().collection(collections.PRODUCTS_COLLECTION).updateOne(
+          { _id: objectId(productId) },
+          { $set: { status: 'inactive' } }
+        );
+
+        resolve({ status: true });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+
   getUserOrder: (userId) => {
     return new Promise(async (resolve, reject) => {
       let orders = await db

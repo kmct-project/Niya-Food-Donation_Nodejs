@@ -45,21 +45,15 @@ router.get("/cart", verifySignedIn, async function (req, res) {
   });
 });
 
-router.get("/add-to-cart/:id", verifySignedIn, function (req, res) {
-  console.log("api call");
+// accepting  the food donated by Donator
+router.get("/accept-donation/:id", verifySignedIn, function (req, res) {
   let productId = req.params.id;
   let userId = req.session.user._id;
-  userHelper.addToCart(productId, userId).then(() => {
-    res.json({ status: true });
+  userHelper.addToTrustCart(productId, userId).then(() => {
+    res.redirect("/trusts/home");
   });
 });
 
-router.post("/change-product-quantity", function (req, res) {
-  console.log(req.body);
-  userHelper.changeProductQuantity(req.body).then((response) => {
-    res.json(response);
-  });
-});
 
 router.post("/remove-cart-product", (req, res, next) => {
   userHelper.removeCartProduct(req.body).then((response) => {
@@ -67,51 +61,8 @@ router.post("/remove-cart-product", (req, res, next) => {
   });
 });
 
-router.get("/place-order", verifySignedIn, async (req, res) => {
-  let user = req.session.user;
-  let userId = req.session.user._id;
-  let cartCount = await userHelper.getCartCount(userId);
-  let total = await userHelper.getTotalAmount(userId);
-  res.render("users/place-order", { admin: false, user, cartCount, total });
-});
 
-router.post("/place-order", async (req, res) => {
-  let user = req.session.user;
-  let products = await userHelper.getCartProductList(req.body.userId);
-  let totalPrice = await userHelper.getTotalAmount(req.body.userId);
-  userHelper
-    .placeOrder(req.body, products, totalPrice, user)
-    .then((orderId) => {
-      if (req.body["payment-method"] === "COD") {
-        res.json({ codSuccess: true });
-      } else {
-        userHelper.generateRazorpay(orderId, totalPrice).then((response) => {
-          res.json(response);
-        });
-      }
-    });
-});
 
-router.post("/verify-payment", async (req, res) => {
-  console.log(req.body);
-  userHelper
-    .verifyPayment(req.body)
-    .then(() => {
-      userHelper.changePaymentStatus(req.body["order[receipt]"]).then(() => {
-        res.json({ status: true });
-      });
-    })
-    .catch((err) => {
-      res.json({ status: false, errMsg: "Payment Failed" });
-    });
-});
-
-router.get("/order-placed", verifySignedIn, async (req, res) => {
-  let user = req.session.user;
-  let userId = req.session.user._id;
-  let cartCount = await userHelper.getCartCount(userId);
-  res.render("users/order-placed", { admin: false, user, cartCount });
-});
 
 router.get("/orders", verifySignedIn, async function (req, res) {
   let user = req.session.user;

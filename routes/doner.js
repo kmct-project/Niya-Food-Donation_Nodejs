@@ -14,16 +14,20 @@ const verifySignedIn = (req, res, next) => {
 /* GET home page. */
 router.get("/", async function (req, res, next) {
   let doner = req.session.doner;
-  donerHelper.getAllProducts().then((products) => {
+  donerHelper.getProductById(doner?._id || '').then((products) => {
     res.render("doners/home", { admin: false, doner, layout: "doner", products });
   })
 });
 
 router.get("/home", async function (req, res, next) {
   let doner = req.session.doner;
-  donerHelper.getAllProducts().then((products) => {
-    res.render("doners/home", { admin: false, doner, layout: "doner", products });
-  })
+  if (doner) {
+    donerHelper.getProductById(doner._id).then((products) => {
+      res.render("doners/home", { admin: false, doner, layout: "doner", products });
+    })
+  } else {
+    res.redirect("/doners/signin");
+  }
 });
 
 
@@ -43,6 +47,8 @@ router.get("/add-product", verifySignedIn, function (req, res) {
 
 ///////ADD donate/////////////////////                                         
 router.post("/add-product", function (req, res) {
+  let doner = req.session.doner;
+  req.body.donatedBy = doner?._id || ''
   donerHelper.addProduct(req.body, (id) => {
     let image = req.files.Image;
     image.mv("./public/images/donate-images/" + id + ".png", (err, done) => {
