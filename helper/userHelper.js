@@ -3,6 +3,7 @@ var collections = require("../config/collections");
 const bcrypt = require("bcrypt");
 const objectId = require("mongodb").ObjectID;
 const Razorpay = require("razorpay");
+const foodspotHelper = require("./foodspotHelper");
 
 const instance = new Razorpay({
   key_id: "rzp_test_iuxZcw2GsP7kC4",
@@ -457,11 +458,18 @@ module.exports = {
 
   cancelOrder: (orderId) => {
     return new Promise(async (resolve, reject) => {
+      let order = await db.get()
+        .collection(collections.ORDER_COLLECTION)
+        .findOne({ _id: objectId(orderId) })
+      let productId = order?.orderObject?.productId || ''
+      foodspotHelper.updateProductStatusActive(productId)
+
+
       db.get()
         .collection(collections.ORDER_COLLECTION)
         .removeOne({ _id: objectId(orderId) })
         .then(() => {
-          resolve();
+          resolve(order);
         });
     });
   },
