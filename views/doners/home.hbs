@@ -1,6 +1,3 @@
-
-
-
 <section>
     <div class="container mt-2">
         <center>
@@ -34,7 +31,10 @@
                                             <th>Item Name</th>
                                             <th>Item Type</th>
                                             <th>Quantity</th>
-                                            <th>Location</th>
+                                            <th>Pickup Location</th>
+                                            <th>Pickup Date</th>
+                                            <th>Pickup Time</th>
+                                            <th>Desc</th>
                                             <th>Image</th>
                                             <th>Edit</th>
                                             <th>Delete</th>
@@ -49,6 +49,10 @@
                                             <td>{{this.type}}</td>
                                             <td>{{this.quantity}}</td>
                                             <td>{{this.location}}</td>
+                                            <td>{{this.pdate}}</td>
+                                            <td>{{this.ptime}}</td>
+                                            <td>{{this.desc}}</td>
+
                                             <td><img src="/images/donate-images/{{this._id}}.png" alt=""
                                                     style="width: 3rem"></td>
                                             <td><a href="/doners/edit-donate/{{this._id}}" class="btn btn-primary"><i
@@ -70,25 +74,25 @@
 
             {{else}}
             <style>
-    body{
-        background-image:url("/images/banner1.jpeg");
-        background-repeat: no-repeat;
-        background-size: cover;
-    
+                body {
+                    background-image: url("/images/banner1.jpeg");
+                    background-repeat: no-repeat;
+                    background-size: cover;
 
-    }
-</style>
+
+                }
+            </style>
             <br><br>
             <div class="card p-5 mt-5 shadow">
                 <h3>Welcome To Food Donation Corner</h3>
                 <p>Join us in the mission to make a difference! Become a Food Donor and contribute to reducing food
                     waste. Your surplus food can nourish those in need, fostering a community of compassion and
                     sustainability. Contact us to make a positive impact today."</p>
-                    <h3 class="mt-4 mb-3">Who Are You?</h3>
+                <h3 class="mt-4 mb-3">Who Are You?</h3>
                 <div class=" justify-content-between">
                     <a href="/doners/signin" class="btn btn-primary w-25  mr-5">Food Doner</a>
                     <a href="/trusts/signin" class="btn btn-dark w-25">Charity Trust</a>
-                      <a href="/volunteers/signin" class="btn btn-danger w-25  mr-5">Volunteer</a>
+                    <a href="/volunteers/signin" class="btn btn-danger w-25  mr-5">Volunteer</a>
                 </div>
             </div>
 
@@ -126,10 +130,10 @@
                         <input type="text" class="form-control" name="type">
                     </div>
                     <div class="row">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Quantity</label>
-                                <input type="number" class="form-control" name="quantity">
-                            </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" name="quantity">
+                        </div>
                         {{!-- <div class="col-lg-6">
                         </div> --}}
                         {{!-- <div class="col-lg-6">
@@ -141,8 +145,20 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="" class="form-label">Location</label>
+                        <label for="" class="form-label">Pickup Place</label>
                         <input type="text" class="form-control" name="location">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Pickup Date</label>
+                        <input type="date" class="form-control" name="pdate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Pickup Time</label>
+                        <input type="time" class="form-control" name="ptime">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Desc About Food</label>
+                        <textarea type="text" class="form-control" name="desc"></textarea>
                     </div>
                     <div class="mb-5">
                         <label for="">Image</label>
@@ -157,4 +173,3 @@
         </div>
     </div>
 </div>
-

@@ -15,10 +15,75 @@ const verifySignedIn = (req, res, next) => {
 /* GET trusts listing. */
 router.get("/", verifySignedIn, async function (req, res, next) {
   let user = req.session.user;
-  donerHelper.getAllProducts().then((products) => {
-    res.render("trusts/home", { admin: false, user, layout: "trust", products });
-  })
+  products = await donerHelper.getAllProducts();
+  reqs = await donerHelper.getAllreqs();
+  res.render("trusts/home", { admin: false, user, layout: "trust", products, reqs });
 });
+
+
+
+///////ALL req/////////////////////                                         
+router.get("/all-reqs", verifySignedIn, function (req, res) {
+  let user = req.session.user;
+  donerHelper.getAllreqs().then((reqs) => {
+    res.render("trusts/all-reqs", { admin: true, layout: "", reqs, user });
+  });
+});
+
+///////ADD req/////////////////////                                         
+router.get("/add-req", verifySignedIn, function (req, res) {
+  let user = req.session.user;
+  res.render("trusts/home", { admin: true, layout: "", user });
+});
+
+///////ADD req/////////////////////                                         
+router.post("/add-req", function (req, res) {
+  donerHelper.addreq(req.body, (id) => {
+
+    res.redirect("/trusts/home");
+
+  });
+});
+
+///////EDIT req/////////////////////                                         
+router.get("/edit-req/:id", verifySignedIn, async function (req, res) {
+  let user = req.session.user;
+  let reqId = req.params.id;
+  let req = await donerHelper.getreqDetails(reqId);
+  console.log(req);
+  res.render("trusts/edit-req", { admin: true, layout: "", req, user });
+});
+
+///////EDIT req/////////////////////                                         
+router.post("/edit-req/:id", verifySignedIn, function (req, res) {
+  let reqId = req.params.id;
+  donerHelper.updatereq(reqId, req.body).then(() => {
+    if (req.files) {
+      let image = req.files.Image;
+      if (image) {
+        image.mv("./public/images/req-images/" + reqId + ".png");
+      }
+    }
+    res.redirect("/trusts/all-reqs");
+  });
+});
+
+///////DELETE req/////////////////////                                         
+router.get("/delete-req/:id", verifySignedIn, function (req, res) {
+  let reqId = req.params.id;
+  donerHelper.deletereq(reqId).then((response) => {
+    fs.unlinkSync("./public/images/req-images/" + reqId + ".png");
+    res.redirect("/trusts/all-reqs");
+  });
+});
+
+///////DELETE ALL req/////////////////////                                         
+router.get("/delete-all-reqs", verifySignedIn, function (req, res) {
+  donerHelper.deleteAllreqs().then(() => {
+    res.redirect("/trusts/all-reqs");
+  });
+});
+
 
 router.get("/home", verifySignedIn, async function (req, res, next) {
   let user = req.session.user;

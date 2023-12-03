@@ -6,6 +6,98 @@ const objectId = require("mongodb").ObjectID;
 module.exports = {
 
 
+  ///////ADD req/////////////////////                                         
+  addreq: (req, callback) => {
+    console.log(req);
+    req.Price = parseInt(req.Price);
+    db.get()
+      .collection(collections.REQ_COLLECTION)
+      .insertOne(req)
+      .then((data) => {
+        console.log(data);
+        callback(data.ops[0]._id);
+      });
+  },
+
+  ///////GET ALL req/////////////////////                                            
+  getAllreqs: () => {
+    return new Promise(async (resolve, reject) => {
+      let reqs = await db
+        .get()
+        .collection(collections.REQ_COLLECTION)
+        .find()
+        .toArray();
+      resolve(reqs);
+    });
+  },
+
+  ///////ADD req DETAILS/////////////////////                                            
+  getreqDetails: (reqId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.REQ_COLLECTION)
+        .findOne({
+          _id: objectId(reqId)
+        })
+        .then((response) => {
+          resolve(response);
+        });
+    });
+  },
+
+  ///////DELETE req/////////////////////                                            
+  deletereq: (reqId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.REQ_COLLECTION)
+        .removeOne({
+          _id: objectId(reqId)
+        })
+        .then((response) => {
+          console.log(response);
+          resolve(response);
+        });
+    });
+  },
+
+  ///////UPDATE req/////////////////////                                            
+  updatereq: (reqId, reqDetails) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.REQ_COLLECTION)
+        .updateOne(
+          {
+            _id: objectId(reqId)
+          },
+          {
+            $set: {
+              Name: reqDetails.Name,
+              Category: reqDetails.Category,
+              Price: reqDetails.Price,
+              Description: reqDetails.Description,
+            },
+          }
+        )
+        .then((response) => {
+          resolve();
+        });
+    });
+  },
+
+
+  ///////DELETE ALL req/////////////////////                                            
+  deleteAllreqs: () => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.REQ_COLLECTION)
+        .remove({})
+        .then(() => {
+          resolve();
+        });
+    });
+  },
+
+
   addToTrustCart: (productData, userId) => {
     return new Promise(async (resolve, reject) => {
       let orderObject = {

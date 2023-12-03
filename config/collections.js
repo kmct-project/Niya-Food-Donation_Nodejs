@@ -18,4 +18,6 @@ module.exports = {
     ORDER_COLLECTION: 'order',
     TRUST_CART: 'trust-cart',
     VOLUNTEER_CART: 'volunteer-cart',
+    REQ_COLLECTION: "req",
+
 }

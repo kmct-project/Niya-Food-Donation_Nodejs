@@ -71,16 +71,18 @@
     <section style="">
       <div class="container py-5">
         <h2 class="text-center mb-5">Buy Some Donated Foods</h2>
-
         <div class="row">
           {{#each products}}
           <div class="col-md-12 col-lg-4 mb-4 mb-lg-0">
             <div class="card">
 
               <div class="card-body">
+                <center>
+                  <img src="/images/donate-images/{{this._id}}.png" width="60%" class="" alt="Food Image" />
+                </center>
                 <div class="d-flex justify-content-between">
                   <p class="small"><a href="#!" class="text-muted">{{this.type}}</a></p>
-                  
+
                 </div>
 
                 <h6> {{this.name}}</h6>
@@ -90,13 +92,12 @@
                 </div>
                 <h6>Donated By {{this.donername}}</h6>
 
-                {{!-- <button onclick="ChooseThis('{{this._id}}')" class="add-to-cart-btn btn bttn btn-info mt-3">Choose This</button> --}}
-<button class="add-to-cart-btn btn bttn btn-info mt-3"
-        data-product-id="{{this._id}}"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal">
-  Choose This
-</button>
+                {{!-- <button onclick="ChooseThis('{{this._id}}')" class="add-to-cart-btn btn bttn btn-info mt-3">Choose
+                  This</button> --}}
+                <button class="add-to-cart-btn btn bttn btn-info mt-3" data-product-id="{{this._id}}"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Choose This
+                </button>
 
 
               </div>
@@ -106,9 +107,13 @@
           {{/each}}
 
 
-        </div>
+        </div><br><br>
+        <hr>
+        <a href="/trusts" class="btn btn-primary">Send a Request for Food</a>
       </div>
     </section>
+
+
   </div>
 
 
@@ -135,7 +140,7 @@
         <form id="addressForm" action="/trusts/accept-donation" method="POST" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="addressInput" class="form-label">Address</label>
-              <input type="hidden" id="productIdInputValue" name="productId" >
+            <input type="hidden" id="productIdInputValue" name="productId">
             <input type="text" class="form-control" id="addressInput" name="address" required>
           </div>
           <input type="hidden" id="selectedProductId" name="productId">
@@ -149,20 +154,20 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const chooseThisButtons = document.querySelectorAll('.add-to-cart-btn');
     const addressForm = document.getElementById('addressForm');
     const selectedProductIdInput = document.getElementById('selectedProductId');
 
     chooseThisButtons.forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', function () {
         const selectedProductId = this.getAttribute('data-product-id');
         selectedProductIdInput.value = selectedProductId;
       });
     });
 
     // Submit the form when Save button is clicked
-    addressForm.addEventListener('submit', function(event) {
+    addressForm.addEventListener('submit', function (event) {
       event.preventDefault();
 
       const productId = selectedProductIdInput.value;
@@ -185,7 +190,7 @@
 
 <script>
   function ChooseThis(productId) {
-      window.location.href = `/trusts/accept-donation/${productId}`;
+    window.location.href = `/trusts/accept-donation/${productId}`;
   }
 </script>
 
@@ -249,5 +254,3 @@
   });
 
 </script>
-
-

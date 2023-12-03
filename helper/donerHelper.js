@@ -82,8 +82,11 @@ module.exports = {
               name: productDetails.name,
               type: productDetails.type,
               quantity: productDetails.quantity,
-              Price: productDetails.Price,
               location: productDetails.location,
+              pdate: productDetails.pdate,
+              ptime: productDetails.ptime,
+              desc: productDetails.desc,
+
               status: 'active'
             },
           }

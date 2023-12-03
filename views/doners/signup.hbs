@@ -1,49 +1,146 @@
 <div class="row mx-auto mb-5">
     <div class="col-md-6 mx-auto">
         <div class="container mt-5">
-             <br><br>
-                    <div class="card p-5 shadow mb-4">
-            <h2 class="text-center">Doner Sign Up</h2>
-            <form action="/doners/signup" method="POST">
+            <br><br>
+            <div class="card p-5 shadow mb-4">
+                <h2 class="text-center">Doner Sign Up</h2>
+                <form action="/doners/signup" method="POST">
 
-                <div class="form-group mt-2">
-                    <label>Name of Organization</label>
-                    <input type="text" class="form-control" name="Orgname" placeholder="Enter Organization Name"
-                        required>
-                </div>
-                <div class="form-group mt-4">
-                    <label>Phone Number</label>
-                    <input type="number" class="form-control" name="Phone" placeholder="Enter Phone number" required>
-                </div>
+                    <div class="form-group mt-2">
+                        <label>Name of Organization</label>
+                        <input type="text" class="form-control" name="Orgname" placeholder="Enter Organization Name"
+                            required>
+                    </div>
+                    <div class="form-group mt-4">
+                        <label>Phone Number</label>
+                        <input type="number" class="form-control" name="Phone" placeholder="Enter Phone number"
+                            required>
+                    </div>
 
-                <div class="form-group mt-4">
-                    <label>Place</label>
+                    <div class="form-group mt-4">
+                        <label>Place</label>
 
-                    <select class="form-select" name="Place" aria-label="Default select example" required>
-                        <option selected disabled>Select</option>
-                        <option value="Calicut">Calicut</option>
-                    </select>
-                </div>
-                <div class="form-group mt-4">
-                    <label>Email</label>
-                    <input type="email" class="form-control" name="Email" placeholder="Enter Phone number" required>
-                </div>
-                <div class="form-group mt-4">
-                    <label>Address</label>
-                    <input type="text" class="form-control" name="Address" placeholder="Enter Phone number" required>
-                </div>
-                <div class="form-group mt-4">
-                    <label>Password</label>
-                    <input type="password" class="form-control" name="Password" placeholder="Password" required>
-                </div>
-                <div class="row">
-                    <a href="/doners/signin" class="mt-4 float-right">Already Have Account ?</a>
-                    <button type="submit" class="btn btn-primary mt-2">Sign Up</button>
-                <a href="/doners/" class="mt-4 text-center">Back To Home Page</a>
+                        <select class="form-select" name="Place" aria-label="Default select example" required>
+                            <option selected disabled>Select</option>
+                            <option value="Baluessery">Baluessery</option>
+                            <option value="Poonoor">Poonoor</option>
+                            <option value="Mukkam">Mukkam</option>
+                            <option value="Koduvally">Koduvally</option>
+                            <option value="Thamarassery">Thamarassery</option>
+                            <option value="Atholi, Kerala">Atholi, Kerala</option>
+                            <option value="Beypore">Beypore</option>
+                            <option value="Chakkalakkal">Chakkalakkal</option>
+                            <option value="Cheruvadi">Cheruvadi</option>
+                            <option value="Chittaripilakkal">Chittaripilakkal</option>
+                            <option value="Edacheri">Edacheri</option>
+                            <option value="Edathumkara">Edathumkara</option>
+                            <option value="Engapuzha">Engapuzha</option>
+                            <option value="Eranhikkal">Eranhikkal</option>
+                            <option value="Kadalundi">Kadalundi</option>
+                            <option value="Kadiyangad">Kadiyangad</option>
+                            <option value="Kakkodi">Kakkodi</option>
+                            <option value="Kakkur">Kakkur</option>
+                            <option value="Kalariyullathil">Kalariyullathil</option>
+                            <option value="Kanthalad">Kanthalad</option>
+                            <option value="Kappad">Kappad</option>
+                            <option value="Karaparamba">Karaparamba</option>
+                            <option value="Karassery">Karassery</option>
+                            <option value="Karthikappalli">Karthikappalli</option>
+                            <option value="Karuvanthuruthy">Karuvanthuruthy</option>
+                            <option value="Katameri">Katameri</option>
+                            <option value="Kattangal">Kattangal</option>
+                            <option value="Kayakkodi">Kayakkodi</option>
+                            <option value="Kayalam">Kayalam</option>
+                            <option value="Kedavoor">Kedavoor</option>
+                            <option value="Kedavur">Kedavur</option>
+                            <option value="Kinalur">Kinalur</option>
+                            <option value="Kizhakkoth">Kizhakkoth</option>
+                            <option value="Kodiyathur">Kodiyathur</option>
+                            <option value="Kokkallur">Kokkallur</option>
+                            <option value="Kolikkal">Kolikkal</option>
+                            <option value="Koodathayi">Koodathayi</option>
+                            <option value="Koolimadu">Koolimadu</option>
+                            <option value="Kottappally">Kottappally</option>
+                            <option value="Kumaranallur, Kozhikode">Kumaranallur, Kozhikode</option>
+                            <option value="Kunnummal">Kunnummal</option>
+                            <option value="Kuttiady">Kuttiady</option>
+                            <option value="Kuttikkattoor and Velliparamba">Kuttikkattoor and Velliparamba</option>
+                            <option value="Maikave">Maikave</option>
+                            <option value="Makkada">Makkada</option>
+                            <option value="Manashery">Manashery</option>
+                            <option value="Maniyur">Maniyur</option>
+                            <option value="Markaz Knowledge City">Markaz Knowledge City</option>
+                            <option value="Muchukunnu">Muchukunnu</option>
+                            <option value="Mukkali, Kozhikode">Mukkali, Kozhikode</option>
+                            <option value="Muthappan Kavu">Muthappan Kavu</option>
+                            <option value="Muttanchery">Muttanchery</option>
+                            <option value="Muyippoth">Muyippoth</option>
+                            <option value="Nadammal Poyil">Nadammal Poyil</option>
+                            <option value="Nambrathkara">Nambrathkara</option>
+                            <option value="Narayamkulam">Narayamkulam</option>
+                            <option value="Narippatta">Narippatta</option>
+                            <option value="Narippatta Grama Panchayat">Narippatta Grama Panchayat</option>
+                            <option value="Neroth, Kozhikode">Neroth, Kozhikode</option>
+                            <option value="Onchiam">Onchiam</option>
+                            <option value="Paimpalasseri">Paimpalasseri</option>
+                            <option value="Palangad">Palangad</option>
+                            <option value="Pallikkara, Payyoli">Pallikkara, Payyoli</option>
+                            <option value="Parambil Bazar">Parambil Bazar</option>
+                            <option value="Paruthippara">Paruthippara</option>
+                            <option value="Payyanakkal">Payyanakkal</option>
+                            <option value="Pazhur">Pazhur</option>
+                            <option value="Peringolam">Peringolam</option>
+                            <option value="Perumanna, Kozhikode">Perumanna, Kozhikode</option>
+                            <option value="Perumugham">Perumugham</option>
+                            <option value="Peruvayal">Peruvayal</option>
+                            <option value="Poolacode">Poolacode</option>
+                            <option value="Poonoor">Poonoor</option>
+                            <option value="Poovaranthode">Poovaranthode</option>
+                            <option value="Pottassery-I">Pottassery-I</option>
+                            <option value="Puliyavu">Puliyavu</option>
+                            <option value="Pulloorampara">Pulloorampara</option>
+                            <option value="Purameri">Purameri</option>
+                            <option value="Puttad">Puttad</option>
+                            <option value="Raroth">Raroth</option>
+                            <option value="Thalakkulathur">Thalakkulathur</option>
+                            <option value="Thazhecode, Kozhikode district">Thazhecode, Kozhikode district</option>
+                            <option value="Thinoor">Thinoor</option>
+                            <option value="Thiruvangoor">Thiruvangoor</option>
+                            <option value="Thodannur">Thodannur</option>
+                            <option value="Thuneri">Thuneri</option>
+                            <option value="Thuruthyad">Thuruthyad</option>
+                            <option value="Uralloor">Uralloor</option>
+                            <option value="Valayam">Valayam</option>
+                            <option value="Valayanad">Valayanad</option>
+                            <option value="Valiacode">Valiacode</option>
+                            <option value="Vanimal">Vanimal</option>
+                            <option value="Vattapparapoyil">Vattapparapoyil</option>
+                            <option value="Vattoli Bazaar">Vattoli Bazaar</option>
+                            <option value="Vavad, India">Vavad, India</option>
+                            <option value="Velom">Velom</option>
+                            <option value="Vilangad">Vilangad</option>
+                        </select>
+                    </div>
+                    <div class="form-group mt-4">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="Email" placeholder="Enter Email number" required>
+                    </div>
+                    <div class="form-group mt-4">
+                        <label>Address</label>
+                        <input type="text" class="form-control" name="Address" placeholder="Enter Address" required>
+                    </div>
+                    <div class="form-group mt-4">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="Password" placeholder="Password" required>
+                    </div>
+                    <div class="row">
+                        <a href="/doners/signin" class="mt-4 float-right">Already Have Account ?</a>
+                        <button type="submit" class="btn btn-primary mt-2">Sign Up</button>
+                        <a href="/doners/" class="mt-4 text-center">Back To Home Page</a>
 
-                </div>
-            </form>
-        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

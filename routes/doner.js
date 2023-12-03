@@ -39,6 +39,12 @@ router.get("/home", async function (req, res, next) {
 //   });
 // });
 
+
+router.get("/welcome", verifySignedIn, function (req, res) {
+  let doner = req.session.doner;
+  res.render("doners/welcome", { admin: false, layout: "doner", doner });
+});
+
 ///////ADD donate/////////////////////                                         
 router.get("/add-product", verifySignedIn, function (req, res) {
   let doner = req.session.doner;
@@ -107,7 +113,7 @@ router.get("/delete-all-products", verifySignedIn, function (req, res) {
 
 router.get("/signup", function (req, res) {
   if (req.session.signedIn) {
-    res.redirect("/doners/home");
+    res.redirect("/doners/welcome");
   } else {
     res.render("doners/signup", { admin: false, layout: "doner" });
   }
@@ -117,13 +123,13 @@ router.post("/signup", function (req, res) {
   donerHelper.doSignup(req.body).then((response) => {
     req.session.signedIn = true;
     req.session.doner = response;
-    res.redirect("/doners/home");
+    res.redirect("/doners/welcome");
   });
 });
 
 router.get("/signin", function (req, res) {
   if (req.session.signedIn) {
-    res.redirect("/doners/home");
+    res.redirect("/doners/welcome");
   } else {
     res.render("doners/signin", {
       admin: false,
@@ -139,7 +145,7 @@ router.post("/signin", function (req, res) {
     if (response.status) {
       req.session.signedIn = true;
       req.session.doner = response.doner;
-      res.redirect("/doners/home");
+      res.redirect("/doners/welcome");
     } else {
       req.session.signInErr = "Invalid Email/Password";
       res.redirect("/doners/signin");
@@ -163,7 +169,7 @@ router.get("/orders", verifySignedIn, function (req, res) {
 router.get("/signout", function (req, res) {
   req.session.signedIn = false;
   req.session.doner = null;
-  res.redirect("/doners/home");
+  res.redirect("/doners/signin");
 });
 
 module.exports = router;
