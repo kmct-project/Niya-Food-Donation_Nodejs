@@ -7,36 +7,33 @@
                     <thead class="table-dark">
                         <tr class="align-middle">
                             <th scope="col">Date</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Pincode</th>
-                            <th scope="col">Mobile</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Payment</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Donated By</th>
+                            <th scope="col">Type</th>
+                             <th scope="col">Address</th>
                             <th scope="col">Cancel</th>
-                            <th scope="col">View Products</th>
+                            {{!-- <th scope="col">View Products</th> --}}
                         </tr>
                     </thead>
 
                     <tbody>
                         {{#each orders}}
                         <tr class="align-middle">
-                            <td>{{this.orderObject.date}}</td>
-                            <td>{{this.orderObject.deliveryDetails.address}}</td>
-                            <td>{{this.orderObject.deliveryDetails.pincode}}</td>
-                            <td>{{this.orderObject.deliveryDetails.mobile}}</td>
-                            <td>{{this.orderObject.totalAmount}}</td>
-                            <td>{{this.orderObject.paymentMethod}}</td>
-                            <td>{{this.orderObject.status}}</td>
+                            <td>{{this.date}}</td>
+                            <td>{{this.productDetails.name}}</td>
+                            <td>{{this.productDetails.donername}}</td>
+                            <td>{{this.productDetails.type}}</td>
+                            <td>{{this.productDetails.location}}</td>
+                  
                             <td>
-                                <a href="/cancel-order/{{this._id}}"
+                                <a href="/trusts/cancel-order/{{this._id}}"
                                     onclick="return confirm('Are You Sure to Cancel This Order ?')"
                                     class="btn btn-danger">Cancel</a>
                             </td>
-                            <td>
+                            {{!-- <td>
                                 <a href="/view-ordered-products/{{this._id}}" class="btn btn-primary"><i
                                         class="bi bi-eye-fill"></i></a>
-                            </td>
+                            </td> --}}
                         </tr>
                         {{/each}}
                     </tbody>
@@ -47,13 +44,10 @@
     {{else}}
     <div class="container mt-5">
         <div class="alert alert-secondary" role="alert">
-            <h4 class="alert-heading">You Have Ordered Nothing!</h4>
+            <h4 class="alert-heading">You Don't Have Any Selected Donations</h4>
             <hr>
-            <p class="mb-0">You need to Order soemthing from the Shopping Cart/Cart.</p>
         </div>
-        <div class="row">
-            <a href="/" class="btn btn-primary">Add Products</a>
-        </div>
+    
     </div>
     {{/if}}
 </section>

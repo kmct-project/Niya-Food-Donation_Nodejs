@@ -49,7 +49,7 @@ router.get("/cart", verifySignedIn, async function (req, res) {
 router.get("/accept-donation/:id", verifySignedIn, function (req, res) {
   let productId = req.params.id;
   let userId = req.session.user._id;
-  userHelper.addToTrustCart(productId, userId).then(() => {
+  trustHelper.addToTrustCart(productId, userId).then(() => {
     res.redirect("/trusts/home");
   });
 });
@@ -67,10 +67,12 @@ router.post("/remove-cart-product", (req, res, next) => {
 router.get("/orders", verifySignedIn, async function (req, res) {
   let user = req.session.user;
   let userId = req.session.user._id;
-  let cartCount = await userHelper.getCartCount(userId);
-  let orders = await userHelper.getUserOrder(userId);
-  res.render("users/orders", { admin: false, user, cartCount, orders });
+  let orders = await trustHelper.getTrustCartById(userId);
+  res.render("trusts/orders", { admin: false, user, orders });
 });
+
+
+
 
 router.get(
   "/view-ordered-products/:id",
@@ -94,8 +96,8 @@ router.get(
 
 router.get("/cancel-order/:id", verifySignedIn, function (req, res) {
   let orderId = req.params.id;
-  userHelper.cancelOrder(orderId).then(() => {
-    res.redirect("/orders");
+  trustHelper.removeFromTrustCart(orderId).then(() => {
+    res.redirect("/trusts/orders");
   });
 });
 
