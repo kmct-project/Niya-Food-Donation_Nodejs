@@ -22,7 +22,8 @@ router.get("/cuisinereq", verifySignedIn, function (req, res, next) {
   res.render("foodspots/cuisinereq", { foodspot: true, layout: 'food', foodspots });
 });
 
-router.post("/cuisinereq", verifySignedIn,function (req, res) {
+router.post("/cuisinereq", verifySignedIn, function (req, res) {
+  let foodspots = req.session.foodspot;
   foodspotHelper.addcuisinereq(req.body, (id) => {
     const successMessage = "Your request was submitted successfully";
 
@@ -31,7 +32,7 @@ router.post("/cuisinereq", verifySignedIn,function (req, res) {
           const message = "${successMessage}";
           const confirmation = confirm(message);
           if (confirmation) {
-              window.location.href = "/foodspots/all-menus"; // Redirect to the home page
+              window.location.href = "/foodspots/menus?id=${foodspots._id}"; 
           }
       </script>`);
   });
@@ -133,16 +134,16 @@ router.get("/signout", function (req, res) {
 
 
 ///////ALL menu/////////////////////                                         
-router.get("/all-menus", verifySignedIn, function (req, res) {
-  let foodspots = req.session.foodspot;
-  foodspotHelper.getAllmenus().then((menus) => {
-    res.render("foodspots/all-menus", { foodspot: true, layout: "food", menus, foodspots });
-  });
-});
+// router.get("/all-menus", verifySignedIn, function (req, res) {
+//   let foodspots = req.session.foodspot;
+//   foodspotHelper.getAllmenus().then((menus) => {
+//     res.render("foodspots/all-menus", { foodspot: true, layout: "food", menus, foodspots });
+//   });
+// });
 
 router.get("/menus", verifySignedIn, function (req, res) {
   let foodspots = req.session.foodspot;
-  let id=req.query.id;
+  let id = req.query.id;
   foodspotHelper.getmenusById(id).then((menus) => {
     res.render("foodspots/all-menus", { foodspot: true, layout: "food", menus, foodspots });
   });
@@ -158,7 +159,7 @@ router.get("/add-menu", verifySignedIn, async function (req, res) {
 ///////ADD menu/////////////////////                                         
 router.post("/add-menu", verifySignedIn, function (req, res) {
   let foodspots = req.session.foodspot;
-  req.body.spot_id =foodspots._id;
+  req.body.spot_id = foodspots._id;
   foodspotHelper.addmenu(req.body, (id) => {
     res.redirect(`/foodspots/menus?id=${foodspots._id}`);
   });
@@ -201,14 +202,12 @@ router.get("/delete-menu/:id", verifySignedIn, function (req, res) {
   });
 });
 
-///////DELETE ALL menu/////////////////////                                         
-router.get("/delete-all-menus", verifySignedIn, function (req, res) {
-  foodspotHelper.deleteAllmenus().then(() => {
-    res.redirect("/foodspots/all-menus");
-  });
-});
-
-
+// ///////DELETE ALL menu/////////////////////                                         
+// router.get("/delete-all-menus", verifySignedIn, function (req, res) {
+//   foodspotHelper.deleteAllmenus().then(() => {
+//     res.redirect("/foodspots/all-menus");
+//   });
+// });
 
 
 ///////ALL time/////////////////////                                         
@@ -234,7 +233,7 @@ router.get("/add-time", verifySignedIn, function (req, res) {
 ///////ADD Time/////////////////////                                         
 router.post("/add-time", function (req, res) {
   let foodspots = req.session.foodspot;
-  req.body.spot_id =foodspots._id;
+  req.body.spot_id = foodspots._id;
   foodspotHelper.addtime(req.body, (id) => {
     res.redirect(`/foodspots/times?id=${foodspots._id}`);
 

@@ -1,72 +1,69 @@
-var db = require("../config/connection");
-var collections = require("../config/collections");
-var bcrypt = require("bcrypt");
-const objectId = require("mongodb").ObjectID;
+var db = require('../config/connection');
+var collections = require('../config/collections');
+var bcrypt = require('bcrypt');
+const objectId = require('mongodb').ObjectID;
 
 module.exports = {
+  //////////////////ADMIN SIGNUP FUNCTION/////////////////////////////
+  doSignup: (adminData) => {
+    return new Promise(async (resolve, reject) => {
+      if (adminData.Code == 'admin123') {
+        adminData.Password = await bcrypt.hash(adminData.Password, 10);
+        db.get()
+          .collection(collections.ADMIN_COLLECTION)
+          .insertOne(adminData)
+          .then((data) => {
+            resolve(data.ops[0]);
+          });
+      } else {
+        resolve({ status: false });
+      }
+    });
+  },
 
-//////////////////ADMIN SIGNUP FUNCTION/////////////////////////////
-doSignup: (adminData) => {
-  return new Promise(async (resolve, reject) => {
-    if (adminData.Code == "admin123") {
-      adminData.Password = await bcrypt.hash(adminData.Password, 10);
-      db.get()
+  //////////////////////ADMIN SIGNIN FUNCTION//////////////////////////
+  doSignin: (adminData) => {
+    return new Promise(async (resolve, reject) => {
+      let response = {};
+      let admin = await db
+        .get()
         .collection(collections.ADMIN_COLLECTION)
-        .insertOne(adminData)
-        .then((data) => {
-          resolve(data.ops[0]);
+        .findOne({ Email: adminData.Email });
+      if (admin) {
+        bcrypt.compare(adminData.Password, admin.Password).then((status) => {
+          if (status) {
+            console.log('Login Success');
+            response.admin = admin;
+            response.status = true;
+            resolve(response);
+          } else {
+            console.log('Login Failed');
+            resolve({ status: false });
+          }
         });
-    } else {
-      resolve({ status: false });
-    }
-  });
-},
+      } else {
+        console.log('Login Failed');
+        resolve({ status: false });
+      }
+    });
+  },
+  ////////////////////////////////////////////////////
 
-//////////////////////ADMIN SIGNIN FUNCTION//////////////////////////
-doSignin: (adminData) => {
-  return new Promise(async (resolve, reject) => {
-    let response = {};
-    let admin = await db
-      .get()
-      .collection(collections.ADMIN_COLLECTION)
-      .findOne({ Email: adminData.Email });
-    if (admin) {
-      bcrypt.compare(adminData.Password, admin.Password).then((status) => {
-        if (status) {
-          console.log("Login Success");
-          response.admin = admin;
-          response.status = true;
-          resolve(response);
-        } else {
-          console.log("Login Failed");
-          resolve({ status: false });
-        }
-      });
-    } else {
-      console.log("Login Failed");
-      resolve({ status: false });
-    }
-  });
-},
-////////////////////////////////////////////////////
+  ///////GET ALL menu/////////////////////
+  getAllcuisinereqs: () => {
+    return new Promise(async (resolve, reject) => {
+      let cuisinereqs = await db
+        .get()
+        .collection(collections.REQ_COLLECTION)
+        .find()
+        .toArray();
+      resolve(cuisinereqs);
+    });
+  },
 
-///////GET ALL menu/////////////////////                                            
-getAllcuisinereqs: () => {
-  return new Promise(async (resolve, reject) => {
-    let cuisinereqs = await db
-    .get()
-    .collection(collections.REQ_COLLECTION)
-    .find()
-    .toArray();
-resolve(cuisinereqs);
-  });
-},
-
-
-
-////////CATEGORY FUNCTION CRUD///////////////////
-//                                             //
-////////ADD FOOD CATEGORY TO DB FUNCTION/////////
+  ////////CATEGORY FUNCTION CRUD///////////////////
+  //                                             //
+  ////////ADD FOOD CATEGORY TO DB FUNCTION/////////
   addfcat: (fcat, callback) => {
     console.log(fcat);
     db.get()
@@ -78,7 +75,7 @@ resolve(cuisinereqs);
       });
   },
 
-////////GET ALL CATEGORIES FROM DB FUNCTION/////////
+  ////////GET ALL CATEGORIES FROM DB FUNCTION/////////
   getfcats: () => {
     return new Promise(async (resolve, reject) => {
       let fcats = await db
@@ -102,7 +99,7 @@ resolve(cuisinereqs);
     });
   },
 
-////////DELETE A CATEGORY FROM DB FUNCTION/////////
+  ////////DELETE A CATEGORY FROM DB FUNCTION/////////
   deletefcat: (fcatId) => {
     return new Promise((resolve, reject) => {
       db.get()
@@ -115,7 +112,7 @@ resolve(cuisinereqs);
     });
   },
 
-////////UPDATE A CATEGORY FROM DB FUNCTION/////////
+  ////////UPDATE A CATEGORY FROM DB FUNCTION/////////
   updatefcat: (fcatId, fcatDetails) => {
     return new Promise((resolve, reject) => {
       db.get()
@@ -133,11 +130,11 @@ resolve(cuisinereqs);
         });
     });
   },
-//////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////
 
-////////CALLING OTHER COLLECTION TO ADMIN FUNCTION ///////////////////
-//                                           
-////////GET ALL USERS FROM DB FUNCTION/////////
+  ////////CALLING OTHER COLLECTION TO ADMIN FUNCTION ///////////////////
+  //
+  ////////GET ALL USERS FROM DB FUNCTION/////////
   getAllUsers: () => {
     return new Promise(async (resolve, reject) => {
       let users = await db
@@ -149,7 +146,7 @@ resolve(cuisinereqs);
     });
   },
 
-////////GET ALL DONERS FROM DB FUNCTION/////////
+  ////////GET ALL DONERS FROM DB FUNCTION/////////
   getalldoners: () => {
     return new Promise(async (resolve, reject) => {
       let doners = await db
@@ -161,7 +158,7 @@ resolve(cuisinereqs);
     });
   },
 
-////////GET ALL VOLUNTEERS FROM DB FUNCTION/////////
+  ////////GET ALL VOLUNTEERS FROM DB FUNCTION/////////
   getallvolunteers: () => {
     return new Promise(async (resolve, reject) => {
       let volunteers = await db
@@ -173,7 +170,7 @@ resolve(cuisinereqs);
     });
   },
 
-////////GET ALL CHARITIES FROM DB FUNCTION///////// 
+  ////////GET ALL CHARITIES FROM DB FUNCTION/////////
   getalltrusts: () => {
     return new Promise(async (resolve, reject) => {
       let trusts = await db
@@ -185,7 +182,7 @@ resolve(cuisinereqs);
     });
   },
 
-////////GET ALL FOODSPOT FROM DB FUNCTION/////////
+  ////////GET ALL FOODSPOT FROM DB FUNCTION/////////
   getallfoodspots: () => {
     return new Promise(async (resolve, reject) => {
       let foodspots = await db
@@ -196,11 +193,11 @@ resolve(cuisinereqs);
       resolve(foodspots);
     });
   },
-////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
 
-////////FUNCTIONS TO REMOVE COLLECTION FROM DB/////////
-//    
-////////REMOVE FOODSPOT FROM DB FUNCTION/////////
+  ////////FUNCTIONS TO REMOVE COLLECTION FROM DB/////////
+  //
+  ////////REMOVE FOODSPOT FROM DB FUNCTION/////////
   removefoodspot: (foodspotId) => {
     return new Promise((resolve, reject) => {
       db.get()
@@ -212,7 +209,7 @@ resolve(cuisinereqs);
     });
   },
 
-////////REMOVE CHARITIE FROM DB FUNCTION/////////
+  ////////REMOVE CHARITIE FROM DB FUNCTION/////////
   removetrust: (trustId) => {
     return new Promise((resolve, reject) => {
       db.get()
@@ -224,7 +221,7 @@ resolve(cuisinereqs);
     });
   },
 
-////////REMOVE VOLUNTEER FROM DB FUNCTION/////////
+  ////////REMOVE VOLUNTEER FROM DB FUNCTION/////////
   removevolunteer: (volunteerId) => {
     return new Promise((resolve, reject) => {
       db.get()
@@ -236,7 +233,7 @@ resolve(cuisinereqs);
     });
   },
 
-////////REMOVE USER FROM DB FUNCTION/////////
+  ////////REMOVE USER FROM DB FUNCTION/////////
   removeUser: (userId) => {
     return new Promise((resolve, reject) => {
       db.get()
@@ -248,7 +245,7 @@ resolve(cuisinereqs);
     });
   },
 
-////////REMOVE DONER FROM DB FUNCTION/////////
+  ////////REMOVE DONER FROM DB FUNCTION/////////
   removedoner: (donerId) => {
     return new Promise((resolve, reject) => {
       db.get()
@@ -260,7 +257,5 @@ resolve(cuisinereqs);
     });
   },
 
-///////////////////////////////////////////////
-
-
+  ///////////////////////////////////////////////
 };
