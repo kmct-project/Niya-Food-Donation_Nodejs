@@ -26,10 +26,10 @@
                                             <th>Item Type</th>
                                             <th>Quantity</th>
                                             <th>Location</th>
-                                            <th>Image</th>
+                                          
                                             <th>Donated By</th>
                                             <th>Trust</th>
-
+                                            <th>Destination</th>
                                             {{!-- <th>Edit</th>
                                             <th>Delete</th> --}}
 
@@ -43,12 +43,11 @@
                                             <td>{{this.productDetails.type}}</td>
                                           <td>{{this.productDetails.quantity}}</td>
                                           <td>{{this.productDetails.location}}</td>
+                                  
 
-
-                                            <td><img src="/images/donate-images/{{this.productDetails._id}}.png" alt=""
-                                                    style="width: 3rem"></td>
                                             <td>{{this.productDetails.donername}}</td>
                                             <td>{{this.trustDetails.Orgname}}</td>
+                                                    <td>{{this.address}}</td>
                                        <td>            <button onclick="accept('{{this._id}}')" class="add-to-cart-btn btn btn-info">Accept</button>
 </td>
 
