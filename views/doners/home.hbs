@@ -34,7 +34,6 @@
                                             <th>Item Name</th>
                                             <th>Item Type</th>
                                             <th>Quantity</th>
-                                            <th>Price</th>
                                             <th>Location</th>
                                             <th>Image</th>
                                             <th>Edit</th>
@@ -49,7 +48,6 @@
                                             <td>{{this.name}}</td>
                                             <td>{{this.type}}</td>
                                             <td>{{this.quantity}}</td>
-                                            <td>{{this.Price}}</td>
                                             <td>{{this.location}}</td>
                                             <td><img src="/images/donate-images/{{this._id}}.png" alt=""
                                                     style="width: 3rem"></td>
@@ -128,18 +126,18 @@
                         <input type="text" class="form-control" name="type">
                     </div>
                     <div class="row">
-                        <div class="col-lg-6">
                             <div class="mb-3">
                                 <label for="" class="form-label">Quantity</label>
                                 <input type="number" class="form-control" name="quantity">
                             </div>
-                        </div>
-                        <div class="col-lg-6">
+                        {{!-- <div class="col-lg-6">
+                        </div> --}}
+                        {{!-- <div class="col-lg-6">
                             <div class="mb-3">
                                 <label for="" class="form-label">Price</label>
                                 <input type="number" class="form-control" name="Price">
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="mb-3">
