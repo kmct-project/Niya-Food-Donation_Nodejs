@@ -54,6 +54,15 @@ router.get("/accept-donation/:id", verifySignedIn, function (req, res) {
   });
 });
 
+router.post("/accept-donation", verifySignedIn, function (req, res) {
+  let productData = { productId: Array.isArray(req.body.productId) ? req.body.productId[0] : req.body.productId, address: req.body.address };
+  let userId = req.session.user._id;
+  trustHelper.addToTrustCart(productData, userId).then(() => {
+    res.redirect("/trusts/home");
+  });
+});
+
+
 
 router.post("/remove-cart-product", (req, res, next) => {
   userHelper.removeCartProduct(req.body).then((response) => {

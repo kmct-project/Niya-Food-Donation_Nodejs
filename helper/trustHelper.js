@@ -6,10 +6,11 @@ const objectId = require("mongodb").ObjectID;
 module.exports = {
 
 
-  addToTrustCart: (productId, userId) => {
+  addToTrustCart: (productData, userId) => {
     return new Promise(async (resolve, reject) => {
       let orderObject = {
-        productId: productId,
+        productId: productData.productId,
+        address: productData.address,
         date: new Date(),
         trust_id: userId,
         status: 'active'
@@ -19,7 +20,7 @@ module.exports = {
         await db.get().collection(collections.TRUST_CART).insertOne(orderObject);
 
         await db.get().collection(collections.PRODUCTS_COLLECTION).updateOne(
-          { _id: objectId(productId) },
+          { _id: objectId(productData.productId) },
           { $set: { status: 'inactive' } }
         );
 

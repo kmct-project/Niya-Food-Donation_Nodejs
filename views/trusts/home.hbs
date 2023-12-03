@@ -77,24 +77,27 @@
           <div class="col-md-12 col-lg-4 mb-4 mb-lg-0">
             <div class="card">
 
-              <img src="/images/donate-images/{{this._id}}.png" class="card-img-top" alt="Laptop" />
               <div class="card-body">
                 <div class="d-flex justify-content-between">
                   <p class="small"><a href="#!" class="text-muted">{{this.type}}</a></p>
+                  
                 </div>
 
-                <div class="d-flex justify-content-between mb-3">
-                  <h5 class="mb-0">{{this.name}}</h5>
-                  <h5 class="text-dark mb-0">Rs.{{this.Price}}/-</h5>
-                </div>
-
+                <h6> {{this.name}}</h6>
                 <div class="d-flex justify-content-between mb-2">
                   <p class="text-muted mb-0">Available For <span class="fw-bold">{{this.quantity}}</span> Heads</p>
 
                 </div>
                 <h6>Donated By {{this.donername}}</h6>
 
-                <button onclick="ChooseThis('{{this._id}}')" class="add-to-cart-btn btn bttn btn-info mt-3">Choose This</button>
+                {{!-- <button onclick="ChooseThis('{{this._id}}')" class="add-to-cart-btn btn bttn btn-info mt-3">Choose This</button> --}}
+<button class="add-to-cart-btn btn bttn btn-info mt-3"
+        data-product-id="{{this._id}}"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal">
+  Choose This
+</button>
+
 
               </div>
             </div>
@@ -120,55 +123,64 @@
 
 
 
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Enter Address</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="/trusts/add-trustreq" enctype="multipart/form-data" method="POST">
+        <form id="addressForm" action="/trusts/accept-donation" method="POST" enctype="multipart/form-data">
           <div class="mb-3">
-            <label for="" class="form-label">Item Name</label>
-            <input type="text" class="form-control" name="name" required>
+            <label for="addressInput" class="form-label">Address</label>
+              <input type="hidden" id="productIdInputValue" name="productId" >
+            <input type="text" class="form-control" id="addressInput" name="address" required>
           </div>
+          <input type="hidden" id="selectedProductId" name="productId">
 
-          <div class="mb-3">
-            <label for="" class="form-label">Item Type</label>
-            <input type="text" class="form-control" name="type" required>
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="mb-3">
-                <label for="" class="form-label">Quantity</label>
-                <input type="number" class="form-control" name="quantity" required>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="mb-3">
-                <label for="" class="form-label">Price</label>
-                <input type="number" class="form-control" name="Price" required>
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="" class="form-label">Your Location</label>
-            <input type="text" class="form-control" name="location" required>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Send Request</button>
+          <button type="submit" class="btn btn-primary">Save</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
         </form>
       </div>
-
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const chooseThisButtons = document.querySelectorAll('.add-to-cart-btn');
+    const addressForm = document.getElementById('addressForm');
+    const selectedProductIdInput = document.getElementById('selectedProductId');
+
+    chooseThisButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const selectedProductId = this.getAttribute('data-product-id');
+        selectedProductIdInput.value = selectedProductId;
+      });
+    });
+
+    // Submit the form when Save button is clicked
+    addressForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const productId = selectedProductIdInput.value;
+      const address = document.getElementById('addressInput').value;
+
+      // Set values in the hidden form
+      document.getElementById('productIdInputValue').value = productId; // Change this line
+
+      // Submit the form
+      document.getElementById('addressForm').submit();
+
+      // Close the modal
+      const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+      modal.hide();
+    });
+  });
+</script>
+
 
 
 <script>
@@ -237,3 +249,5 @@
   });
 
 </script>
+
+

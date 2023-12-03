@@ -147,6 +147,19 @@ router.post("/signin", function (req, res) {
   });
 });
 
+
+
+router.get("/orders", verifySignedIn, function (req, res) {
+  let doner = req.session.doner;
+  donerHelper.getAllOrders(doner._id).then((orders) => {
+    res.render("doners/orders", { orders });
+  });
+});
+
+
+
+
+
 router.get("/signout", function (req, res) {
   req.session.signedIn = false;
   req.session.doner = null;

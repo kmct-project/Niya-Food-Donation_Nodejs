@@ -151,5 +151,60 @@ module.exports = {
     });
   },
 
+  getAllOrders: async (doner_id) => {
+    try {
+      // Step 1: Find Products by DonatedBy ID in Products Collection
+      const donatedProducts = await db.get().collection(collections.PRODUCTS_COLLECTION).find({ donatedBy: doner_id }).toArray();
+
+      // Step 2: Fetch all product IDs for efficient lookup
+      const productIds = donatedProducts.map(product => product._id.toString());
+
+      // Step 3: Find Matching Trust Cart Entries for all products at once
+      const trustCartData = await db.get().collection(collections.TRUST_CART).find({
+        productId: { $in: productIds },
+        status: 'inactive'
+      }).toArray();
+
+      // Step 4: Create a mapping of product IDs to Trust Cart entries for quick lookup
+      const trustCartMap = trustCartData.reduce((acc, entry) => {
+        acc[entry.productId] = entry;
+        return acc;
+      }, {});
+
+      // Step 5: Fetch Trust Details for all Trust Cart entries
+      const trustDetails = await Promise.all(trustCartData.map(async (trustCartEntry) => {
+        if (trustCartEntry) {
+          return await db.get().collection(collections.TRUSTS_COLLECTION).findOne({
+            _id: objectId(trustCartEntry.trust_id)
+          });
+        } else {
+          return null; // Handle as needed for entries without Trust Cart matches
+        }
+      }));
+
+      // Step 6: Combine the data into a final result
+      const orders = donatedProducts.map((product) => {
+        const productIdStr = product._id.toString();
+        const trustCartEntry = trustCartMap[productIdStr] || null;
+
+        // Check if trustCartEntry exists before accessing its properties
+        const tempTrustDetails = trustDetails.find(details => details && details._id.toString() === (trustCartEntry?.trust_id || null)) || null;
+
+        return {
+          product: product,
+          trustCart: trustCartEntry,
+          trustDetails: tempTrustDetails,
+        };
+      });
+
+      return orders;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+
+
+
 
 };
