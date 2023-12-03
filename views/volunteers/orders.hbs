@@ -1,0 +1,44 @@
+<section>
+    {{#if orders}}
+    <div class="container my-5">
+        <div class="card p-4 shadow">
+            <div class="table-responsive table-bordered">
+                <table class="table" id="table">
+                    <thead class="table-dark">
+                        <tr class="align-middle">
+                            <th scope="col">Date</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Donated By</th>
+                            <th scope="col">Trust</th>
+                            <th scope="col">Type</th>
+                             <th scope="col">Address</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {{#each orders}}
+                        <tr class="align-middle">
+                            <td>{{this.volunteerCart.date}}</td>
+                            <td>{{this.productDetails.name}}</td>
+                            <td>{{this.productDetails.donername}}</td>
+                            <td>{{this.trustUserDetails.Orgname}}</td>
+
+                            <td>{{this.productDetails.type}}</td>
+                            <td>{{this.productDetails.location}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="container mt-5">
+        <div class="alert alert-secondary" role="alert">
+            <h4 class="alert-heading">You Don't Have Any Selected Donations</h4>
+            <hr>
+        </div>
+    
+    </div>
+    {{/if}}
+</section>

@@ -3,19 +3,13 @@
         <center>
             {{#if volunteering}}
             <h5>Hi {{volunteering.Name}}, Welcome</h5>
-
             <div class="page-wrapper mt-5">
                 <div class="page-breadcrumb">
                     <div class="row">
                         <div class="col-lg-16 d-flex no-block ">
                             <h4 class="page-title">Details of Donations</h4><br>
                         </div>
-                        {{!-- <div class="col-lg-16 d-flex no-block ">
-                            <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                Send Request For Food
-                            </button>
-                        </div> --}}
+            
                     </div>
 
                 </div>
@@ -31,10 +25,11 @@
                                             <th>Item Name</th>
                                             <th>Item Type</th>
                                             <th>Quantity</th>
-                                            <th>Price</th>
                                             <th>Location</th>
                                             <th>Image</th>
                                             <th>Donated By</th>
+                                            <th>Trust</th>
+
                                             {{!-- <th>Edit</th>
                                             <th>Delete</th> --}}
 
@@ -44,21 +39,18 @@
                                         {{#each products}}
                                         <tr>
                                             <td>{{incremented @index}}</td>
-                                            <td>{{this.name}}</td>
-                                            <td>{{this.type}}</td>
-                                            <td>{{this.quantity}}</td>
-                                            <td>{{this.Price}}</td>
-                                            <td>{{this.location}}</td>
-                                            <td><img src="/images/donate-images/{{this._id}}.png" alt=""
-                                                    style="width: 3rem"></td>
-                                            <td>{{this.donername}}</td>
+                                            <td>{{this.productDetails.name}}</td>
+                                            <td>{{this.productDetails.type}}</td>
+                                          <td>{{this.productDetails.quantity}}</td>
+                                          <td>{{this.productDetails.location}}</td>
 
-                                            {{!-- <td><a href="/doners/edit-donate/{{this._id}}"
-                                                    class="btn btn-primary"><i class="bi bi-pen"
-                                                        aria-hidden="true"></i></a></td>
-                                            <td><a href="/doners/delete-donate/{{this._id}}" class="btn btn-danger"
-                                                    onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')"><i
-                                                        class="bi bi-trash" aria-hidden="true"></i></a></td> --}}
+
+                                            <td><img src="/images/donate-images/{{this.productDetails._id}}.png" alt=""
+                                                    style="width: 3rem"></td>
+                                            <td>{{this.productDetails.donername}}</td>
+                                            <td>{{this.trustDetails.Orgname}}</td>
+                                       <td>            <button onclick="accept('{{this._id}}')" class="add-to-cart-btn btn btn-info">Accept</button>
+</td>
 
                                         </tr>
                                         {{/each}}
@@ -133,3 +125,10 @@
         </div>
     </div>
 </div>
+
+
+  <script>
+    function accept(productId) {
+    window.location.href = `/volunteers/accept-donation/${productId}`;
+    }
+  </script>

@@ -17,10 +17,34 @@ const verifySignedIn = (req, res, next) => {
 /* GET volunteers listing. */
 router.get("/", verifySignedIn, function (req, res, next) {
   let volunteering = req.session.volunteer;
-  donerHelper.getAllProducts().then((products) => {
+  volunteerHelper.getAllProductsForVolunteers().then((products) => {
     res.render("volunteers/home", { volunteer: true, layout: "volunteer", volunteering, products });
   })
 });
+
+
+
+
+// accepting  the food donated by Donator
+router.get("/accept-donation/:id", verifySignedIn, function (req, res) {
+  let donationId = req.params.id;
+  let userId = req.session.volunteer._id;
+  volunteerHelper.addToVolunteerCart(donationId, userId).then(() => {
+    res.redirect("/volunteers");
+  });
+});
+
+router.get("/orders", verifySignedIn, async function (req, res) {
+  let user = req.session.user;
+  let userId = req.session.volunteer._id;
+  let orders = await volunteerHelper.getVolunteerCartById(userId);
+
+  res.render("volunteers/orders", { admin: false, orders, volunteer: true, layout: "volunteer" });
+});
+
+
+
+
 
 
 router.route("/signup")
