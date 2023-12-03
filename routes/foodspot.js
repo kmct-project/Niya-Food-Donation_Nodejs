@@ -298,5 +298,15 @@ router.get("/delete-all-times", verifySignedIn, function (req, res) {
 
 
 
+/////// Orders /////////////////////  
+
+router.get("/orders", verifySignedIn, function (req, res) {
+  let foodspotsId = req?.session?.foodspot?._id || ''
+  foodspotHelper.getAllOrders(foodspotsId).then((orders) => {
+    res.render("foodspots/orders", { orders });
+  });
+});
+
+
 
 module.exports = router;

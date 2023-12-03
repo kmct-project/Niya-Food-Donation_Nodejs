@@ -373,13 +373,30 @@ module.exports = {
   },
 
   /////////FUNCTION FOR GET USER'S ORDER BY ID///////////////// 
+
   getOrderById: (orderId) => {
     return new Promise(async (resolve, reject) => {
-      let order = await db
-        .get()
-        .collection(collections.ORDER_COLLECTION)
-        .findOne({ _id: objectId(orderId) });
-      resolve(order);
+      try {
+        let order = await db
+          .get()
+          .collection(collections.ORDER_COLLECTION)
+          .findOne({ _id: objectId(orderId) });
+
+        if (order) {
+          let productId = order.orderObject.productId;
+
+          let productDetails = await db
+            .get()
+            .collection(collections.MENU_COLLECTION)
+            .findOne({ _id: objectId(productId) });
+
+          order.productDetails = productDetails;
+        }
+
+        resolve(order);
+      } catch (error) {
+        reject(error);
+      }
     });
   },
 

@@ -82,9 +82,8 @@ module.exports = {
     menu.Price = parseInt(menu.Price);
     db.get()
       .collection(collections.MENU_COLLECTION)
-      .insertOne(menu)
+      .insertOne({ ...menu, status: 'active', })
       .then((data) => {
-        console.log(data);
         callback(data.ops[0]._id);
       });
   },
@@ -95,7 +94,7 @@ module.exports = {
       let menus = await db
         .get()
         .collection(collections.MENU_COLLECTION)
-        .find()
+        .find({ status: 'active', })
         .toArray();
       resolve(menus);
     });
@@ -103,11 +102,10 @@ module.exports = {
 
   getmenusById: (id) => {
     return new Promise(async (resolve, reject) => {
-      console.log(id, "kkk")
       let menus = await db
         .get()
         .collection(collections.MENU_COLLECTION)
-        .find({ spot_id: id })
+        .find({ spot_id: id, status: 'active', })
         .toArray();
       resolve(menus);
     });
@@ -156,13 +154,13 @@ module.exports = {
             $set: {
               // Name: menuDetails.Name,
               // Category: menuDetails.Category,
+              status: 'active',
               Price: menuDetails.Price,
               name: menuDetails.name,
               size: menuDetails.size,
               time: menuDetails.time,
               timeampm: menuDetails.timeampm,
               cuisine: menuDetails.cuisine,
-              // Description: menuDetails.Description,
               categoryId: menuDetails.categoryId
             },
           }
@@ -172,6 +170,47 @@ module.exports = {
         });
     });
   },
+
+  updateProductStatusInactive: (menuId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.MENU_COLLECTION)
+        .updateOne(
+          {
+            _id: objectId(menuId)
+          },
+          {
+            $set: {
+              status: 'inactive'
+            },
+          }
+        )
+        .then((response) => {
+          resolve();
+        });
+    });
+  },
+
+  updateProductStatusActive: (menuId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.MENU_COLLECTION)
+        .updateOne(
+          {
+            _id: objectId(menuId)
+          },
+          {
+            $set: {
+              status: 'active'
+            },
+          }
+        )
+        .then((response) => {
+          resolve();
+        });
+    });
+  },
+
 
 
   ///////DELETE ALL menu/////////////////////                                            
@@ -291,6 +330,17 @@ module.exports = {
   },
 
 
+  getAllOrders: (vender_id) => {
+    return new Promise(async (resolve, reject) => {
+      let orders = await db
+        .get()
+        .collection(collections.ORDER_COLLECTION)
+        .find({ "orderObject.vender_id": vender_id })
+        .toArray();
+
+      resolve(orders);
+    });
+  },
 
 
 

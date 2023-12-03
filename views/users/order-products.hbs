@@ -4,14 +4,6 @@
         <button onclick="window.print()" class="btn btn-primary mb-4">Print Bill</button>
 
         <div class="card p-5 shadow">
-            {{!-- <div class="invoice-info mb-4">
-                <p class="mb-0">Date : <b>{{order.orderObject.date}}</b></p>
-                <p class="mb-0">Name : <b> {{order.orderObject.deliveryDetails.name}}</b></p>
-                <p class="mb-0">Email : <b> {{order.orderObject.deliveryDetails.email}}</b></p>
-                <p class="mb-0">Phone Number : <b> {{order.orderObject.deliveryDetails.mobile}}</b></p>
-                <p class="mb-0">Address : <b> {{order.orderObject.deliveryDetails.address}}</b></p>
-
-            </div> --}}
             <div class="table-responsive">
                 <table class="table table-bordered" id="table">
                     <thead class="table-dark">
@@ -23,18 +15,18 @@
                     </thead>
 
                     <tbody>
-                        {{#each products}}
+                        {{#each order}}
                         <tr class="align-middle">
                             <td>{{incremented @index}}</td>
-                            <td>{{this.product.name}}</td>
-                            <td>₹{{this.product.Price}}/-</td>
+                            <td>{{this.productDetails.name}}</td>
+                            <td>₹{{this.productDetails.Price}}/-</td>
                         </tr>
                         {{/each}}
                     </tbody>
                     <tfoot class="table-light">
                         <tr>
                             <td class="" colspan="2"><b>Total (Qty x Price/Item) :</b></td>
-                            <td class=""><b>₹{{order.orderObject.totalAmount}}</b></td>
+                            <td class=""><b>₹{{totalAmount}}</b></td>
                         </tr>
 
                     </tfoot>

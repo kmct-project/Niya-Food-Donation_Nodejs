@@ -183,8 +183,6 @@ router.get('/place-order/:id', verifySignedIn, async (req, res) => {
   let allProduct = (await foodspotHelper.getAllmenus()) ?? [];
 
   let selectedProductDetails = allProduct.find((item) => item._id == productId);
-  // console.log("file: users.js:186 ~ router.get ~ selectedProductDetails:", selectedProductDetails)
-  // let { Price, size, postedBy, cuisine, food_id: _id } = selectedProductDetails
   if (!user || !selectedProductDetails) {
     res.redirect('/signin');
   } else {
@@ -198,9 +196,14 @@ router.get('/place-order/:id', verifySignedIn, async (req, res) => {
 
 router.post('/place-order', async (req, res) => {
   let user = req.session.user;
+  console.log(req.body)
   userHelper
     .placeOrder(req.body, user)
     .then((orderId) => {
+      let ProductID = req?.body?.product_id || ''
+      // update the product status
+      foodspotHelper.updateProductStatusInactive(ProductID)
+
       if (req.body['payment-method'] === 'COD') {
         res.json({ codSuccess: true });
       } else {
@@ -209,6 +212,7 @@ router.post('/place-order', async (req, res) => {
           res.json({ order, razorpay: true });
         });
       }
+
     });
 });
 
@@ -246,17 +250,13 @@ router.get(
   verifySignedIn,
   async function (req, res) {
     let user = req.session.user;
-    let userId = req.session.user._id;
-    let cartCount = await userHelper.getCartCount(userId);
     let orderId = req.params.id;
     const order = await userHelper.getOrderById(orderId);
-    let products = await userHelper.getOrderProducts(orderId);
     res.render('users/order-products', {
       admin: false,
       user,
-      cartCount,
-      products,
-      order,
+      order: [order],
+      totalAmount: order?.orderObject?.totalAmount || 0
     });
   }
 );
@@ -266,6 +266,7 @@ router.get('/cancel-order/:id', verifySignedIn, function (req, res) {
   userHelper.cancelOrder(orderId).then(() => {
     res.redirect('/orders');
   });
+  // update the product status
 });
 
 module.exports = router;
