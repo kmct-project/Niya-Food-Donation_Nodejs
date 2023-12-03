@@ -31,9 +31,7 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       let response = {};
       let foodspot = await db
-        .get()
-        .collection(collections.FOODSPOT_COLLECTION)
-        .findOne({ Email: foodspotData.Email });
+        .get().collection(collections.FOODSPOT_COLLECTION).findOne({ Email: foodspotData.Email });
       if (foodspot) {
         bcrypt.compare(foodspotData.Password, foodspot.Password).then((status) => {
           if (status) {
@@ -103,13 +101,13 @@ module.exports = {
     });
   },
 
-  getmenusById:(id)=>{
+  getmenusById: (id) => {
     return new Promise(async (resolve, reject) => {
-      console.log(id,"kkk")
+      console.log(id, "kkk")
       let menus = await db
         .get()
         .collection(collections.MENU_COLLECTION)
-        .find({spot_id:id})
+        .find({ spot_id: id })
         .toArray();
       resolve(menus);
     });
@@ -156,14 +154,16 @@ module.exports = {
           },
           {
             $set: {
-              Name: menuDetails.Name,
-              Category: menuDetails.Category,
+              // Name: menuDetails.Name,
+              // Category: menuDetails.Category,
               Price: menuDetails.Price,
+              name: menuDetails.name,
               size: menuDetails.size,
               time: menuDetails.time,
               timeampm: menuDetails.timeampm,
               cuisine: menuDetails.cuisine,
-              Description: menuDetails.Description,
+              // Description: menuDetails.Description,
+              categoryId: menuDetails.categoryId
             },
           }
         )
@@ -212,12 +212,12 @@ module.exports = {
     });
   },
 
-  gettimesById:(id)=>{
+  gettimesById: (id) => {
     return new Promise(async (resolve, reject) => {
       let times = await db
         .get()
         .collection(collections.TIME_COLLECTION)
-        .find({spot_id:id})
+        .find({ spot_id: id })
         .toArray();
       resolve(times);
     });

@@ -143,6 +143,7 @@ router.get("/signout", function (req, res) {
 
 router.get("/menus", verifySignedIn, function (req, res) {
   let foodspots = req.session.foodspot;
+  console.log("file: foodspot.js:146 ~ foodspots:", foodspots)
   let id = req.query.id;
   foodspotHelper.getmenusById(id).then((menus) => {
     res.render("foodspots/all-menus", { foodspot: true, layout: "food", menus, foodspots });
@@ -157,9 +158,20 @@ router.get("/add-menu", verifySignedIn, async function (req, res) {
 });
 
 ///////ADD menu/////////////////////                                         
-router.post("/add-menu", verifySignedIn, function (req, res) {
+router.post("/add-menu", verifySignedIn, async function (req, res) {
+  // Moved the declaration of foodspots before using it
   let foodspots = req.session.foodspot;
+  let categories = await foodspotHelper.getfcats(foodspots._id || '') || []
+  console.log("file: foodspot.js:164 ~ categories:", categories)
+
+  let categoryId = categories?.find((cat) => cat.Name === req.body.cuisine)?._id || '';
+  console.log("file: foodspot.js:167 ~ categoryId:", categoryId)
+
+  // Note: adding the cuisine_Id to the req.body for showing image in the user side ease
   req.body.spot_id = foodspots._id;
+  req.body.categoryId = categoryId;
+  req.body.postedBy = foodspots && Array.isArray(foodspots.Name) && foodspots.Name[0]
+
   foodspotHelper.addmenu(req.body, (id) => {
     res.redirect(`/foodspots/menus?id=${foodspots._id}`);
   });
@@ -174,14 +186,24 @@ router.get("/edit-menu/:id", verifySignedIn, async function (req, res) {
   let menu = await foodspotHelper.getmenuDetails(menuId);
   let fcatId = req.params.id;
   let fcats = await foodspotHelper.getfcats(fcatId);
-  console.log(menu);
   res.render("foodspots/edit-menu", { foodspot: true, layout: "food", menu, fcats, foodspots });
 });
 
 ///////EDIT menu/////////////////////                                         
-router.post("/edit-menu/:id", verifySignedIn, function (req, res) {
-  let menuId = req.params.id;
+router.post("/edit-menu/:id", verifySignedIn, async function (req, res) {
   let foodspots = req.session.foodspot;
+  let categories = await foodspotHelper.getfcats(foodspots._id || '') || []
+
+  let categoryId = categories?.find((cat) => cat.Name === req.body.cuisine)?._id || '';
+
+
+  // Note: adding the cuisine_Id to the req.body for showing image in the user side ease
+  req.body.categoryId = categoryId;
+  req.body.postedBy = foodspots && Array.isArray(foodspots.Name) && foodspots.Name[0]
+
+  let menuId = req.params.id;
+
+
   foodspotHelper.updatemenu(menuId, req.body).then(() => {
     if (req.files) {
       let image = req.files.Image;

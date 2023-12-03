@@ -21,14 +21,20 @@
                             <input type="text" name="address" id="address" class="form-control mb-3" required>
                             <label class="mb-1">Pincode</label>
                             <input type="text" name="pincode" id="pincode" class="form-control mb-3" required>
-
                             <input type="text" name="userId" value="{{user._id}}" hidden>
+                            <input type="text" name="product_id" value="{{selectedProductDetails._id}}" hidden>
+                            <input type="text" name="vender_id" value="{{selectedProductDetails.spot_id}}" hidden>
+                            <input type="number" name="total_price" value="{{selectedProductDetails.Price}}" hidden>
+
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card shadow">
                             <div class="container  ml-5">
-                                <h5 class="mt-4">Total amount: Rs. {{total}}</h5>
+                                <h5 class="mt-4">Category : {{selectedProductDetails.cuisine}}</h5>
+                                <h5 class="mt-4">Name : {{selectedProductDetails.name}}</h5>
+                                <h5 class="mt-4">From : {{selectedProductDetails.postedBy}}</h5>
+                                <h5 class="mt-4">Total amount: Rs. {{selectedProductDetails.Price}}</h5>
                                 <hr>
                                 <div class="payment">
                                     <p>Payment Method</p>
@@ -36,10 +42,11 @@
                                         <input type="radio" name="payment-method" value="COD" style="margin-right: 5px;"
                                             checked> Cash on Delivery
                                     </label>
-                                    <label class="radio-inline mt-2">
+                                    {{!-- commenting due to razopay payment amount issue --}}
+                                    {{!-- <label class="radio-inline mt-2">
                                         <input type="radio" name="payment-method" style="margin-right: 5px;"
                                             value="ONLINE"> Online payment
-                                    </label>
+                                    </label> --}}
                                     <button class="btn btn-primary float-right mt-4 w-100"
                                         type="submit">Checkout</button>
                                 </div>
@@ -87,13 +94,13 @@
 
     function razorpayPayment(order) {
         var options = {
-            "key": "rzp_test_8NokNgt8cA3Hdv", // Enter the Key ID generated from the Dashboard
-            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "key": "rzp_test_iuxZcw2GsP7kC4",
+            "amount":order.amount ,
             "currency": "INR",
             "name": "Shopping Cart",
             "description": "Test Transaction",
             "image": "https://example.com/your_logo",
-            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "order_id": order.id, 
             "handler": function (response) {
                 verifyPayment(response, order)
             },

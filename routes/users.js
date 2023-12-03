@@ -1,40 +1,44 @@
-var express = require("express");
-var userHelper = require("../helper/userHelper");
-var donerHelper = require("../helper/donerHelper");
+var express = require('express');
+var userHelper = require('../helper/userHelper');
+var donerHelper = require('../helper/donerHelper');
+const foodspotHelper = require('../helper/foodspotHelper');
 var router = express.Router();
 
 const verifySignedIn = (req, res, next) => {
   if (req.session.signedIn) {
     next();
   } else {
-    res.redirect("/signin");
+    res.redirect('/signin');
   }
 };
 
 /* GET home page. */
-router.get("/", async function (req, res, next) {
+router.get('/', async function (req, res, next) {
   let user = req.session.user;
 
-  res.render("users/welcome", { admin: false, layout: "welcome", user });
+  res.render('users/welcome', { admin: false, layout: 'welcome', user });
 });
 
-router.get("/home", async function (req, res, next) {
+router.get('/home', async function (req, res, next) {
   let user = req.session.user;
-  products = await donerHelper.getAllProducts();
-  res.render("users/home", { admin: false, user, products });
+  let products = (await foodspotHelper.getAllmenus()) ?? [];
+  res.render('users/home', {
+    admin: false,
+    user,
+    products,
+    isUser: user ? true : false,
+  });
 });
 
-router.get("/signup", function (req, res) {
+router.get('/signup', function (req, res) {
   if (req.session.signedIn) {
-    res.redirect("/home");
+    res.redirect('/home');
   } else {
-    res.render("users/signup", { admin: false, layout: 'emptylayout', });
+    res.render('users/signup', { admin: false, layout: 'emptylayout' });
   }
 });
 
-
-
-router.post("/signup", async function (req, res) {
+router.post('/signup', async function (req, res) {
   const mobileRegex = /^[0-9\s-]{10}$/;
   const phone = req.body.Phone;
   const password = req.body.Password;
@@ -43,7 +47,8 @@ router.post("/signup", async function (req, res) {
   const nameRegex = /^[A-Za-z]+$/; // Regular expression for name validation (letters only)
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i; // Regular expression for email validation
 
-  const passwordCriteria = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordCriteria =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
   let isValidMobile = mobileRegex.test(phone);
   let isValidPassword = passwordCriteria.test(password);
@@ -56,46 +61,46 @@ router.post("/signup", async function (req, res) {
       if (response && response._id) {
         req.session.signedIn = true;
         req.session.user = response;
-        res.status(200).send("Success"); // Return success message
+        res.status(200).send('Success'); // Return success message
       } else {
-        console.log("User signup response does not contain a valid ID.");
-        res.status(400).send("User signup response does not contain a valid ID.");
+        console.log('User signup response does not contain a valid ID.');
+        res
+          .status(400)
+          .send('User signup response does not contain a valid ID.');
       }
     } catch (error) {
       console.error(error);
       res.status(500).send(error.message); // Return the error message
     }
   } else {
-    let errorMessage = "";
+    let errorMessage = '';
 
     if (!isValidMobile) {
-      errorMessage += "Please enter a valid mobile number. ";
+      errorMessage += 'Please enter a valid mobile number. ';
     }
 
     if (!isValidEmail) {
-      errorMessage += "Please enter a valid email address. ";
+      errorMessage += 'Please enter a valid email address. ';
     }
 
     if (!isValidName) {
-      errorMessage += "Please enter a valid name with letters only. ";
+      errorMessage += 'Please enter a valid name with letters only. ';
     }
 
     if (!isValidPassword) {
-      errorMessage += "Please enter a strong password with at least 8 characters, including uppercase, lowercase, numbers, and special characters.";
+      errorMessage +=
+        'Please enter a strong password with at least 8 characters, including uppercase, lowercase, numbers, and special characters.';
     }
 
     res.status(400).send(errorMessage.trim());
   }
 });
 
-
-
-
-router.get("/signin", function (req, res) {
+router.get('/signin', function (req, res) {
   if (req.session.signedIn) {
-    res.redirect("/home");
+    res.redirect('/home');
   } else {
-    res.render("users/signin", {
+    res.render('users/signin', {
       admin: false,
       layout: 'emptylayout',
       signInErr: req.session.signInErr,
@@ -104,28 +109,26 @@ router.get("/signin", function (req, res) {
   }
 });
 
-router.post("/signin", function (req, res) {
+router.post('/signin', function (req, res) {
   userHelper.doSignin(req.body).then((response) => {
     if (response.status) {
       req.session.signedIn = true;
       req.session.user = response.user;
-      res.redirect("/home");
+      res.redirect('/home');
     } else {
-      req.session.signInErr = "Invalid Email/Password";
-      res.redirect("/signin");
+      req.session.signInErr = 'Invalid Email/Password';
+      res.redirect('/signin');
     }
   });
 });
 
-router.get("/signout", function (req, res) {
+router.get('/signout', function (req, res) {
   req.session.signedIn = false;
   req.session.user = null;
-  res.redirect("/home");
+  res.redirect('/home');
 });
 
-
-
-router.get("/cart", verifySignedIn, async function (req, res) {
+router.get('/cart', verifySignedIn, async function (req, res) {
   let user = req.session.user;
   let userId = req.session.user._id;
   let cartCount = await userHelper.getCartCount(userId);
@@ -134,7 +137,7 @@ router.get("/cart", verifySignedIn, async function (req, res) {
   if (cartCount != 0) {
     total = await userHelper.getTotalAmount(userId);
   }
-  res.render("users/cart", {
+  res.render('users/cart', {
     admin: false,
     user,
     cartCount,
@@ -143,84 +146,103 @@ router.get("/cart", verifySignedIn, async function (req, res) {
   });
 });
 
-router.get("/add-to-cart/:id", verifySignedIn, function (req, res) {
-  console.log("api call");
+router.get('/add-to-cart/:id', verifySignedIn, function (req, res) {
+  console.log('api call');
   let productId = req.params.id;
   let userId = req.session.user._id;
-  userHelper.addToCart(productId, userId).then(() => {
-    res.json({ status: true });
-  });
+  if (!userId) {
+    res.render('users/signin', {
+      admin: false,
+      layout: 'emptylayout',
+      signInErr: req.session.signInErr,
+    });
+    req.session.signInErr = null;
+  } else {
+    userHelper.addToCart(productId, userId).then(() => {
+      res.json({ status: true });
+    });
+  }
 });
 
-router.post("/change-product-quantity", function (req, res) {
+router.post('/change-product-quantity', function (req, res) {
   console.log(req.body);
   userHelper.changeProductQuantity(req.body).then((response) => {
     res.json(response);
   });
 });
 
-router.post("/remove-cart-product", (req, res, next) => {
+router.post('/remove-cart-product', (req, res, next) => {
   userHelper.removeCartProduct(req.body).then((response) => {
     res.json(response);
   });
 });
 
-router.get("/place-order", verifySignedIn, async (req, res) => {
+router.get('/place-order/:id', verifySignedIn, async (req, res) => {
   let user = req.session.user;
-  let userId = req.session.user._id;
-  let cartCount = await userHelper.getCartCount(userId);
-  let total = await userHelper.getTotalAmount(userId);
-  res.render("users/place-order", { admin: false, user, cartCount, total });
+  let productId = req.params.id;
+  let allProduct = (await foodspotHelper.getAllmenus()) ?? [];
+
+  let selectedProductDetails = allProduct.find((item) => item._id == productId);
+  // console.log("file: users.js:186 ~ router.get ~ selectedProductDetails:", selectedProductDetails)
+  // let { Price, size, postedBy, cuisine, food_id: _id } = selectedProductDetails
+  if (!user || !selectedProductDetails) {
+    res.redirect('/signin');
+  } else {
+    res.render('users/place-order', {
+      admin: false,
+      user,
+      selectedProductDetails,
+    });
+  }
 });
 
-router.post("/place-order", async (req, res) => {
+router.post('/place-order', async (req, res) => {
   let user = req.session.user;
-  let products = await userHelper.getCartProductList(req.body.userId);
-  let totalPrice = await userHelper.getTotalAmount(req.body.userId);
   userHelper
-    .placeOrder(req.body, products, totalPrice, user)
+    .placeOrder(req.body, user)
     .then((orderId) => {
-      if (req.body["payment-method"] === "COD") {
+      if (req.body['payment-method'] === 'COD') {
         res.json({ codSuccess: true });
       } else {
-        userHelper.generateRazorpay(orderId, totalPrice).then((response) => {
-          res.json(response);
+        console.log(req?.body)
+        userHelper.generateRazorpay(orderId, req?.body?.total_price || 0).then((order) => {
+          res.json({ order, razorpay: true });
         });
       }
     });
 });
 
-router.post("/verify-payment", async (req, res) => {
+router.post('/verify-payment', async (req, res) => {
   console.log(req.body);
   userHelper
     .verifyPayment(req.body)
     .then(() => {
-      userHelper.changePaymentStatus(req.body["order[receipt]"]).then(() => {
+      userHelper.changePaymentStatus(req.body['order[receipt]']).then(() => {
         res.json({ status: true });
       });
     })
     .catch((err) => {
-      res.json({ status: false, errMsg: "Payment Failed" });
+      res.json({ status: false, errMsg: 'Payment Failed' });
     });
 });
 
-router.get("/order-placed", verifySignedIn, async (req, res) => {
+router.get('/order-placed', verifySignedIn, async (req, res) => {
   let user = req.session.user;
   let userId = req.session.user._id;
   let cartCount = await userHelper.getCartCount(userId);
-  res.render("users/order-placed", { admin: false, user, cartCount });
+  res.render('users/order-placed', { admin: false, user, cartCount });
 });
 
-router.get("/orders", verifySignedIn, async function (req, res) {
+router.get('/orders', verifySignedIn, async function (req, res) {
   let user = req.session.user;
   let userId = req.session.user._id;
   let cartCount = await userHelper.getCartCount(userId);
   let orders = await userHelper.getUserOrder(userId);
-  res.render("users/orders", { admin: false, user, cartCount, orders });
+  res.render('users/orders', { admin: false, user, cartCount, orders });
 });
 
 router.get(
-  "/view-ordered-products/:id",
+  '/view-ordered-products/:id',
   verifySignedIn,
   async function (req, res) {
     let user = req.session.user;
@@ -229,22 +251,21 @@ router.get(
     let orderId = req.params.id;
     const order = await userHelper.getOrderById(orderId);
     let products = await userHelper.getOrderProducts(orderId);
-    res.render("users/order-products", {
+    res.render('users/order-products', {
       admin: false,
       user,
       cartCount,
       products,
-      order
+      order,
     });
   }
 );
 
-router.get("/cancel-order/:id", verifySignedIn, function (req, res) {
+router.get('/cancel-order/:id', verifySignedIn, function (req, res) {
   let orderId = req.params.id;
   userHelper.cancelOrder(orderId).then(() => {
-    res.redirect("/orders");
+    res.redirect('/orders');
   });
 });
-
 
 module.exports = router;

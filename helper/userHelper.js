@@ -2,6 +2,12 @@ var db = require("../config/connection");
 var collections = require("../config/collections");
 const bcrypt = require("bcrypt");
 const objectId = require("mongodb").ObjectID;
+const Razorpay = require("razorpay");
+
+const instance = new Razorpay({
+  key_id: "rzp_test_iuxZcw2GsP7kC4",
+  key_secret: "oq5x15xdQVJG05DyZUcLQa4q",
+});
 
 
 module.exports = {
@@ -286,10 +292,10 @@ module.exports = {
 
   placeOrder: (order, products, total, user) => {
     return new Promise(async (resolve, reject) => {
-      console.log(order, products, total);
       let status = order["payment-method"] === "COD" ? "placed" : "pending";
       let orderObject = {
         deliveryDetails: {
+          name: order.name,
           mobile: order.mobile,
           address: order.address,
           pincode: order.pincode,
@@ -297,8 +303,9 @@ module.exports = {
         userId: objectId(order.userId),
         user: user,
         paymentMethod: order["payment-method"],
-        products: products,
-        totalAmount: total,
+        productId: order.product_id,
+        vender_id: order.vender_id,
+        totalAmount: order.total_price ? parseInt(order.total_price) : 0,
         status: status,
         date: new Date(),
       };
@@ -379,7 +386,7 @@ module.exports = {
   generateRazorpay: (orderId, totalPrice) => {
     return new Promise((resolve, reject) => {
       var options = {
-        amount: totalPrice * 100, // amount in the smallest currency unit
+        amount: parseInt(totalPrice) * 100, // amount in the smallest currency unit
         currency: "INR",
         receipt: "" + orderId,
       };

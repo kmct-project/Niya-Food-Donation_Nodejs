@@ -248,45 +248,40 @@
   </section><!-- End About Us Section -->
 
   <!-- ======= Clients Section ======= -->
-  <section style="background-color: #eee;">
-    <div class="container py-5">
-      <h2 class="text-center mb-5">Donated Food By Good Minds</h2>
+ <section style="background-color: #eee;">
+  <div class="container py-5">
+    <h2 class="text-center mb-5">Available Foods</h2>
 
-      <div class="row">
-        {{#each products}}
-        <div class="col-md-12 col-lg-4 mb-4 mb-lg-0">
-          <div class="card">
-
-            <img src="/images/donate-images/{{this._id}}.png" class="card-img-top" alt="Laptop" />
-            <div class="card-body">
-              <div class="d-flex justify-content-between">
-                <p class="small"><a href="#!" class="text-muted">{{this.type}}</a></p>
-              </div>
-
-              <div class="d-flex justify-content-between mb-3">
-                <h5 class="mb-0">{{this.name}}</h5>
-                <h5 class="text-dark mb-0">Rs.{{this.Price}}/-</h5>
-              </div>
-
-              <div class="d-flex justify-content-between mb-2">
-                <p class="text-muted mb-0">Available For <span class="fw-bold">{{this.quantity}}</span> Heads</p>
-
-              </div>
-              <h6>Donated By {{this.donername}}</h6>
-
-              <button onclick="addToCart('{{this._id}}')" class="add-to-cart-btn btn bttn btn-info mt-3">Add to
-                Cart</button>
-
+    <div class="row">
+      {{#each products}}
+      <div class="col-md-12 col-lg-4 mb-4">
+        <div class="card h-100">
+          <img src="/images/food-category-images/{{categoryId}}.png" class="card-img-top" alt="Food Image" />
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <p class="small"><a href="#!" class="text-muted">{{this.cuisine}}</a></p>
             </div>
+
+            <div class="d-flex justify-content-between mb-3">
+              <h5 class="mb-0">{{this.name}}</h5>
+              <h5 class="text-dark mb-0">Rs.{{this.Price}}/-</h5>
+            </div>
+
+            <div class="d-flex justify-content-between mb-2">
+              <p class="text-muted mb-0">Available For <span class="fw-bold">{{this.size}}</span> Heads</p>
+            </div>
+
+            <h6 class="mb-3">Posted By {{this.postedBy}}</h6>
+
+            <button onclick="buyNow('{{this._id}}')" class="add-to-cart-btn btn btn-info">Buy Now</button>
           </div>
         </div>
-
-        {{/each}}
-
-
       </div>
+      {{/each}}
     </div>
-  </section>
+  </div>
+</section>
+
 
 
   <!--=======Stats Counter Section=======-->
@@ -447,18 +442,8 @@
   <div id="preloader"></div>
 
   <script>
-    function addToCart(productId) {
-      $.ajax({
-        url: "/add-to-cart/" + productId,
-        method: "get",
-        success: (response) => {
-          if (response.status) {
-            let count = $("#cart-count").html();
-            count = parseInt(count) + 1;
-            $("#cart-count").html(count);
-          }
-        },
-      });
+    function buyNow(productId) {
+    window.location.href = `/place-order/${productId}`;
     }
   </script>
 
