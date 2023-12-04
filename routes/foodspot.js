@@ -152,6 +152,7 @@ router.get("/menus", verifySignedIn, function (req, res) {
   });
 });
 ///////ADD menu/////////////////////                                         
+// Render add-menu page
 router.get("/add-menu", verifySignedIn, async function (req, res) {
   let foodspots = req.session.foodspot;
   let fcatId = req.params.id;
@@ -159,35 +160,24 @@ router.get("/add-menu", verifySignedIn, async function (req, res) {
   res.render("foodspots/add-menu", { foodspot: true, layout: 'food', layout: "food", fcats, foodspots });
 });
 
-///////ADD menu/////////////////////                                         
+// Process form submission for add-menu without image upload
 router.post("/add-menu", verifySignedIn, async function (req, res) {
   let foodspots = req.session.foodspot;
   let categories = await foodspotHelper.getfcats(foodspots._id || '') || '';
 
   let categoryId = categories?.find((cat) => cat.Name === req.body.cuisine)?._id || '';
 
-  let image = req.files.image;
+  // Remove image handling code
 
-  // Generate a unique filename using the foodspot ID and timestamp
-  let filename = req.session.foodspot._id + '-' + Date.now() + path.extname(image.name || '');
+  req.body.spot_id = foodspots._id;
+  req.body.categoryId = categoryId;
+  req.body.postedBy = foodspots && Array.isArray(foodspots.Name) && foodspots.Name[0];
 
-  image.mv('./public/images/food-category-images/' + filename, (err) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).send(err);
-    }
-
-    req.body.image = filename;
-
-    req.body.spot_id = foodspots._id;
-    req.body.categoryId = categoryId;
-    req.body.postedBy = foodspots && Array.isArray(foodspots.Name) && foodspots.Name[0];
-
-    foodspotHelper.addmenu(req.body, (id) => {
-      res.redirect(`/foodspots/menus?id=${foodspots._id}`);
-    });
+  foodspotHelper.addmenu(req.body, (id) => {
+    res.redirect(`/foodspots/menus?id=${foodspots._id}`);
   });
 });
+
 
 
 
