@@ -16,42 +16,53 @@ const verifySignedIn = (req, res, next) => {
 router.get("/", verifySignedIn, async function (req, res, next) {
   let user = req.session.user;
   products = await donerHelper.getAllProducts();
-  reqs = await donerHelper.getAllreqs();
-  res.render("trusts/home", { admin: false, user, layout: "trust", products, reqs });
+  trustreqs = await donerHelper.getAlltrustreqs();
+
+  res.render("trusts/home", { admin: false, layout: "trust", user, products, trustreqs });
+
 });
 
-
+// router.get("/home", verifySignedIn, async function (req, res, next) {
+//   let user = req.session.user;
+//   trustHelper.getAlltrustreqs().then((trustreqs) => {
+//     res.render("trusts/home", { admin: true, layout: "trust",trustreqs, user });
+//   });
+// });
 
 ///////ALL req/////////////////////                                         
-router.get("/all-reqs", verifySignedIn, function (req, res) {
-  let user = req.session.user;
-  donerHelper.getAllreqs().then((reqs) => {
-    res.render("trusts/all-reqs", { admin: true, layout: "", reqs, user });
-  });
-});
+// router.get("/all-reqs", verifySignedIn, function (req, res) {
+//   let user = req.session.user;
+//   trustHelper.getAllreqs().then((reqs) => {
+//     res.render("trusts/all-reqs", { admin: true, layout: "trust",reqs, user });
+//   });
+// });
 
 ///////ADD req/////////////////////                                         
 router.get("/add-req", verifySignedIn, function (req, res) {
   let user = req.session.user;
-  res.render("trusts/home", { admin: true, layout: "", user });
+  res.render("trusts/charityreq", { admin: true, layout: "trust", user });
 });
 
 ///////ADD req/////////////////////                                         
 router.post("/add-req", function (req, res) {
-  donerHelper.addreq(req.body, (id) => {
-
-    res.redirect("/trusts/home");
+  trustHelper.addtrustreq(req.body, (id) => {
+    res.redirect("/trusts/charityreq");
 
   });
+});
+
+router.get("/profile", verifySignedIn, function (req, res) {
+  let user = req.session.user;
+  res.render("trusts/profile", { admin: false, layout: "trust", user });
 });
 
 ///////EDIT req/////////////////////                                         
 router.get("/edit-req/:id", verifySignedIn, async function (req, res) {
   let user = req.session.user;
   let reqId = req.params.id;
-  let req = await donerHelper.getreqDetails(reqId);
+  let reqs = await donerHelper.getreqDetails(reqId);
   console.log(req);
-  res.render("trusts/edit-req", { admin: true, layout: "", req, user });
+  res.render("trusts/edit-req", { admin: true, layout: "trust", reqs, user });
 });
 
 ///////EDIT req/////////////////////                                         
@@ -70,10 +81,9 @@ router.post("/edit-req/:id", verifySignedIn, function (req, res) {
 
 ///////DELETE req/////////////////////                                         
 router.get("/delete-req/:id", verifySignedIn, function (req, res) {
-  let reqId = req.params.id;
-  donerHelper.deletereq(reqId).then((response) => {
-    fs.unlinkSync("./public/images/req-images/" + reqId + ".png");
-    res.redirect("/trusts/all-reqs");
+  let trustreqId = req.params.id;
+  trustHelper.deletetrustreq(trustreqId).then((response) => {
+    res.redirect("/trusts");
   });
 });
 
@@ -84,12 +94,30 @@ router.get("/delete-all-reqs", verifySignedIn, function (req, res) {
   });
 });
 
+router.get("/welcome", verifySignedIn, function (req, res) {
+  let user = req.session.user;
+  res.render("trusts/welcome", { admin: false, layout: "trust", user });
+});
+
+router.get("/charityreq", verifySignedIn, async function (req, res, next) {
+  let user = req.session.user;
+  products = await donerHelper.getAllProducts();
+  trustreqs = await donerHelper.getAlltrustreqs();
+  res.render("trusts/charityreq", { admin: false, layout: "trust", user, products, trustreqs });
+});
+
+router.get("/request", verifySignedIn, async function (req, res, next) {
+  let user = req.session.user;
+  products = await donerHelper.getAllProducts();
+  trustreqs = await donerHelper.getAlltrustreqs();
+  res.render("trusts/request", { admin: false, layout: "trust", user, products, trustreqs });
+});
 
 router.get("/home", verifySignedIn, async function (req, res, next) {
   let user = req.session.user;
-  donerHelper.getAllProducts().then((products) => {
-    res.render("trusts/home", { admin: false, user, layout: "trust", products });
-  })
+  products = await donerHelper.getAllProducts();
+  trustreqs = await donerHelper.getAlltrustreqs();
+  res.render("trusts/home", { admin: false, layout: "trust", user, products, trustreqs });
 });
 
 router.get("/cart", verifySignedIn, async function (req, res) {
@@ -103,7 +131,7 @@ router.get("/cart", verifySignedIn, async function (req, res) {
   }
   res.render("users/cart", {
     admin: false,
-    user,
+    layout: "trust", user,
     cartCount,
     cartProducts,
     total,
@@ -142,7 +170,7 @@ router.get("/orders", verifySignedIn, async function (req, res) {
   let user = req.session.user;
   let userId = req.session.user._id;
   let orders = await trustHelper.getTrustCartById(userId);
-  res.render("trusts/orders", { admin: false, user, orders });
+  res.render("trusts/orders", { admin: false, layout: "trust", user, orders });
 });
 
 
@@ -160,7 +188,7 @@ router.get(
     let products = await userHelper.getOrderProducts(orderId);
     res.render("users/order-products", {
       admin: false,
-      user,
+      layout: "trust", user,
       cartCount,
       products,
       order
@@ -181,7 +209,7 @@ router.get("/cancel-order/:id", verifySignedIn, function (req, res) {
 router.route("/signup")
   .get(function (req, res) {
     if (req.session.signedInTrust) {
-      res.redirect("/trusts/home");
+      res.redirect("/trusts/welcome");
     } else {
       res.render("trusts/signup", {
         admin: false,
@@ -199,7 +227,7 @@ router.route("/signup")
       } else {
         req.session.signedInTrust = true;
         req.session.user = response;
-        res.redirect("/trusts/home");
+        res.redirect("/trusts/welcome");
       }
     });
   });
@@ -208,7 +236,7 @@ router.route("/signup")
 router.route("/signin")
   .get(function (req, res) {
     if (req.session.signedInTrust) {
-      res.redirect("/trusts/home");
+      res.redirect("/trusts/welcome");
     } else {
       res.render("trusts/signin", {
         admin: false,
@@ -223,7 +251,7 @@ router.route("/signin")
       if (response.status) {
         req.session.signedInTrust = true;
         req.session.user = response.user;
-        res.redirect("/trusts/home");
+        res.redirect("/trusts/welcome");
       } else {
         req.session.signInErr = "Invalid Email/Password";
         res.redirect("/trusts/signin");
@@ -236,7 +264,7 @@ router.route("/signin")
 router.get("/signout", function (req, res) {
   req.session.signedInTrust = false;
   req.session.user = null;
-  res.redirect("/trusts");
+  res.redirect("/trusts/");
 });
 
 

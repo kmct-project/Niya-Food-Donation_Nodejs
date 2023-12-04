@@ -42,7 +42,30 @@ module.exports = {
     });
   },
 
+  ///////ADD userreq/////////////////////                                         
+  addtrustreq: (trustreq, callback) => {
+    console.log(trustreq);
+    trustreq.Price = parseInt(trustreq.Price);
+    db.get()
+      .collection(collections.TRUSTREQ_COLLECTION)
+      .insertOne(trustreq)
+      .then((data) => {
+        console.log(data);
+        callback(data.ops[0]._id);
+      });
+  },
 
+  ///////GET ALL trustreq/////////////////////                                            
+  getAlltrustreqs: () => {
+    return new Promise(async (resolve, reject) => {
+      let trustreqs = await db
+        .get()
+        .collection(collections.TRUSTREQ_COLLECTION)
+        .find()
+        .toArray();
+      resolve(trustreqs);
+    });
+  },
 
   ///////ADD donate DETAILS/////////////////////                                            
   getProductDetails: (productId) => {

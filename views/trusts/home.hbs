@@ -74,7 +74,7 @@
         <div class="row">
           {{#each products}}
           <div class="col-md-12 col-lg-4 mb-4 mb-lg-0">
-            <div class="card">
+            <div class="card shadow ">
 
               <div class="card-body">
                 <center>
@@ -90,7 +90,29 @@
                   <p class="text-muted mb-0">Available For <span class="fw-bold">{{this.quantity}}</span> Heads</p>
 
                 </div>
-                <h6>Donated By {{this.donername}}</h6>
+                <p>{{this.desc}}</p>
+
+                <div class="accordion" id="accordionExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        More Detils
+                      </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                      data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <p>Pickup Location : {{this.location}}</p>
+                        <p>Pickup Date : {{this.pdate}}</p>
+                        <p>Pickup Time : {{this.ptime}}</p>
+                        <h6>Donated By {{this.donername}}</h6>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
 
                 {{!-- <button onclick="ChooseThis('{{this._id}}')" class="add-to-cart-btn btn bttn btn-info mt-3">Choose
                   This</button> --}}
@@ -107,11 +129,10 @@
           {{/each}}
 
 
-        </div><br><br>
-        <hr>
-        <a href="/trusts" class="btn btn-primary">Send a Request for Food</a>
+        </div>
       </div>
     </section>
+
 
 
   </div>
@@ -141,17 +162,42 @@
           <div class="mb-3">
             <label for="addressInput" class="form-label">Address</label>
             <input type="hidden" id="productIdInputValue" name="productId">
-            <input type="text" class="form-control" id="addressInput" name="address" required>
+            <input type="text" class="form-control" id="addressInput" name="address" {{#if user}}
+              value="{{user.Address}}" {{/if}} required>
           </div>
+          <div class="mb-3">
+            <label for="addressInput" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" id="addressInput" {{#if user}} value="{{user.Phone}}"
+              {{/if}}name="phone" required>
+          </div>
+
+          <input type="hidden" name="date" id="datetime">
+
           <input type="hidden" id="selectedProductId" name="productId">
 
-          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="submit" class="btn btn-primary">Book Now</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+
+<script>
+  // Get current date and time
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = now.getDate().toString().padStart(2, '0');
+  const hours = ((now.getHours() + 11) % 12 + 1).toString().padStart(2, '0'); // Convert to 12-hour format
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+
+  // Set default value to current date and time in 12-hour format with AM/PM
+  const defaultDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+  document.getElementById('datetime').value = defaultDateTime;
+</script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

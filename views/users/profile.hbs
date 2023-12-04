@@ -1,0 +1,55 @@
+<div class="row mx-auto mb-5">
+    <div class="col-md-6 mx-auto">
+        <div class="container mt-5">
+            <br><br>
+            <div class="card p-5 shadow mb-4">
+                <h2 class="text-center">My Profile</h2>
+                {{#if user}}
+                <form action="#!" method="POST">
+
+                    <div class="form-group mt-2">
+                        <label>Name of Organization</label>
+                        <input type="text" class="form-control" value="{{user.FName}} {{user.LName}}" name="Orgname"
+                            placeholder="Enter Organization Name" required>
+                    </div>
+                    {{!-- <div class="form-group mt-4">
+                        <label>Reg Number / GST Number</label>
+                        <input type="number" class="form-control" value="{{user.Rnumber}}" name="Rnumber"
+                            placeholder="Enter Phone number" required>
+                    </div> --}}
+                    <div class="form-group mt-4">
+                        <label>Phone Number</label>
+                        <input type="number" class="form-control" value="{{user.Phone}}" name="Phone"
+                            placeholder="Enter Phone number" required>
+                    </div>
+
+                    {{!-- <div class="form-group mt-4">
+                        <label>Place</label>
+                        <input type="text" class="form-control" value="{{user.Address}}" name="Address" placeholder=""
+                            required>
+                    </div> --}}
+
+
+                    <div class="form-group mt-4">
+                        <label>Email</label>
+                        <input type="email" class="form-control" value="{{user.Email}}" name="Email"
+                            placeholder="Enter Email number" required>
+                    </div>
+                    <div class="form-group mt-4">
+                        <label>Place</label>
+                        <input type="text" class="form-control" value="{{user.place}}" name="" placeholder="Enter"
+                            required>
+                    </div>
+                    {{!-- <div class="form-group mt-4">
+                        <label>Address</label>
+                        <input type="text" class="form-control" value="{{user.Address}}" name="Address"
+                            placeholder="Enter Address" required>
+                    </div> --}}
+
+                    <a href="/home" class="btn btn-dark w-100 mt-5">Back to home</a>
+                </form>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>

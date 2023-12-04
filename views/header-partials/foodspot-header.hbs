@@ -76,7 +76,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
                             {{#if foodspots}}
-                            <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-wallet me-1 ms-1"></i>
+                            <a class="dropdown-item" href="/foodspots/profile"><i class="mdi mdi-wallet me-1 ms-1"></i>
                                 {{foodspots.Name}}</a>
                             {{!-- <a class="dropdown-item" href="/foodspot/profile"><i
                                     class="mdi mdi-wallet me-1 ms-1"></i>
@@ -112,8 +112,9 @@
                                 class="hide-menu">Home</span></a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/foodspots/menus?id={{foodspots._id}}"
-                            aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Prepare
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                            href="/foodspots/menus?id={{foodspots._id}}" aria-expanded="false"><i
+                                class="mdi mdi-view-dashboard"></i><span class="hide-menu">Prepare
                                 Menu</span></a>
                     </li>
 
@@ -126,7 +127,8 @@
 
                     <li class="sidebar-item">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/foodspots/orders"
-                            aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Orders</span></a>
+                            aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
+                                class="hide-menu">Orders</span></a>
                     </li>
 
                     {{!-- <li class="sidebar-item">

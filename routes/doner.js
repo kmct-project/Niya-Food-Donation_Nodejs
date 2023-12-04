@@ -45,6 +45,19 @@ router.get("/welcome", verifySignedIn, function (req, res) {
   res.render("doners/welcome", { admin: false, layout: "doner", doner });
 });
 
+router.get("/profile", verifySignedIn, function (req, res) {
+  let doner = req.session.doner;
+  res.render("doners/profile", { admin: false, layout: "doner", doner });
+});
+
+router.get("/charityreq", verifySignedIn, async function (req, res) {
+  let doner = req.session.doner;
+  let trustreqs = await donerHelper.getAlltrustreqs();
+
+  res.render("doners/charityreq", { admin: false, layout: "doner", doner, trustreqs });
+});
+
+
 ///////ADD donate/////////////////////                                         
 router.get("/add-product", verifySignedIn, function (req, res) {
   let doner = req.session.doner;
@@ -115,7 +128,7 @@ router.get("/signup", function (req, res) {
   if (req.session.signedIn) {
     res.redirect("/doners/welcome");
   } else {
-    res.render("doners/signup", { admin: false, layout: "doner" });
+    res.render("doners/signup", { admin: false, layout: "doner", });
   }
 });
 

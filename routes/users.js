@@ -15,8 +15,12 @@ const verifySignedIn = (req, res, next) => {
 /* GET home page. */
 router.get('/', async function (req, res, next) {
   let user = req.session.user;
-
   res.render('users/welcome', { admin: false, layout: 'welcome', user });
+});
+
+router.get("/profile", verifySignedIn, function (req, res) {
+  let user = req.session.user;
+  res.render("users/profile", { admin: false, layout: "welcome", user });
 });
 
 router.get('/home', async function (req, res, next) {

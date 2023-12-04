@@ -119,6 +119,8 @@
                 <form action="/doners/add-product" enctype="multipart/form-data" method="POST">
                     <input type="hidden" class="form-control" name="donername" {{#if doner}} value="{{doner.Orgname}}"
                         {{/if}}>
+                    <input type="hidden" class="form-control" name="donernumber" {{#if doner}} value="{{doner.Phone}}"
+                        {{/if}}>
 
                     <div class="mb-3">
                         <label for="" class="form-label">Item Name</label>

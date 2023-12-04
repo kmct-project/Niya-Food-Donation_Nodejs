@@ -22,6 +22,11 @@ router.get("/", verifySignedIn, function (req, res, next) {
   })
 });
 
+router.get("/profile", verifySignedIn, function (req, res) {
+  let volunteering = req.session.volunteer;
+  res.render("volunteers/profile", { admin: false, volunteering });
+});
+
 
 
 
@@ -39,7 +44,7 @@ router.get("/orders", verifySignedIn, async function (req, res) {
   let userId = req.session.volunteer._id;
   let orders = await volunteerHelper.getVolunteerCartById(userId);
 
-  res.render("volunteers/orders", { admin: false, orders, volunteer: true, layout: "volunteer" });
+  res.render("volunteers/orders", { admin: false, orders, volunteer: true, layout: "volunteer", layout: "volunteer" });
 });
 
 
@@ -54,7 +59,7 @@ router.route("/signup")
     } else {
       res.render("volunteers/signup", {
         volunteer: true,
-        signUpErr: req.session.signUpErr,
+        layout: "volunteer", signUpErr: req.session.signUpErr,
       });
     }
   })
@@ -80,7 +85,7 @@ router.route("/signin")
     } else {
       res.render("volunteers/signin", {
         volunteer: true,
-        signInErr: req.session.signInErr,
+        layout: "volunteer", signInErr: req.session.signInErr,
       });
       req.session.signInErr = null;
     }

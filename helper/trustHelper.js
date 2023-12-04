@@ -9,7 +9,6 @@ module.exports = {
   ///////ADD req/////////////////////                                         
   addreq: (req, callback) => {
     console.log(req);
-    req.Price = parseInt(req.Price);
     db.get()
       .collection(collections.REQ_COLLECTION)
       .insertOne(req)

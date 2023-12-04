@@ -48,21 +48,22 @@
     }
   }
 
-.outer-card {
-  width: 192px;
-  height: 50px;
-  background-color: #e0e0e0;
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  margin-right: 271px;
-}
+  .outer-card {
+    width: 192px;
+    height: 50px;
+    background-color: #e0e0e0;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-right: 271px;
+  }
 
     {
       {
-      /if}
-}
+      /if
+    }
+  }
 
   /* Inner card */
   .inner-card {
@@ -118,14 +119,16 @@
     <nav id="navbar" style="display:;" class="navbar">
       <ul>
         <li><a href="/admin">Admin Panel</a></li>
-                <li><a href="/doners">Food Donation Corner</a></li>
+        <li><a href="/doners">Food Donation Corner</a></li>
 
         {{#if user}}
 
         <li class="dropdown"><a href="#"><span>{{user.FName}}</span> <i
               class="bi bi-chevron-down dropdown-indicator"></i></a>
           <ul>
-            <li><a href="/cart">Cart</a></li>
+            {{!-- <li><a href="/cart">Cart</a></li> --}}
+            <li><a href="/profile">My Profile</a></li>
+
             <li><a href="/orders">My Orders</a></li>
 
             <li><a href="/signout">Logout</a></li>
