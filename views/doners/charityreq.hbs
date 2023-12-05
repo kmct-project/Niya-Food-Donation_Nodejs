@@ -37,7 +37,7 @@
                                             <th>Quantity</th>
                                             <th>Time of delivery</th>
                                             <th>Date of delivery</th>
-                                            {{!-- <th>Delete</th> --}}
+                                            <th>Donate Now</th>
 
                                         </tr>
                                     </thead>
@@ -53,7 +53,10 @@
                                             <td>{{this.qty}}</td>
                                             <td>{{this.td}}</td>
                                             <td>{{this.dd}}</td>
-
+                                            <td><button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal">
+                                                    Donate
+                                                </button></td>
                                             {{!-- <td><a href="/tursts/delete-req/{{this._id}}" class="btn btn-danger"
                                                     onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')"><i
                                                         class="bi bi-trash" aria-hidden="true"></i></a></td> --}}
@@ -72,3 +75,25 @@
 
     </div>
 </section>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Donate Now</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Do You Want to Donate food to This Trust?</h6>
+                {{#if doner}}
+                <input type="hidden" value="">
+                {{/if}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
