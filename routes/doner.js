@@ -58,6 +58,17 @@ router.get("/charityreq", verifySignedIn, async function (req, res) {
 });
 
 
+router.post("/accept-request", verifySignedIn, function (req, res) {
+  console.log(req.body)
+  let productData = { productId: Array.isArray(req.body.productId) ? req.body.productId[0] : req.body.productId, address: req.body.address, phone: req.body.phone };
+  let doner = req.session.doner;
+  donerHelper.acceptRequest(productData, doner).then(() => {
+    res.redirect("/doners/charityreq");
+  });
+});
+
+
+
 ///////ADD donate/////////////////////                                         
 router.get("/add-product", verifySignedIn, function (req, res) {
   let doner = req.session.doner;
@@ -107,7 +118,6 @@ router.post("/edit-donate/:id", verifySignedIn, function (req, res) {
 router.get("/delete-donate/:id", verifySignedIn, function (req, res) {
   let productId = req.params.id;
   donerHelper.deleteProduct(productId).then((response) => {
-    fs.unlinkSync("./public/images/donate-images/" + productId + ".png");
     res.redirect("/doners/home");
   });
 });

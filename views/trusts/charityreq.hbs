@@ -43,9 +43,13 @@
                                 <td>{{this.td}}</td>
                                 <td>{{this.dd}}</td>
 
-                                <td><a href="/tursts/delete-req/{{this._id}}" class="btn btn-danger"
-                                        onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')"><i
-                                            class="bi bi-trash" aria-hidden="true"></i></a></td>
+                              <td>
+  <a href="/trusts/delete-req?id={{this._id}}" class="btn btn-danger"
+     onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')">
+    <i class="bi bi-trash" aria-hidden="true"></i>
+  </a>
+</td>
+
 
                             </tr>
                             {{/each}}

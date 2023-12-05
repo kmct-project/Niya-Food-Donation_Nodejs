@@ -53,8 +53,8 @@
                                             <td>{{this.qty}}</td>
                                             <td>{{this.td}}</td>
                                             <td>{{this.dd}}</td>
-                                            <td><button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal">
+                                            <td><button   data-product-id="{{this._id}}" type="button" class="btn btn-primary add-to-cart-btn" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal" >
                                                     Donate
                                                 </button></td>
                                             {{!-- <td><a href="/tursts/delete-req/{{this._id}}" class="btn btn-danger"
@@ -73,27 +73,70 @@
             </div>
         </center>
 
-    </div>
+    </div>  
 </section>
 
 
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Donate Now</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h6>Do You Want to Donate food to This Trust?</h6>
-                {{#if doner}}
-                <input type="hidden" value="">
-                {{/if}}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Enter Your Address</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addressForm" action="/doners/accept-request" method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="addressInput" class="form-label">Address</label>
+            <input type="hidden" id="productIdInputValue" name="productId">
+            <input type="text" class="form-control" id="addressInput" name="address" {{#if user}}
+              value="{{user.Address}}" {{/if}} required>
+          </div>
+          <div class="mb-3">
+            <label for="addressInput" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" id="addressInput" {{#if user}} value="{{user.Phone}}"
+              {{/if}}name="phone" required>
+          </div>
+
+          <input type="hidden" name="date" id="datetime">
+
+          <input type="hidden" id="selectedProductId" name="productId">
+
+          <button type="submit" class="btn btn-primary">Book Now</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const chooseThisButtons = document.querySelectorAll('.add-to-cart-btn');
+    const addressForm = document.getElementById('addressForm');
+    const selectedProductIdInput = document.getElementById('selectedProductId');
+
+    chooseThisButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        const selectedProductId = this.getAttribute('data-product-id');
+        selectedProductIdInput.value = selectedProductId;
+      });
+    });
+
+    addressForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const requestId = selectedProductIdInput.value;
+      const address = document.getElementById('addressInput').value;
+
+      document.getElementById('productIdInputValue').value = requestId; 
+
+      document.getElementById('addressForm').submit();
+
+      const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+      modal.hide();
+    });
+  });
+</script>

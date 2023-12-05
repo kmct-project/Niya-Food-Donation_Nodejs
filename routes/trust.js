@@ -45,7 +45,8 @@ router.get("/add-req", verifySignedIn, function (req, res) {
 
 ///////ADD req/////////////////////                                         
 router.post("/add-req", function (req, res) {
-  trustHelper.addtrustreq(req.body, (id) => {
+  let user = req.session.user;
+  trustHelper.addtrustreq({ ...req.body, requestedBy: user._id }, (id) => {
     res.redirect("/trusts/charityreq");
 
   });
@@ -80,10 +81,10 @@ router.post("/edit-req/:id", verifySignedIn, function (req, res) {
 });
 
 ///////DELETE req/////////////////////                                         
-router.get("/delete-req/:id", verifySignedIn, function (req, res) {
-  let trustreqId = req.params.id;
+router.get('/delete-req', verifySignedIn, function (req, res) {
+  let trustreqId = req.query.id;
   trustHelper.deletetrustreq(trustreqId).then((response) => {
-    res.redirect("/trusts");
+    res.redirect("/trusts/charityreq");
   });
 });
 
@@ -101,9 +102,8 @@ router.get("/welcome", verifySignedIn, function (req, res) {
 
 router.get("/charityreq", verifySignedIn, async function (req, res, next) {
   let user = req.session.user;
-  products = await donerHelper.getAllProducts();
-  trustreqs = await donerHelper.getAlltrustreqs();
-  res.render("trusts/charityreq", { admin: false, layout: "trust", user, products, trustreqs });
+  trustreqs = await donerHelper.getAlltrustreqsWithId(user._id);
+  res.render("trusts/charityreq", { admin: false, layout: "trust", user, trustreqs });
 });
 
 router.get("/request", verifySignedIn, async function (req, res, next) {
@@ -154,8 +154,6 @@ router.post("/accept-donation", verifySignedIn, function (req, res) {
     res.redirect("/trusts/home");
   });
 });
-
-
 
 router.post("/remove-cart-product", (req, res, next) => {
   userHelper.removeCartProduct(req.body).then((response) => {

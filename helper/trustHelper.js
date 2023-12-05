@@ -181,7 +181,7 @@ module.exports = {
     trustreq.Price = parseInt(trustreq.Price);
     db.get()
       .collection(collections.TRUSTREQ_COLLECTION)
-      .insertOne(trustreq)
+      .insertOne({ ...trustreq, status: 'active' })
       .then((data) => {
         console.log(data);
         callback(data.ops[0]._id);
