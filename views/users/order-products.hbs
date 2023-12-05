@@ -1,7 +1,7 @@
 <section>
     <div class="container my-5">
         <a href="/orders" class="btn btn-dark mb-4">Back to orders</a>
-        <button onclick="window.print()" class="btn btn-primary mb-4">Print Bill</button>
+        {{!-- <button onclick="window.print()" class="btn btn-primary mb-4">Print Bill</button> --}}
 
         <div class="card p-5 shadow">
             <div class="table-responsive">
@@ -18,7 +18,7 @@
                         {{#each order}}
                         <tr class="align-middle">
                             <td>{{incremented @index}}</td>
-                            <td>{{this.productDetails.name}}</td>
+                            <td>{{this.productDetails.cuisine}}</td>
                             <td>₹{{this.productDetails.Price}}/-</td>
                         </tr>
                         {{/each}}

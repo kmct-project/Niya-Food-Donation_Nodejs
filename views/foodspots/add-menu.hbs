@@ -11,7 +11,8 @@
                             <form action="/foodspots/add-menu" enctype="multipart/form-data" method="POST">
 
                                 {{#if foodspots}}
-                                <input type="hidden" value="{{foodspots.Address}}" name="myaddress">
+                                <input type="hidden" value="{{foodspots.address}}" name="myaddress">
+                                <input type="hidden" value="{{foodspots.Name}}" name="bname">
 
                                 {{/if}}
 

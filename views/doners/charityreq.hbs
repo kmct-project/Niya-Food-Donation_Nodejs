@@ -6,6 +6,8 @@
             <div class="page-wrapper mt-5">
                 <div class="page-breadcrumb">
                     <div class="row">
+                        <a href="/doners/welcome" class="btn btn-dark w-25 mb-3">Back to home</a>
+
                         <div class="col-lg-16 d-flex no-block ">
                             <h4 class="page-title text-center mb-3">Charity Requests</h4><br>
                         </div>
@@ -35,7 +37,7 @@
                                             <th>Quantity</th>
                                             <th>Time of delivery</th>
                                             <th>Date of delivery</th>
-                                            <th>Delete</th>
+                                            {{!-- <th>Delete</th> --}}
 
                                         </tr>
                                     </thead>
@@ -52,9 +54,9 @@
                                             <td>{{this.td}}</td>
                                             <td>{{this.dd}}</td>
 
-                                            <td><a href="/tursts/delete-req/{{this._id}}" class="btn btn-danger"
+                                            {{!-- <td><a href="/tursts/delete-req/{{this._id}}" class="btn btn-danger"
                                                     onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')"><i
-                                                        class="bi bi-trash" aria-hidden="true"></i></a></td>
+                                                        class="bi bi-trash" aria-hidden="true"></i></a></td> --}}
 
                                         </tr>
                                         {{/each}}
